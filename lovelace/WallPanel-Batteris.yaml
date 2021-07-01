@@ -1,0 +1,139 @@
+type: custom:layout-card
+layout_type: custom:grid-layout
+layout:
+  grid-template-areas: |
+    'c   c   .nlr nbr nsh  nb   nfp nc   .    wb'
+    '.   .   .    .    .   .    .   .   .  .  .'
+    '.   .   .    k    l   g    .   .   .  .  .'
+    '.   .   .    m    s   w    .   .   .  .  .'
+    '.   .   .    .    .   .    .   .   .  .  .'
+    '.   .   .    .    .   .    .   .   .  .  .'
+  grid-template-columns: repeat(9,120px)  1fr 90px
+  grid-template-rows: 60px 75px repeat(6,126px)
+cards:
+  - type: custom:simple-clock-card
+    use_military: false
+    font_size: 2rem
+    view_layout:
+      grid-area: c
+  - type: custom:button-card
+    icon_height: 24px;
+    style: |
+      * {color: var(--primary-color)}    
+    tap_action:
+      action: navigate
+      navigation_path: /lovelace-wallboard/wall-panel?kiosk
+    icon: mdi:sofa
+    name: Living Room
+    view_layout:
+      grid-area: nlr
+  - type: custom:button-card
+    icon_height: 24px;
+    style: |
+      * {color: var(--primary-color)}    
+    tap_action:
+      action: navigate
+      navigation_path: /lovelace-wallboard/bedrooms?kiosk
+    icon: mdi:bed
+    name: Bedrooms
+    view_layout:
+      grid-area: nbr
+  - type: custom:button-card
+    icon_height: 24px;
+    style: |
+      * {color: var(--primary-color)}    
+    tap_action:
+      action: navigate
+      navigation_path: /lovelace-wallboard/shades?kiosk
+    icon: mdi:blinds
+    name: Shades
+    view_layout:
+      grid-area: nsh
+  - type: custom:button-card
+    icon_height: 24px;
+    style: |
+      * {color: var(--primary-color)}    
+    tap_action:
+      action: navigate
+      navigation_path: /lovelace-wallboard/batteries?kiosk
+    icon: mdi:battery
+    name: Batteries
+    view_layout:
+      grid-area: nb
+  - type: custom:button-card
+    icon_height: 24px;
+    style: |
+      * {color: var(--primary-color)}
+    tap_action:
+      action: navigate
+      navigation_path: /lovelace-wallboard/floor-plan?kiosk
+    icon: mdi:home
+    name: Floor Plan
+    view_layout:
+      grid-area: nfp
+  - type: gauge
+    entity: sensor.my_wall_panel_battery_level
+    min: 0
+    max: 100
+    name: Wall Panel
+    view_layout:
+      grid-area: w
+    severity:
+      green: 80
+      yellow: 40
+      red: 0
+  - type: gauge
+    entity: sensor.kitchen_battery
+    min: 0
+    max: 100
+    name: Kitchen Shade
+    view_layout:
+      grid-area: k
+    severity:
+      green: 80
+      yellow: 40
+      red: 0
+  - type: gauge
+    entity: sensor.living_room_battery
+    min: 0
+    max: 100
+    name: Living Room Shade
+    view_layout:
+      grid-area: l
+    severity:
+      green: 80
+      yellow: 40
+      red: 0
+  - type: gauge
+    entity: sensor.guest_slider_battery
+    min: 0
+    max: 100
+    name: Guest Shade
+    view_layout:
+      grid-area: g
+    severity:
+      green: 80
+      yellow: 40
+      red: 0
+  - type: gauge
+    entity: sensor.master_slider_battery
+    min: 0
+    max: 100
+    name: Master Slider Battery
+    view_layout:
+      grid-area: s
+    severity:
+      green: 80
+      yellow: 40
+      red: 0
+  - type: gauge
+    entity: sensor.master_window_battery
+    min: 0
+    max: 100
+    name: Master Window Battery
+    view_layout:
+      grid-area: m
+    severity:
+      green: 80
+      yellow: 40
+      red: 0
