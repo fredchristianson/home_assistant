@@ -1,0 +1,273 @@
+type: custom:layout-card
+layout_type: custom:grid-layout
+layout:
+  grid-template-areas: |
+    'c   c   .nlr nbr nsh  nb   nfp nc   .    wb'
+    'tmp occ .    .    .   .    .   .   .  .  .'
+    'mc  mc   mf   mf   fl  fl  .   .   .  .  .'
+    'mw  mw   ms   ms   gs gs   .   .   .  .  .'
+    '.   .    mw   mw   .   ms  ms  .   gs gs .'
+    '.   .    .    .    .   .   .   .   .  .  .'
+    'tv  tv   tv   .    .   .   .   .   .  .  .'
+    'vol vol  vol  .    .   .   .   .   .  .  .'
+  grid-template-columns: repeat(9,120px)  1fr 90px
+  grid-template-rows: 60px 75px repeat(6,126px)
+cards:
+  - type: custom:simple-clock-card
+    use_military: false
+    font_size: 2rem
+    view_layout:
+      grid-area: c
+  - type: custom:button-card
+    icon_height: 24px;
+    style: |
+      * {color: var(--primary-color)}    
+    tap_action:
+      action: navigate
+      navigation_path: /lovelace-wallboard/wall-panel?kiosk
+    icon: mdi:sofa
+    name: Living Room
+    view_layout:
+      grid-area: nlr
+  - type: custom:button-card
+    icon_height: 24px;
+    style: |
+      * {color: var(--primary-color)}    
+    tap_action:
+      action: navigate
+      navigation_path: /lovelace-wallboard/bedrooms?kiosk
+    icon: mdi:bed
+    name: Bedrooms
+    view_layout:
+      grid-area: nbr
+  - type: custom:button-card
+    icon_height: 24px;
+    style: |
+      * {color: var(--primary-color)}    
+    tap_action:
+      action: navigate
+      navigation_path: /lovelace-wallboard/shades?kiosk
+    icon: mdi:blinds
+    name: Shades
+    view_layout:
+      grid-area: nsh
+  - type: custom:button-card
+    icon_height: 24px;
+    style: |
+      * {color: var(--primary-color)}    
+    tap_action:
+      action: navigate
+      navigation_path: /lovelace-wallboard/batteries?kiosk
+    icon: mdi:battery
+    name: Batteries
+    view_layout:
+      grid-area: nb
+  - type: custom:button-card
+    icon_height: 24px;
+    style: |
+      * {color: var(--primary-color)}
+    tap_action:
+      action: navigate
+      navigation_path: /lovelace-wallboard/floor-plan?kiosk
+    icon: mdi:home
+    name: Floor Plan
+    view_layout:
+      grid-area: nfp
+  - type: custom:slider-button-card
+    entity: light.master_ceiling
+    name: Master Ceiling
+    view_layout:
+      grid-area: mc
+    style: |
+      ha-card { --state-color-off: #aaaaaa; 
+                --paper-item-icon-color: #aaaaaa;
+              }
+    slider:
+      direction: left-right
+      background: gradient
+      use_percentage_bg_opacity: true
+      use_state_color: false
+      show_track: true
+      force_square: false
+    action_button:
+      mode: toggle
+    icon:
+      icon: hass:lightbulb
+      show: true
+      use_state_color: true
+    compact: false
+  - type: custom:slider-button-card
+    entity: fan.master
+    name: Master Fan
+    view_layout:
+      grid-area: mf
+    style: |
+      ha-card { --state-color-off: #aaaaaa; 
+                --paper-item-icon-color: #aaaaaa;
+              }
+    slider:
+      direction: left-right
+      background: gradient
+      use_percentage_bg_opacity: true
+      use_state_color: false
+      show_track: true
+      force_square: false
+    action_button:
+      mode: toggle
+    icon:
+      icon: hass:fan
+      show: true
+      use_state_color: true
+    compact: false    
+  - type: custom:slider-button-card
+    entity: light.freds_lamp
+    name: Fred's Bed Lamp
+    view_layout:
+      grid-area: fl
+    style: |
+      ha-card { --state-color-off: #aaaaaa; 
+                --paper-item-icon-color: #aaaaaa;
+              }
+    slider:
+      direction: left-right
+      background: gradient
+      use_percentage_bg_opacity: true
+      use_state_color: false
+      show_track: true
+      force_square: false
+    action_button:
+      mode: toggle
+    icon:
+      icon: hass:lightbulb
+      show: true
+      use_state_color: true
+    compact: false
+  - type: custom:gap-card
+  - type: custom:slider-button-card
+    entity: cover.master_window
+    name: Master Window
+    view_layout:
+      grid-area: mw
+    style: |
+      ha-card { --state-color-off: #aaaaaa; 
+                --paper-item-icon-color: #aaaaaa
+              }
+    slider:
+      direction: top-bottom
+      background: striped
+      use_state_color: false
+      use_percentage_bg_opacity: false
+      toggle_on_click: false
+      show_track: false
+      force_square: false
+      invert: true
+    action_button:
+      mode: toggle
+    icon:
+      icon: ''
+      show: true
+      use_state_color: true
+    compact: false
+  - type: custom:slider-button-card
+    entity: cover.master_slider
+    name: Master Slider
+    view_layout:
+      grid-area: ms
+    style: |
+      ha-card { --state-color-off: #aaaaaa; 
+                --paper-item-icon-color: #aaaaaa
+              }
+    slider:
+      direction: top-bottom
+      background: striped
+      use_state_color: false
+      use_percentage_bg_opacity: false
+      toggle_on_click: false
+      show_track: false
+      force_square: false
+      invert: true
+    action_button:
+      mode: toggle
+    icon:
+      icon: ''
+      show: true
+      use_state_color: true
+    compact: false
+
+  - type: custom:slider-button-card
+    entity: cover.guest_slider
+    name: Guest Slider
+    view_layout:
+      grid-area: gs
+    style: |
+      ha-card { --state-color-off: #aaaaaa; 
+                --paper-item-icon-color: #aaaaaa
+              }
+    slider:
+      direction: top-bottom
+      background: striped
+      use_state_color: false
+      use_percentage_bg_opacity: false
+      toggle_on_click: false
+      show_track: false
+      force_square: false
+      invert: true
+    action_button:
+      mode: toggle
+    icon:
+      icon: ''
+      show: true
+      use_state_color: true
+  - type: custom:slider-button-card
+    entity: switch.samsung_q60
+    name: TV
+    view_layout:
+      grid-area: tv
+    style: |
+      ha-card { --state-color-off: #aaaaaa; 
+                --paper-item-icon-color: #aaaaaa;
+              }
+    action_button:
+      mode: toggle
+    icon:
+      icon: hass:tv
+      show: true
+      use_state_color: true   
+  - type: custom:slider-button-card
+    entity: sensor.samsung_q60_volume
+    name: Master Ceiling
+    view_layout:
+      grid-area: vol
+    style: |
+      ha-card { --state-color-off: #aaaaaa; 
+                --paper-item-icon-color: #aaaaaa;
+              }
+    slider:
+      direction: left-right
+      background: gradient
+      use_percentage_bg_opacity: true
+      use_state_color: false
+      show_track: true
+      force_square: false
+    action_button:
+      mode: toggle
+    icon:
+      icon: hass:lightbulb
+      show: true
+      use_state_color: true
+    compact: false         
+  - type: entities
+    title: Master
+    entities:
+      - entity: switch.samsung_q60
+        name: TV
+      - entity: sensor.samsung_q60_volume
+        name: TV Volume
+      - entity: sensor.ecobee_bedroom_temperature
+        name: Temperature
+        state_color: true
+      - entity: binary_sensor.ecobee_bedroom_occupancy
+        name: Occupied
+        state_color: true
+    view_layout:
+      grid-area: tv      

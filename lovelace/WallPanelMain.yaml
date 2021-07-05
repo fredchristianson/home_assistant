@@ -2,15 +2,23 @@ type: custom:layout-card
 layout_type: custom:grid-layout
 layout:
   grid-template-areas: |
-    'c   c   .nlr nbr nsh  nb   nfp nc   .    wb'
-    '.   .   .    .    .   .    .   .   .  .  .'
-    't   t   t    w    w   w    w   .   lfd . .'
-    't   t   t    w    w   w    w   .   o  .  .'
-    't   t   t    w    w   w    w   .   .  .  .'
-    '.   .   .    .    .   .    .   .   .  .  .'
-    'lk  llr  lh  ld   .   .    ck  clr fp fl .'
-  grid-template-columns: repeat(9,120px)  1fr 90px
+    'c   c   .    nlr  nbr nsh  nb  nfp nc  .  wb'
+    '.   .   .    .    .   .    .   .   .   .  .'
+    't   t   t    w    w   w    w   clr clr ck ck'
+    't   t   t    w    w   w    w   clr clr ck ck'
+    't   t   t    w    w   w    w   clr clr ck ck'
+    'ld  ld  ld   lh   lh  lh   .   .   .   .  . '
+    'llr llr llr  lk   lk  lk   .   fl  fp  o  lfd'
+  grid-template-columns: repeat(7,120px)  1fr 1fr 1fr 1fr
   grid-template-rows: 60px 75px repeat(6,126px)
+card_mod: |
+  style: |
+    div {
+          --state-icon-active-color: rgb(9, 251, 213);
+          --paper-item-icon-active-color: var(--state-icon-active-color);
+          --state-icon-color: rgb(50,50,255);
+          --paper-item-icon-color: var(--paper-item-icon-color);
+        }  
 cards:
   - type: thermostat
     entity: climate.ecobee
@@ -22,6 +30,9 @@ cards:
         round-slider {
           --xround-slider-path-color: #aaaaff !important;
           --round-slider-bar-color: #aaffaa !important;
+        }
+        #info {
+          display: none;
         }
   - type: custom:weather-card
     entity: weather.openweathermap
@@ -116,7 +127,7 @@ cards:
   - type: custom:slider-button-card
     entity: cover.kitchen
     name: Kitchen Shade
-    style: 'ha-card .name {font-size: .8rem}'
+    style: ha-card .name {}
     view_layout:
       grid-area: ck
     slider:
@@ -137,8 +148,8 @@ cards:
     compact: false
   - type: custom:slider-button-card
     entity: cover.living_room
-    name: LR Shade
-    style: 'ha-card .name {font-size: .8rem}'
+    name: Living Room Shade
+    style: ha-card .name {}
     view_layout:
       grid-area: clr
     slider:
@@ -202,6 +213,11 @@ cards:
   - type: custom:button-card
     name: Front Door
     entity: lock.front_door
+    card_mod:
+      style: |
+        ha-card {
+          height: 100%;
+        }   
     icon: mdi:lock
     view_layout:
       grid-area: lfd
@@ -211,7 +227,7 @@ cards:
         color: green
         icon: mdi:lock
       - value: unlocked
-        color: red
+        color: null
         icon: mdi:lock-open-variant
     tap_action:
       action: call-service
@@ -254,9 +270,15 @@ cards:
         icon: mdi:lock-open-variant
     tap_action:
       action: more-info
+    card_mod:
+      style: |
+        ha-card {
+          height: 100%;
+        }      
   - type: custom:simple-clock-card
     use_military: false
-    font_size: 2rem
+    font_size: 3rem
+    hide_seconds: true
     view_layout:
       grid-area: c
   - type: custom:button-card
