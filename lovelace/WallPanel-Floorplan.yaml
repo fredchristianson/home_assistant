@@ -11,6 +11,7 @@ cards:
   - type: custom:simple-clock-card
     use_military: false
     font_size: 2rem
+    hide_seconds: true
     view_layout:
       grid-area: c
   - type: custom:button-card
@@ -118,7 +119,9 @@ cards:
         entity: light.kitchen
         tap_action:
           action: toggle
-        state_color: false
+        state_color: true
+        state_filter:
+          'on': brightness(110%)
         style:
           top: 616px
           left: 200px
@@ -127,7 +130,8 @@ cards:
           border-radius: 9999px
           border-color: blue
           z-index: 100
-          --primary-text-color: black          
+          filter: brightness(100%)
+          '--primary-text-color': black
       - type: image
         image: https://22.400ggp.com/local/images/walls.png
         state_color: false
@@ -158,8 +162,8 @@ cards:
           'on': https://22.400ggp.com/local/images/pulley-fan-on.gif
           'off': https://22.400ggp.com/local/images/pulley-fan.png
         style:
-          top: 247px
-          left: 185px
+          top: 197px
+          left: 132px
       - type: image
         entity: switch.pulley_fan
         tap_action:
@@ -168,5 +172,5 @@ cards:
           'on': https://22.400ggp.com/local/images/pulley-fan-on.gif
           'off': https://22.400ggp.com/local/images/pulley-fan.png
         style:
-          top: 301px
-          left: 418px
+          top: 250px
+          left: 366px
