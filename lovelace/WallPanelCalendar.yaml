@@ -1,0 +1,114 @@
+type: vertical-stack
+cards:
+  - type: custom:layout-card
+    layout_type: custom:grid-layout
+    layout:
+      grid-template-areas: |
+        'c   c   .    nlr  nbr nlc nsh  nb  nfp nc .  . wb'
+      grid-template-columns: repeat(2,120px) 50px repeat(7,1fr) 2fr 100px
+      grid-template-rows: 75px
+    cards:
+      - type: custom:simple-clock-card
+        use_military: false
+        font_size: 3rem
+        hide_seconds: true
+        view_layout:
+          grid-area: c
+      - type: custom:button-card
+        icon_height: 24px;
+        style: |
+          * {color: var(--primary-color)}   
+          ha-icon { height: 24px !important} 
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace-wallboard/wall-panel?kiosk
+        icon: mdi:sofa
+        name: Living Room
+        view_layout:
+          grid-area: nlr
+          ha-icon { height: 24px !important}
+      - type: custom:button-card
+        icon_height: 24px;
+        style: |
+          * {color: var(--primary-color)}    
+          ha-icon { height: 24px !important} 
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace-wallboard/bedrooms?kiosk
+        icon: mdi:bed
+        name: Bedrooms
+        view_layout:
+          grid-area: nbr
+      - type: custom:button-card
+        icon_height: 24px;
+        style: |
+          * {color: var(--primary-color)}
+          ha-icon { height: 24px !important} 
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace-wallboard/calendar?kiosk
+        icon: mdi:calendar
+        name: Calendar
+        view_layout:
+          grid-area: nlc
+      - type: custom:button-card
+        icon_height: 24px;
+        style: |
+          * {color: var(--primary-color)}    
+          ha-icon { height: 24px !important} 
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace-wallboard/shades?kiosk
+        icon: mdi:blinds
+        name: Shades
+        view_layout:
+          grid-area: nsh
+      - type: custom:button-card
+        icon_height: 24px;
+        style: |
+          * {color: var(--primary-color)}    
+          ha-icon { height: 24px !important} 
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace-wallboard/batteries?kiosk
+        icon: mdi:battery
+        name: Batteries
+        view_layout:
+          grid-area: nb
+      - type: custom:button-card
+        icon_height: 24px;
+        style: |
+          * {color: var(--primary-color)}
+          ha-icon { height: 24px !important} 
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace-wallboard/floor-plan?kiosk
+        icon: mdi:home
+        name: Floor Plan
+        view_layout:
+          grid-area: nfp
+      - type: glance
+        entities:
+          - entity: sensor.my_wall_panel_battery_level
+            name: ''
+        view_layout:
+          grid-area: wb
+        style: |
+          ha-card {margin-top: -40px}     
+  - type: horizontal-stack
+    cards:   
+      - type: calendar
+        entities:
+          - calendar.fred_s_reminders
+          - calendar.fred_and_jen
+        initial_view: dayGridDay
+        theme: Caule Light Yellow
+      - type: calendar
+        entities:
+          - calendar.fred_s_reminders
+          - calendar.fred_and_jen
+          - calendar.holidays_in_united_states
+          - calendar.fred_christianson_gmail_com
+          - calendar.birthdays
+        initial_view: dayGridMonth
+        theme: Caule Light Yellow
