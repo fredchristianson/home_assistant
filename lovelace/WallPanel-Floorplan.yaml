@@ -7,19 +7,6 @@ cards:
         'c  .    n1  n2 n3 n4 n5 n6 n7 . wb'
       grid-template-columns: 240px 50px repeat(7,1fr) 1fr 100px
       grid-template-rows: 75px
-    style: |
-      layout-card {
-        border-bottom: 1px solid red;
-      }
-    card_mod: |
-      style: |
-        div {
-              --test: 12345;
-              --state-icon-active-color: rgb(9, 251, 213);
-              --paper-item-icon-active-color: var(--state-icon-active-color);
-              --state-icon-color: rgb(50,50,255);
-              --paper-item-icon-color: var(--paper-item-icon-color);
-            }  
     cards:
       - type: custom:simple-clock-card
         use_military: false
@@ -113,36 +100,31 @@ cards:
         image: https://22.400ggp.com/local/images/v2/tile.png
         view_layout:
           grid-area: fp
-        style: |
-          margin: 0px !important
         card_mod:
           style: |
             ha-card {
-              --paper-item-icon-active-color: #ffff00;
+              --test: 5678
+              --paper-item-icon-active-color: #ff7700;
               --paper-item-icon-color: rgba(255,255,0,0.4);
-              margin: 0 0.4);
+              margin: 0;
+              padding: 0;
               position: relative;
               width: 800px !important;
               height: 600px !important;
             }
-            ha-card #root {
-              width: 100%;
-              height: 100%;
-            }
-            ha-card hui-image {
-              position: absolute;
-              left: 0;
-              top: 0;
-            }
-
-            ha-card hui-image-element {
+            ha-card hui-image, ha-card hui-image-element {
               position: absolute;
               transform: none !important;
-              left: unset;
+              left: 0;
               top: unset;
               bottom: unset;
-              right: unset;
-            }
+              right: unset;               
+            }     
+
+            #root {
+                left: 100px !important
+                transform: rotate(90deg)
+              }
         elements:
           - type: image
             image: https://22.400ggp.com/local/images/v2/furniture.png
@@ -164,26 +146,7 @@ cards:
               transform: none
               position: absolute
               pointer-events: none
-          - type: image
-            entity: switch.pulley_fan
-            tap_action:
-              action: more-info
-            state_image:
-              'on': https://22.400ggp.com/local/images/pulley-fan-on.gif
-              'off': https://22.400ggp.com/local/images/pulley-fan.png
-            style:
-              top: 167px
-              left: 102px
-          - type: image
-            entity: switch.pulley_fan
-            tap_action:
-              action: more-info
-            state_image:
-              'on': https://22.400ggp.com/local/images/pulley-fan-on.gif
-              'off': https://22.400ggp.com/local/images/pulley-fan.png
-            style:
-              top: 200px
-              left: 306px
+              z-index: 10
           - type: image
             entity: light.kitchen
             tap_action:
@@ -191,7 +154,7 @@ cards:
             state_image:
               'off': https://22.400ggp.com/local/images/v2/overlay-kitchen.png
           - type: image
-            entity: light.living
+            entity: light.living_room
             tap_action:
               action: toggle
             state_image:
@@ -203,7 +166,7 @@ cards:
             state_image:
               'off': https://22.400ggp.com/local/images/v2/overlay-dining.png
           - type: image
-            entity: light.master
+            entity: light.master_ceiling
             tap_action:
               action: toggle
             state_image:
@@ -214,6 +177,186 @@ cards:
               action: toggle
             state_image:
               'off': https://22.400ggp.com/local/images/v2/overlay-hall.png
+          - type: image
+            entity: light.freds_lamp
+            tap_action:
+              action: toggle
+            state_image:
+              'on': https://22.400ggp.com/local/images/v2/overlay-freds-light.png
+          - type: image
+            entity: switch.pulley_fan
+            card_mod:
+              style: |
+                @keyframes rotate {
+                  100% {
+                    transform: rotate(360deg);
+                  }
+                }                
+                :host {
+                  animation: rotate 2s linear infinite;
+                  left:282px !important;
+                  top: 218px !important;
+                  z-index: 999;
+                }
+            tap_action:
+              action: toggle
+            state_image:
+              'on': https://22.400ggp.com/local/images/v2/fan-dining.png
+          - type: image
+            entity: switch.pulley_fan
+            tap_action:
+              action: toggle
+            state_image:
+              'off': https://22.400ggp.com/local/images/v2/fan-dining.png
+            card_mod:
+              style: |
+                :host {
+                  left:282px !important;
+                  top: 218px !important;
+                  transform: rotate(93deg) !important;
+                  z-index: 999;
+                }
+          - type: image
+            entity: switch.pulley_fan
+            card_mod:
+              style: |
+                @keyframes lrotate {
+                  0% {
+                    transform: rotate(45deg);
+                  }
+                  100% {
+                    transform: rotate(405deg);
+                  }
+                }                
+                :host {
+                  animation: lrotate 2s linear infinite;
+                  left:88px !important;
+                  top: 149px !important;
+                  z-index: 999;
+                }
+            tap_action:
+              action: toggle
+            state_image:
+              'on': https://22.400ggp.com/local/images/v2/fan-living.png
+          - type: image
+            entity: switch.pulley_fan
+            tap_action:
+              action: toggle
+            state_image:
+              'off': https://22.400ggp.com/local/images/v2/fan-living.png
+            card_mod:
+              style: |
+                :host {
+                  left:120px !important;
+                  top: 180px !important;
+                  transform: rotate(3deg) !important;
+                  z-index: 999;
+                }  
+          - type: image
+            entity: switch.lanai_fan
+            card_mod:
+              style: |
+                @keyframes rotate {
+                  100% {
+                    transform: rotate(360deg);
+                  }
+                }                
+                :host {
+                  animation: rotate 2s linear infinite;
+                  left:318px !important;
+                  top: 18px !important;
+                  z-index: 999;
+                }
+            tap_action:
+              action: toggle
+            state_image:
+              'on': https://22.400ggp.com/local/images/v2/fan-lanai.png
+          - type: image
+            entity: switch.lanai_fan
+            tap_action:
+              action: toggle
+            state_image:
+              'off': https://22.400ggp.com/local/images/v2/fan-lanai.png
+            card_mod:
+              style: |
+                :host {
+                  left:318px !important;
+                  top: 18px !important;
+                  transform: rotate(93deg) !important;
+                  z-index: 999;
+                }
+          - type: image
+            entity: switch.lanai_fan
+            card_mod:
+              style: |
+                @keyframes lrotate {
+                  0% {
+                    transform: rotate(45deg);
+                  }
+                  100% {
+                    transform: rotate(405deg);
+                  }
+                }                
+                :host {
+                  animation: lrotate 2s linear infinite;
+                  left:518px !important;
+                  top: 18px !important;
+                  z-index: 999;
+                }
+            tap_action:
+              action: toggle
+            state_image:
+              'on': https://22.400ggp.com/local/images/v2/fan-lanai.png
+          - type: image
+            entity: switch.lanai_fan
+            tap_action:
+              action: toggle
+            state_image:
+              'off': https://22.400ggp.com/local/images/v2/fan-lanai.png
+            card_mod:
+              style: |
+                :host {
+                  left:513px !important;
+                  top: 18px !important;
+                  transform: rotate(3deg) !important;
+                  z-index: 999;
+                }                
+          - type: image
+            entity: fan.master
+            state_image:
+              'on': https://22.400ggp.com/local/images/v2/fan-master.png
+            card_mod:
+              style: |
+                @keyframes lrotate {
+                  0% {
+                    transform: rotate(45deg);
+                  }
+                  100% {
+                    transform: rotate(405deg);
+                  }
+                }                
+                :host {
+                  animation: lrotate 2s linear infinite;
+                  left:634px !important;
+                  top: 159px !important;
+                  z-index: 999;
+                }
+            tap_action:
+              action: toggle
+          - type: image
+            entity: fan.master
+            tap_action:
+              action: toggle
+            state_image:
+              'off': https://22.400ggp.com/local/images/v2/fan-master.png
+            card_mod:
+              style: |
+                :host {
+                  left:634px !important;
+                  top: 159px !important;
+                  transform: rotate(3deg) !important;
+                  z-index: 999;
+                }                
           - type: state-icon
             entity: light.kitchen
             tap_action:
@@ -242,5 +385,3 @@ cards:
               color: black
               background-color: rgba(0,0,0,0.4)
               border-radius: 9999px
-              border-color: blue
-              '--primary-text-color': black
