@@ -4,9 +4,22 @@ cards:
     layout_type: custom:grid-layout
     layout:
       grid-template-areas: |
-        'c   c   .    nlr  nbr nlc nsh  nb  nfp nc .  . wb'
-      grid-template-columns: repeat(2,120px) 50px repeat(7,1fr) 2fr 100px
+        'c  .    n1  n2 n3 n4 n5 n6 n7 . wb'
+      grid-template-columns: 240px 50px repeat(7,1fr) 1fr 100px
       grid-template-rows: 75px
+    style: |
+      layout-card {
+        border-bottom: 1px solid red;
+      }
+    card_mod: |
+      style: |
+        div {
+              --test: 12345;
+              --state-icon-active-color: rgb(9, 251, 213);
+              --paper-item-icon-active-color: var(--state-icon-active-color);
+              --state-icon-color: rgb(50,50,255);
+              --paper-item-icon-color: var(--paper-item-icon-color);
+            }  
     cards:
       - type: custom:simple-clock-card
         use_military: false
@@ -19,14 +32,17 @@ cards:
         style: |
           * {color: var(--primary-color)}   
           ha-icon { height: 24px !important} 
+          #name {
+            border-bottom: 1px solid var(--primary-color);
+          }
         tap_action:
           action: navigate
           navigation_path: /lovelace-wallboard/wall-panel?kiosk
         icon: mdi:sofa
         name: Living Room
         view_layout:
-          grid-area: nlr
-          ha-icon { height: 24px !important}
+          grid-area: n1
+          
       - type: custom:button-card
         icon_height: 24px;
         style: |
@@ -38,7 +54,7 @@ cards:
         icon: mdi:bed
         name: Bedrooms
         view_layout:
-          grid-area: nbr
+          grid-area: n2
       - type: custom:button-card
         icon_height: 24px;
         style: |
@@ -50,7 +66,7 @@ cards:
         icon: mdi:calendar
         name: Calendar
         view_layout:
-          grid-area: nlc
+          grid-area: n3
       - type: custom:button-card
         icon_height: 24px;
         style: |
@@ -58,35 +74,23 @@ cards:
           ha-icon { height: 24px !important} 
         tap_action:
           action: navigate
-          navigation_path: /lovelace-wallboard/shades?kiosk
-        icon: mdi:blinds
-        name: Shades
+          navigation_path: /lovelace-wallboard/weather?kiosk
+        icon: mdi:cloud
+        name: Weather
         view_layout:
-          grid-area: nsh
+          grid-area: n4
       - type: custom:button-card
         icon_height: 24px;
         style: |
           * {color: var(--primary-color)}    
-          ha-icon { height: 24px !important} 
-        tap_action:
-          action: navigate
-          navigation_path: /lovelace-wallboard/batteries?kiosk
-        icon: mdi:battery
-        name: Batteries
-        view_layout:
-          grid-area: nb
-      - type: custom:button-card
-        icon_height: 24px;
-        style: |
-          * {color: var(--primary-color)}
-          ha-icon { height: 24px !important} 
+          ha-icon { height: 24px !important}          
         tap_action:
           action: navigate
           navigation_path: /lovelace-wallboard/floor-plan?kiosk
         icon: mdi:home
         name: Floor Plan
         view_layout:
-          grid-area: nfp
+          grid-area: n5
       - type: glance
         entities:
           - entity: sensor.my_wall_panel_battery_level

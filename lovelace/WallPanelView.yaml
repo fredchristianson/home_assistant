@@ -17,13 +17,22 @@ views:
             layout_type: custom:grid-layout
             layout:
               grid-template-areas: |
-                'c   c   .    nlr  nbr nlc nsh  nb  nfp nc .  . wb'
-              grid-template-columns: repeat(2,120px) 50px repeat(7,120px) 1fr 100px
+                'c  .    n1  n2 n3 n4 n5 n6 n7 . wb'
+              grid-template-columns: 240px 50px repeat(7,1fr) 1fr 100px
               grid-template-rows: 75px
             style: |
               layout-card {
                 border-bottom: 1px solid red;
               }
+            card_mod: |
+              style: |
+                div {
+                      --test: 12345;
+                      --state-icon-active-color: rgb(9, 251, 213);
+                      --paper-item-icon-active-color: var(--state-icon-active-color);
+                      --state-icon-color: rgb(50,50,255);
+                      --paper-item-icon-color: var(--paper-item-icon-color);
+                    }  
             cards:
               - type: custom:simple-clock-card
                 use_military: false
@@ -36,14 +45,17 @@ views:
                 style: |
                   * {color: var(--primary-color)}   
                   ha-icon { height: 24px !important} 
+                  #name {
+                    border-bottom: 1px solid var(--primary-color);
+                    
+                  }
                 tap_action:
                   action: navigate
                   navigation_path: /lovelace-wallboard/wall-panel?kiosk
                 icon: mdi:sofa
                 name: Living Room
                 view_layout:
-                  grid-area: nlr
-                  ha-icon { height: 24px !important}
+                  grid-area: n1
               - type: custom:button-card
                 icon_height: 24px;
                 style: |
@@ -55,7 +67,7 @@ views:
                 icon: mdi:bed
                 name: Bedrooms
                 view_layout:
-                  grid-area: nbr
+                  grid-area: n2
               - type: custom:button-card
                 icon_height: 24px;
                 style: |
@@ -67,7 +79,7 @@ views:
                 icon: mdi:calendar
                 name: Calendar
                 view_layout:
-                  grid-area: nlc
+                  grid-area: n3
               - type: custom:button-card
                 icon_height: 24px;
                 style: |
@@ -75,35 +87,23 @@ views:
                   ha-icon { height: 24px !important} 
                 tap_action:
                   action: navigate
-                  navigation_path: /lovelace-wallboard/shades?kiosk
-                icon: mdi:blinds
-                name: Shades
+                  navigation_path: /lovelace-wallboard/weather?kiosk
+                icon: mdi:cloud
+                name: Weather
                 view_layout:
-                  grid-area: nsh
+                  grid-area: n4
               - type: custom:button-card
                 icon_height: 24px;
                 style: |
                   * {color: var(--primary-color)}    
-                  ha-icon { height: 24px !important} 
-                tap_action:
-                  action: navigate
-                  navigation_path: /lovelace-wallboard/batteries?kiosk
-                icon: mdi:battery
-                name: Batteries
-                view_layout:
-                  grid-area: nb
-              - type: custom:button-card
-                icon_height: 24px;
-                style: |
-                  * {color: var(--primary-color)}
-                  ha-icon { height: 24px !important} 
+                  ha-icon { height: 24px !important}          
                 tap_action:
                   action: navigate
                   navigation_path: /lovelace-wallboard/floor-plan?kiosk
                 icon: mdi:home
                 name: Floor Plan
                 view_layout:
-                  grid-area: nfp
+                  grid-area: n5
               - type: glance
                 entities:
                   - entity: sensor.my_wall_panel_battery_level
@@ -112,24 +112,15 @@ views:
                   grid-area: wb
                 style: |
                   ha-card {margin-top: -40px}        
-            card_mod: |
-              style: |
-                div {
-                      --test: 12345;
-                      --state-icon-active-color: rgb(9, 251, 213);
-                      --paper-item-icon-active-color: var(--state-icon-active-color);
-                      --state-icon-color: rgb(50,50,255);
-                      --paper-item-icon-color: var(--paper-item-icon-color);
-                    }  
           - type: custom:layout-card
             layout_type: custom:grid-layout
             layout:
               grid-template-areas: |
-                't   t   t    w    w   w    w   cal cal clr ck'
-                't   t   t    w    w   w    w   cal cal clr ck'
-                't   t   t    w    w   w    w   cal cal clr ck'
-                'ld  ld  ld   lh   lh  lh   .   cal cal fl fp '
-                'llr llr llr  lk   lk  lk   .   cal cal o  lfd'
+                't   t   t    w    w   w    w   clr clr ck ck'
+                't   t   t    w    w   w    w   clr clr ck ck'
+                't   t   t    w    w   w    w   clr clr ck ck'
+                'ld  ld  ld   lh   lh  lh   .   .   .   .  . '
+                'llr llr llr  lk   lk  lk   .   fl  fp  o  lfd'
               grid-template-columns: repeat(7,120px)  1fr 1fr 1fr 1fr
               grid-template-rows: repeat(6,126px)
             card_mod: |
@@ -390,18 +381,6 @@ views:
                     ha-card {
                       height: 100%;
                     }      
-              - type: calendar
-                theme: Caule Black Aqua Glass
-                entities:
-                  - calendar.fred_s_reminders
-                  - calendar.fred_and_jen
-                initial_view: listWeek
-                style: |
-                  ha-card {
-                        --fc-page-bg-color: var(--primary-color)
-                  }
-                view_layout:
-                  grid-area: cal
   - title: Bedrooms
     path: bedrooms
     icon: mdi:bed
@@ -415,9 +394,22 @@ views:
             layout_type: custom:grid-layout
             layout:
               grid-template-areas: |
-                'c   c   .    nlr  nbr nlc nsh  nb  nfp nc .  . wb'
-              grid-template-columns: repeat(2,120px) 50px repeat(7,1fr) 2fr 100px
+                'c  .    n1  n2 n3 n4 n5 n6 n7 . wb'
+              grid-template-columns: 240px 50px repeat(7,1fr) 1fr 100px
               grid-template-rows: 75px
+            style: |
+              layout-card {
+                border-bottom: 1px solid red;
+              }
+            card_mod: |
+              style: |
+                div {
+                      --test: 12345;
+                      --state-icon-active-color: rgb(9, 251, 213);
+                      --paper-item-icon-active-color: var(--state-icon-active-color);
+                      --state-icon-color: rgb(50,50,255);
+                      --paper-item-icon-color: var(--paper-item-icon-color);
+                    }  
             cards:
               - type: custom:simple-clock-card
                 use_military: false
@@ -436,32 +428,35 @@ views:
                 icon: mdi:sofa
                 name: Living Room
                 view_layout:
-                  grid-area: nlr
+                  grid-area: n1
                   ha-icon { height: 24px !important}
               - type: custom:button-card
                 icon_height: 24px;
                 style: |
                   * {color: var(--primary-color)}    
                   ha-icon { height: 24px !important} 
+                  #name {
+                    border-bottom: 1px solid var(--primary-color);
+                  }
                 tap_action:
                   action: navigate
                   navigation_path: /lovelace-wallboard/bedrooms?kiosk
                 icon: mdi:bed
                 name: Bedrooms
                 view_layout:
-                  grid-area: nbr
+                  grid-area: n2
               - type: custom:button-card
                 icon_height: 24px;
                 style: |
                   * {color: var(--primary-color)}
-                  ha-icon { height: 24px !important} 
+                  ha-icon { height: 24px !important;} 
                 tap_action:
                   action: navigate
                   navigation_path: /lovelace-wallboard/calendar?kiosk
                 icon: mdi:calendar
                 name: Calendar
                 view_layout:
-                  grid-area: nlc
+                  grid-area: n3
               - type: custom:button-card
                 icon_height: 24px;
                 style: |
@@ -469,35 +464,23 @@ views:
                   ha-icon { height: 24px !important} 
                 tap_action:
                   action: navigate
-                  navigation_path: /lovelace-wallboard/shades?kiosk
-                icon: mdi:blinds
-                name: Shades
+                  navigation_path: /lovelace-wallboard/weather?kiosk
+                icon: mdi:cloud
+                name: Weather
                 view_layout:
-                  grid-area: nsh
+                  grid-area: n4
               - type: custom:button-card
                 icon_height: 24px;
                 style: |
                   * {color: var(--primary-color)}    
-                  ha-icon { height: 24px !important} 
-                tap_action:
-                  action: navigate
-                  navigation_path: /lovelace-wallboard/batteries?kiosk
-                icon: mdi:battery
-                name: Batteries
-                view_layout:
-                  grid-area: nb
-              - type: custom:button-card
-                icon_height: 24px;
-                style: |
-                  * {color: var(--primary-color)}
-                  ha-icon { height: 24px !important} 
+                  ha-icon { height: 24px !important}          
                 tap_action:
                   action: navigate
                   navigation_path: /lovelace-wallboard/floor-plan?kiosk
                 icon: mdi:home
                 name: Floor Plan
                 view_layout:
-                  grid-area: nfp
+                  grid-area: n5
               - type: glance
                 entities:
                   - entity: sensor.my_wall_panel_battery_level
@@ -505,7 +488,7 @@ views:
                 view_layout:
                   grid-area: wb
                 style: |
-                  ha-card {margin-top: -40px}        
+                  ha-card {margin-top: -40px}            
           - type: custom:layout-card
             layout_type: custom:grid-layout
             layout:
@@ -693,116 +676,126 @@ views:
                   icon: hass:tv
                   show: true
                   use_state_color: true
-  - title: Shades
-    path: shades
-    icon: mdi:blinds
+  - title: Weather
+    path: weather
+    icon: mdi:cloud
     theme: Caule Dark Blue
     panel: true
     badges: []
     cards:
-      - type: custom:layout-card
-        layout_type: custom:grid-layout
-        layout:
-          grid-template-areas: |
-            'c   c   .nlr nbr nsh  nb   nfp nc   .    wb'
-            '.   .   .    .    .   .    .   .   .  .  .'
-            '.   m   m    m    m   .    g   g   g  .  .'
-            '.   m   m    m    m   .    g   g   g  .  .'
-            '.   m   m    m    m   .    g   g   g  .  .'
-            '.   m   m    m    m   .    g   g   g  .  .'
-          grid-template-columns: repeat(9,120px)  1fr 90px
-          grid-template-rows: 60px 75px repeat(6,126px)
+      - type: vertical-stack
         cards:
-          - type: custom:simple-clock-card
-            use_military: false
-            font_size: 2rem
-            view_layout:
-              grid-area: c
-          - type: custom:button-card
-            icon_height: 24px;
+          - type: custom:layout-card
+            layout_type: custom:grid-layout
+            layout:
+              grid-template-areas: |
+                'c  .    n1  n2 n3 n4 n5 n6 n7 . wb'
+              grid-template-columns: 240px 50px repeat(7,1fr) 1fr 100px
+              grid-template-rows: 75px
             style: |
-              * {color: var(--primary-color)}    
-            tap_action:
-              action: navigate
-              navigation_path: /lovelace-wallboard/wall-panel?kiosk
-            icon: mdi:sofa
-            name: Living Room
-            view_layout:
-              grid-area: nlr
-          - type: custom:button-card
-            icon_height: 24px;
-            style: |
-              * {color: var(--primary-color)}    
-            tap_action:
-              action: navigate
-              navigation_path: /lovelace-wallboard/bedrooms?kiosk
-            icon: mdi:bed
-            name: Bedrooms
-            view_layout:
-              grid-area: nbr
-          - type: custom:button-card
-            icon_height: 24px;
-            style: |
-              * {color: var(--primary-color)}    
-            tap_action:
-              action: navigate
-              navigation_path: /lovelace-wallboard/shades?kiosk
-            icon: mdi:blinds
-            name: Shades
-            view_layout:
-              grid-area: nsh
-          - type: custom:button-card
-            icon_height: 24px;
-            style: |
-              * {color: var(--primary-color)}    
-            tap_action:
-              action: navigate
-              navigation_path: /lovelace-wallboard/batteries?kiosk
-            icon: mdi:battery
-            name: Batteries
-            view_layout:
-              grid-area: nb
-          - type: custom:button-card
-            icon_height: 24px;
-            style: |
-              * {color: var(--primary-color)}
-            tap_action:
-              action: navigate
-              navigation_path: /lovelace-wallboard/floor-plan?kiosk
-            icon: mdi:home
-            name: Floor Plan
-            view_layout:
-              grid-area: nfp
-          - type: entities
-            entities:
-              - entity: cover.kitchen
-                name: Kitchen
-                state_color: true
-              - entity: cover.living_room
+              layout-card {
+                border-bottom: 1px solid red;
+              }
+            card_mod: |
+              style: |
+                div {
+                      --test: 12345;
+                      --state-icon-active-color: rgb(9, 251, 213);
+                      --paper-item-icon-active-color: var(--state-icon-active-color);
+                      --state-icon-color: rgb(50,50,255);
+                      --paper-item-icon-color: var(--paper-item-icon-color);
+                    }  
+            cards:
+              - type: custom:simple-clock-card
+                use_military: false
+                font_size: 3rem
+                hide_seconds: true
+                view_layout:
+                  grid-area: c
+              - type: custom:button-card
+                icon_height: 24px;
+                style: |
+                  * {color: var(--primary-color)}   
+                  ha-icon { height: 24px !important} 
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace-wallboard/wall-panel?kiosk
+                icon: mdi:sofa
                 name: Living Room
-                state_color: true
-              - entity: cover.master_window
-                name: Master Window
-                state_color: true
-              - entity: cover.master_slider
-                name: Master Slider
-                state_color: true
-              - entity: cover.guest_slider
-                name: Guest Room
-                state_color: true
-            title: Shades
-            view_layout:
-              grid-area: m
-          - type: entities
-            entities:
-              - entity: sensor.kitchen_battery
-              - entity: sensor.living_room_battery
-              - entity: sensor.guest_slider_battery
-              - entity: sensor.master_window_battery
-              - entity: sensor.master_slider_battery
-            title: Shade Batteries
-            view_layout:
-              grid-area: g
+                view_layout:
+                  grid-area: n1
+                  ha-icon { height: 24px !important}
+              - type: custom:button-card
+                icon_height: 24px;
+                style: |
+                  * {color: var(--primary-color)}    
+                  ha-icon { height: 24px !important} 
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace-wallboard/bedrooms?kiosk
+                icon: mdi:bed
+                name: Bedrooms
+                view_layout:
+                  grid-area: n2
+              - type: custom:button-card
+                icon_height: 24px;
+                style: |
+                  * {color: var(--primary-color)}
+                  ha-icon { height: 24px !important} 
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace-wallboard/calendar?kiosk
+                icon: mdi:calendar
+                name: Calendar
+                view_layout:
+                  grid-area: n3
+              - type: custom:button-card
+                icon_height: 24px;
+                style: |
+                  * {color: var(--primary-color)}    
+                  ha-icon { height: 24px !important} 
+                  #name {
+                    border-bottom: 1px solid var(--primary-color);
+                  }          
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace-wallboard/weather?kiosk
+                icon: mdi:cloud
+                name: Weather
+                view_layout:
+                  grid-area: n4
+              - type: custom:button-card
+                icon_height: 24px;
+                style: |
+                  * {color: var(--primary-color)}    
+                  ha-icon { height: 24px !important}          
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace-wallboard/floor-plan?kiosk
+                icon: mdi:home
+                name: Floor Plan
+                view_layout:
+                  grid-area: n5
+              - type: glance
+                entities:
+                  - entity: sensor.my_wall_panel_battery_level
+                    name: ''
+                view_layout:
+                  grid-area: wb
+                style: |
+                  ha-card {margin-top: -40px}        
+          - type: horizontal-stack
+            cards:
+              - type: custom:layout-card
+                layout_type: custom:grid-layout
+                layout:
+                  grid-template-rows: 550px
+                  grid-template-columns: 1fr
+                cards:
+                  - type: iframe
+                    url: /local/html/windfinder-forcast.html
+                    view_layout:
+                      grid: 1 / 1
   - title: Batteries
     path: batteries
     icon: mdi:battery
@@ -956,182 +949,253 @@ views:
     theme: Caule Black Gray
     badges: []
     cards:
-      - type: custom:layout-card
-        layout_type: custom:grid-layout
-        layout:
-          grid-template-areas: |
-            'c   c   .   nlr nbr nsh nb nfp nc  .  wb'
-            '.   .   .   .   .   .   .  .   .   .  .'
-            '.   .   f   f   f   f   f  f   f   f  .  '
-          grid-template-columns: repeat(9,120px)  1fr 90px
-          grid-template-rows: 60px 75px 744px
+      - type: vertical-stack
         cards:
-          - type: custom:simple-clock-card
-            use_military: false
-            font_size: 2rem
-            hide_seconds: true
-            view_layout:
-              grid-area: c
-          - type: custom:button-card
-            icon_height: 24px;
+          - type: custom:layout-card
+            layout_type: custom:grid-layout
+            layout:
+              grid-template-areas: |
+                'c  .    n1  n2 n3 n4 n5 n6 n7 . wb'
+              grid-template-columns: 240px 50px repeat(7,1fr) 1fr 100px
+              grid-template-rows: 75px
             style: |
-              * {color: var(--primary-color)}    
-            tap_action:
-              action: navigate
-              navigation_path: /lovelace-wallboard/wall-panel?kiosk
-            icon: mdi:sofa
-            name: Living Room
-            view_layout:
-              grid-area: nlr
-          - type: custom:button-card
-            icon_height: 24px;
-            style: |
-              * {color: var(--primary-color)}    
-            tap_action:
-              action: navigate
-              navigation_path: /lovelace-wallboard/bedrooms?kiosk
-            icon: mdi:bed
-            name: Bedrooms
-            view_layout:
-              grid-area: nbr
-          - type: custom:button-card
-            icon_height: 24px;
-            style: |
-              * {color: var(--primary-color)}    
-            tap_action:
-              action: navigate
-              navigation_path: /lovelace-wallboard/shades?kiosk
-            icon: mdi:blinds
-            name: Shades
-            view_layout:
-              grid-area: nsh
-          - type: custom:button-card
-            icon_height: 24px;
-            style: |
-              * {color: var(--primary-color)}    
-            tap_action:
-              action: navigate
-              navigation_path: /lovelace-wallboard/batteries?kiosk
-            icon: mdi:battery
-            name: Batteries
-            view_layout:
-              grid-area: nb
-          - type: custom:button-card
-            icon_height: 24px;
-            style: |
-              * {color: var(--primary-color)}
-            tap_action:
-              action: navigate
-              navigation_path: /lovelace-wallboard/floor-plan?kiosk
-            icon: mdi:home
-            name: Floor Plan
-            view_layout:
-              grid-area: nfp
-          - type: picture-elements
-            image: https://22.400ggp.com/local/images/floor-dark.png
-            view_layout:
-              grid-area: f
-            style: |
-              width: 1024px
-              height: 744px
-            card_mod:
+              layout-card {
+                border-bottom: 1px solid red;
+              }
+            card_mod: |
               style: |
-                ha-card {
-                  --paper-item-icon-active-color: #ffff00;
-                  --paper-item-icon-color: rgba(255,255,0,0.4);
-                  margin: 0 0.4);
-                  position: relative;
-                  width: 1024px;
-                  height: 744px;
-                }
-                ha-card #root {
-                  width: 100%;
-                  height: 100%;
-                }
-                ha-card hui-image {
-                  position: absolute;
-                  left: 0;
-                  top: 0;
-                }
+                div {
+                      --test: 12345;
+                      --state-icon-active-color: rgb(9, 251, 213);
+                      --paper-item-icon-active-color: var(--state-icon-active-color);
+                      --state-icon-color: rgb(50,50,255);
+                      --paper-item-icon-color: var(--paper-item-icon-color);
+                    }  
+            cards:
+              - type: custom:simple-clock-card
+                use_military: false
+                font_size: 3rem
+                hide_seconds: true
+                view_layout:
+                  grid-area: c
+              - type: custom:button-card
+                icon_height: 24px;
+                style: |
+                  * {color: var(--primary-color)}   
+                  ha-icon { height: 24px !important} 
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace-wallboard/wall-panel?kiosk
+                icon: mdi:sofa
+                name: Living Room
+                view_layout:
+                  grid-area: n1
+                  ha-icon { height: 24px !important}
+              - type: custom:button-card
+                icon_height: 24px;
+                style: |
+                  * {color: var(--primary-color)}    
+                  ha-icon { height: 24px !important} 
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace-wallboard/bedrooms?kiosk
+                icon: mdi:bed
+                name: Bedrooms
+                view_layout:
+                  grid-area: n2
+              - type: custom:button-card
+                icon_height: 24px;
+                style: |
+                  * {color: var(--primary-color)}
+                  ha-icon { height: 24px !important} 
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace-wallboard/calendar?kiosk
+                icon: mdi:calendar
+                name: Calendar
+                view_layout:
+                  grid-area: n3
+              - type: custom:button-card
+                icon_height: 24px;
+                style: |
+                  * {color: var(--primary-color)}    
+                  ha-icon { height: 24px !important} 
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace-wallboard/weather?kiosk
+                icon: mdi:cloud
+                name: Weather
+                view_layout:
+                  grid-area: n4
+              - type: custom:button-card
+                icon_height: 24px;
+                style: |
+                  * {color: var(--primary-color); }    
+                  #name {
+                    border-bottom: 1px solid var(--primary-color);
+                  }     
+                  ha-icon { height: 24px !important}          
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace-wallboard/floor-plan?kiosk
+                icon: mdi:home
+                name: Floor Plan
+                view_layout:
+                  grid-area: n5
+              - type: glance
+                entities:
+                  - entity: sensor.my_wall_panel_battery_level
+                    name: ''
+                view_layout:
+                  grid-area: wb
+                style: |
+                  ha-card {margin-top: -40px}         
+          - type: custom:layout-card
+            layout_type: custom:grid-layout
+            layout:
+              grid-template-areas: |
+                '. .  .'
+                '. fp .'
+                '. .  .'
+              grid-template-columns: 1fr 800px 1fr
+              grid-template-rows: 1fr 600px 1fr
+            cards:
+              - type: picture-elements
+                image: https://22.400ggp.com/local/images/v2/tile.png
+                view_layout:
+                  grid-area: fp
+                style: |
+                  margin: 0px !important
+                card_mod:
+                  style: |
+                    ha-card {
+                      --paper-item-icon-active-color: #ffff00;
+                      --paper-item-icon-color: rgba(255,255,0,0.4);
+                      margin: 0 0.4);
+                      position: relative;
+                      width: 800px !important;
+                      height: 600px !important;
+                    }
+                    ha-card #root {
+                      width: 100%;
+                      height: 100%;
+                    }
+                    ha-card hui-image {
+                      position: absolute;
+                      left: 0;
+                      top: 0;
+                    }
 
-                ha-card hui-image-element {
-                  position: absolute;
-                  transform: none !important;
-                  left: unset;
-                  top: unset;
-                  bottom: unset;
-                  right: unset;
-                }
-            elements:
-              - type: image
-                entity: light.kitchen
-                tap_action:
-                  action: more-info
-                state_image:
-                  'on': https://22.400ggp.com/local/images/kitchen-lit.png
-                  'off': https://22.400ggp.com/local/images/kitchen-unlit.png
-                style:
-                  bottom: 11px
-                  left: 0px
-              - type: state-icon
-                entity: light.kitchen
-                tap_action:
-                  action: toggle
-                state_color: true
-                state_filter:
-                  'on': brightness(110%)
-                style:
-                  top: 616px
-                  left: 200px
-                  color: black
-                  background-color: rgba(0,0,0,0.4)
-                  border-radius: 9999px
-                  border-color: blue
-                  z-index: 100
-                  filter: brightness(100%)
-                  '--primary-text-color': black
-              - type: image
-                image: https://22.400ggp.com/local/images/walls.png
-                state_color: false
-                style:
-                  top: 0
-                  left: 0
-                  transform: none
-                  position: absolute
-                  pointer-events: none
-              - type: state-icon
-                entity: switch.pulley_fan
-                tap_action:
-                  action: toggle
-                state_color: true
-                style:
-                  top: 506px
-                  left: 160px
-                  color: black
-                  background-color: rgba(0,0,0,0.4)
-                  border-radius: 9999px
-                  border-color: blue
-                  '--primary-text-color': black
-              - type: image
-                entity: switch.pulley_fan
-                tap_action:
-                  action: more-info
-                state_image:
-                  'on': https://22.400ggp.com/local/images/pulley-fan-on.gif
-                  'off': https://22.400ggp.com/local/images/pulley-fan.png
-                style:
-                  top: 197px
-                  left: 132px
-              - type: image
-                entity: switch.pulley_fan
-                tap_action:
-                  action: more-info
-                state_image:
-                  'on': https://22.400ggp.com/local/images/pulley-fan-on.gif
-                  'off': https://22.400ggp.com/local/images/pulley-fan.png
-                style:
-                  top: 250px
-                  left: 366px
+                    ha-card hui-image-element {
+                      position: absolute;
+                      transform: none !important;
+                      left: unset;
+                      top: unset;
+                      bottom: unset;
+                      right: unset;
+                    }
+                elements:
+                  - type: image
+                    image: https://22.400ggp.com/local/images/v2/furniture.png
+                    state_color: false
+                    style:
+                      top: 0
+                      left: 0
+                      transform: none
+                      position: absolute
+                      pointer-events: none
+                  - type: image
+                    image: https://22.400ggp.com/local/images/v2/overlay-unlit.png
+                  - type: image
+                    image: https://22.400ggp.com/local/images/v2/walls.png
+                    state_color: false
+                    style:
+                      top: 0
+                      left: 0
+                      transform: none
+                      position: absolute
+                      pointer-events: none
+                  - type: image
+                    entity: switch.pulley_fan
+                    tap_action:
+                      action: more-info
+                    state_image:
+                      'on': https://22.400ggp.com/local/images/pulley-fan-on.gif
+                      'off': https://22.400ggp.com/local/images/pulley-fan.png
+                    style:
+                      top: 167px
+                      left: 102px
+                  - type: image
+                    entity: switch.pulley_fan
+                    tap_action:
+                      action: more-info
+                    state_image:
+                      'on': https://22.400ggp.com/local/images/pulley-fan-on.gif
+                      'off': https://22.400ggp.com/local/images/pulley-fan.png
+                    style:
+                      top: 200px
+                      left: 306px
+                  - type: image
+                    entity: light.kitchen
+                    tap_action:
+                      action: more-info
+                    state_image:
+                      'off': >-
+                        https://22.400ggp.com/local/images/v2/overlay-kitchen.png
+                  - type: image
+                    entity: light.living
+                    tap_action:
+                      action: toggle
+                    state_image:
+                      'off': https://22.400ggp.com/local/images/v2/overlay-living.png
+                  - type: image
+                    entity: light.dining
+                    tap_action:
+                      action: toggle
+                    state_image:
+                      'off': https://22.400ggp.com/local/images/v2/overlay-dining.png
+                  - type: image
+                    entity: light.master
+                    tap_action:
+                      action: toggle
+                    state_image:
+                      'off': https://22.400ggp.com/local/images/v2/overlay-master.png
+                  - type: image
+                    entity: light.hall
+                    tap_action:
+                      action: toggle
+                    state_image:
+                      'off': https://22.400ggp.com/local/images/v2/overlay-hall.png
+                  - type: state-icon
+                    entity: light.kitchen
+                    tap_action:
+                      action: toggle
+                    state_color: true
+                    state_filter:
+                      'on': brightness(110%)
+                    style:
+                      top: 550px
+                      left: 50px
+                      color: black
+                      background-color: rgba(0,0,0,0.4)
+                      border-radius: 9999px
+                      border-color: blue
+                      z-index: 100
+                      filter: brightness(100%)
+                      '--primary-text-color': black
+                  - type: state-icon
+                    entity: switch.pulley_fan
+                    tap_action:
+                      action: toggle
+                    state_color: true
+                    style:
+                      top: 406px
+                      left: 100px
+                      color: black
+                      background-color: rgba(0,0,0,0.4)
+                      border-radius: 9999px
+                      border-color: blue
+                      '--primary-text-color': black
   - title: Camera
     path: camera
     visible: []
@@ -1167,9 +1231,22 @@ views:
             layout_type: custom:grid-layout
             layout:
               grid-template-areas: |
-                'c   c   .    nlr  nbr nlc nsh  nb  nfp nc .  . wb'
-              grid-template-columns: repeat(2,120px) 50px repeat(7,1fr) 2fr 100px
+                'c  .    n1  n2 n3 n4 n5 n6 n7 . wb'
+              grid-template-columns: 240px 50px repeat(7,1fr) 1fr 100px
               grid-template-rows: 75px
+            style: |
+              layout-card {
+                border-bottom: 1px solid red;
+              }
+            card_mod: |
+              style: |
+                div {
+                      --test: 12345;
+                      --state-icon-active-color: rgb(9, 251, 213);
+                      --paper-item-icon-active-color: var(--state-icon-active-color);
+                      --state-icon-color: rgb(50,50,255);
+                      --paper-item-icon-color: var(--paper-item-icon-color);
+                    }  
             cards:
               - type: custom:simple-clock-card
                 use_military: false
@@ -1188,7 +1265,7 @@ views:
                 icon: mdi:sofa
                 name: Living Room
                 view_layout:
-                  grid-area: nlr
+                  grid-area: n1
                   ha-icon { height: 24px !important}
               - type: custom:button-card
                 icon_height: 24px;
@@ -1201,19 +1278,22 @@ views:
                 icon: mdi:bed
                 name: Bedrooms
                 view_layout:
-                  grid-area: nbr
+                  grid-area: n2
               - type: custom:button-card
                 icon_height: 24px;
                 style: |
                   * {color: var(--primary-color)}
                   ha-icon { height: 24px !important} 
+                  #name {
+                    border-bottom: 1px solid var(--primary-color);
+                  }
                 tap_action:
                   action: navigate
                   navigation_path: /lovelace-wallboard/calendar?kiosk
                 icon: mdi:calendar
                 name: Calendar
                 view_layout:
-                  grid-area: nlc
+                  grid-area: n3
               - type: custom:button-card
                 icon_height: 24px;
                 style: |
@@ -1221,35 +1301,23 @@ views:
                   ha-icon { height: 24px !important} 
                 tap_action:
                   action: navigate
-                  navigation_path: /lovelace-wallboard/shades?kiosk
-                icon: mdi:blinds
-                name: Shades
+                  navigation_path: /lovelace-wallboard/weather?kiosk
+                icon: mdi:cloud
+                name: Weather
                 view_layout:
-                  grid-area: nsh
+                  grid-area: n4
               - type: custom:button-card
                 icon_height: 24px;
                 style: |
                   * {color: var(--primary-color)}    
-                  ha-icon { height: 24px !important} 
-                tap_action:
-                  action: navigate
-                  navigation_path: /lovelace-wallboard/batteries?kiosk
-                icon: mdi:battery
-                name: Batteries
-                view_layout:
-                  grid-area: nb
-              - type: custom:button-card
-                icon_height: 24px;
-                style: |
-                  * {color: var(--primary-color)}
-                  ha-icon { height: 24px !important} 
+                  ha-icon { height: 24px !important}          
                 tap_action:
                   action: navigate
                   navigation_path: /lovelace-wallboard/floor-plan?kiosk
                 icon: mdi:home
                 name: Floor Plan
                 view_layout:
-                  grid-area: nfp
+                  grid-area: n5
               - type: glance
                 entities:
                   - entity: sensor.my_wall_panel_battery_level
@@ -1257,14 +1325,14 @@ views:
                 view_layout:
                   grid-area: wb
                 style: |
-                  ha-card {margin-top: -40px}     
+                  ha-card {margin-top: -40px}        
           - type: horizontal-stack
             cards:
               - type: calendar
                 entities:
                   - calendar.fred_s_reminders
                   - calendar.fred_and_jen
-                initial_view: listWeek
+                initial_view: dayGridDay
                 theme: Caule Light Yellow
               - type: calendar
                 entities:

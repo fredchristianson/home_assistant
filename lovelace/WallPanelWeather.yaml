@@ -57,9 +57,6 @@ cards:
         style: |
           * {color: var(--primary-color)}
           ha-icon { height: 24px !important} 
-          #name {
-            border-bottom: 1px solid var(--primary-color);
-          }
         tap_action:
           action: navigate
           navigation_path: /lovelace-wallboard/calendar?kiosk
@@ -72,6 +69,9 @@ cards:
         style: |
           * {color: var(--primary-color)}    
           ha-icon { height: 24px !important} 
+          #name {
+            border-bottom: 1px solid var(--primary-color);
+          }          
         tap_action:
           action: navigate
           navigation_path: /lovelace-wallboard/weather?kiosk
@@ -101,18 +101,13 @@ cards:
           ha-card {margin-top: -40px}        
   - type: horizontal-stack
     cards:   
-      - type: calendar
-        entities:
-          - calendar.fred_s_reminders
-          - calendar.fred_and_jen
-        initial_view: dayGridDay
-        theme: Caule Light Yellow
-      - type: calendar
-        entities:
-          - calendar.fred_s_reminders
-          - calendar.fred_and_jen
-          - calendar.holidays_in_united_states
-          - calendar.fred_christianson_gmail_com
-          - calendar.birthdays
-        initial_view: dayGridMonth
-        theme: Caule Light Yellow
+      - type: custom:layout-card
+        layout_type: custom:grid-layout
+        layout:
+          grid-template-rows: 550px
+          grid-template-columns: 1fr
+        cards:
+          - type: iframe
+            url: /local/html/windfinder-forcast.html
+            view_layout:
+              grid: 1 / 1
