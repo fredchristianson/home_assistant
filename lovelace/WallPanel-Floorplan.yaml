@@ -99,7 +99,7 @@ cards:
       grid-template-rows: 1fr 200px 200px 200px 1fr
     cards:
       - type: picture-elements
-        image: https://22.400ggp.com/local/images/v2/tile.png
+        image: https://22.400ggp.com/local/images/v2/tile.png?v=3
         view_layout:
           grid-area: fp
         card_mod:
@@ -134,7 +134,7 @@ cards:
               }
         elements:
           - type: image
-            image: https://22.400ggp.com/local/images/v2/furniture.png
+            image: https://22.400ggp.com/local/images/v2/furniture.png?v=3
             state_color: false
             style:
               top: 0
@@ -143,9 +143,9 @@ cards:
               position: absolute
               pointer-events: none
           - type: image
-            image: https://22.400ggp.com/local/images/v2/overlay-unlit.png
+            image: https://22.400ggp.com/local/images/v2/overlay-unlit.png?v=3
           - type: image
-            image: https://22.400ggp.com/local/images/v2/walls.png
+            image: https://22.400ggp.com/local/images/v2/walls.png?v=3
             state_color: false
             style:
               top: 0
@@ -161,7 +161,7 @@ cards:
             hold_action:
               action: none
             state_image:
-              'off': https://22.400ggp.com/local/images/v2/overlay-kitchen.png
+              'off': https://22.400ggp.com/local/images/v2/overlay-kitchen.png?v=3
           - type: image
             entity: light.living_room
             tap_action:
@@ -169,7 +169,7 @@ cards:
             hold_action:
               action: none
             state_image:
-              'off': https://22.400ggp.com/local/images/v2/overlay-living.png
+              'off': https://22.400ggp.com/local/images/v2/overlay-living.png?v=3
           - type: image
             entity: light.dining
             tap_action:
@@ -177,7 +177,7 @@ cards:
             hold_action:
               action: none
             state_image:
-              'off': https://22.400ggp.com/local/images/v2/overlay-dining.png
+              'off': https://22.400ggp.com/local/images/v2/overlay-dining.png?v=3
           - type: image
             entity: light.master_ceiling
             tap_action:
@@ -185,7 +185,7 @@ cards:
             hold_action:
               action: none
             state_image:
-              'off': https://22.400ggp.com/local/images/v2/overlay-master.png
+              'off': https://22.400ggp.com/local/images/v2/overlay-master.png?v=3
           - type: image
             entity: light.hall
             tap_action:
@@ -193,7 +193,7 @@ cards:
             hold_action:
               action: none
             state_image:
-              'off': https://22.400ggp.com/local/images/v2/overlay-hall.png
+              'off': https://22.400ggp.com/local/images/v2/overlay-hall.png?v=3
           - type: image
             entity: light.freds_lamp
             tap_action:
@@ -201,7 +201,8 @@ cards:
             hold_action:
               action: none
             state_image:
-              'on': https://22.400ggp.com/local/images/v2/overlay-freds-light.png
+              'on': >-
+                https://22.400ggp.com/local/images/v2/overlay-freds-light.png?v=3
           - type: image
             entity: switch.pulley_fan
             card_mod:
@@ -220,13 +221,13 @@ cards:
             tap_action:
               action: toggle
             state_image:
-              'on': https://22.400ggp.com/local/images/v2/fan-dining.png
+              'on': https://22.400ggp.com/local/images/v2/fan-dining.png?v=3
           - type: image
             entity: switch.pulley_fan
             tap_action:
               action: toggle
             state_image:
-              'off': https://22.400ggp.com/local/images/v2/fan-dining.png
+              'off': https://22.400ggp.com/local/images/v2/fan-dining.png?v=3
             card_mod:
               style: |
                 :host {
@@ -256,13 +257,13 @@ cards:
             tap_action:
               action: toggle
             state_image:
-              'on': https://22.400ggp.com/local/images/v2/fan-living.png
+              'on': https://22.400ggp.com/local/images/v2/fan-living.png?v=3
           - type: image
             entity: switch.pulley_fan
             tap_action:
               action: toggle
             state_image:
-              'off': https://22.400ggp.com/local/images/v2/fan-living.png
+              'off': https://22.400ggp.com/local/images/v2/fan-living.png?v=3
             card_mod:
               style: |
                 :host {
@@ -289,13 +290,13 @@ cards:
             tap_action:
               action: toggle
             state_image:
-              'on': https://22.400ggp.com/local/images/v2/fan-lanai.png
+              'on': https://22.400ggp.com/local/images/v2/fan-lanai.png?v=3
           - type: image
             entity: switch.lanai_fan
             tap_action:
               action: toggle
             state_image:
-              'off': https://22.400ggp.com/local/images/v2/fan-lanai.png
+              'off': https://22.400ggp.com/local/images/v2/fan-lanai.png?v=3
             card_mod:
               style: |
                 :host {
@@ -325,13 +326,13 @@ cards:
             tap_action:
               action: toggle
             state_image:
-              'on': https://22.400ggp.com/local/images/v2/fan-lanai.png
+              'on': https://22.400ggp.com/local/images/v2/fan-lanai.png?v=3
           - type: image
             entity: switch.lanai_fan
             tap_action:
               action: toggle
             state_image:
-              'off': https://22.400ggp.com/local/images/v2/fan-lanai.png
+              'off': https://22.400ggp.com/local/images/v2/fan-lanai.png?v=3
             card_mod:
               style: |
                 :host {
@@ -343,7 +344,7 @@ cards:
           - type: image
             entity: fan.master
             state_image:
-              'on': https://22.400ggp.com/local/images/v2/fan-master.png
+              'on': https://22.400ggp.com/local/images/v2/fan-master.png?v=3
             card_mod:
               style: |
                 @keyframes lrotate {
@@ -369,7 +370,7 @@ cards:
             hold_action:
               action: more-info
             state_image:
-              'off': https://22.400ggp.com/local/images/v2/fan-master.png
+              'off': https://22.400ggp.com/local/images/v2/fan-master.png?v=3
             card_mod:
               style: |
                 :host {
@@ -384,7 +385,7 @@ cards:
               action: toggle
             hold_action:
               action: more-info
-            image: https://22.400ggp.com/local/images/v2/transparent.png
+            image: https://22.400ggp.com/local/images/v2/transparent.png?v=3
             state_filter:
               'on': brightness(110%)
             style:
@@ -400,7 +401,7 @@ cards:
               action: toggle
             hold_action:
               action: more-info
-            image: https://22.400ggp.com/local/images/v2/transparent.png
+            image: https://22.400ggp.com/local/images/v2/transparent.png?v=3
             style:
               top: 0px
               left: 0px
@@ -414,7 +415,7 @@ cards:
               action: toggle
             hold_action:
               action: more-info
-            image: https://22.400ggp.com/local/images/v2/transparent.png
+            image: https://22.400ggp.com/local/images/v2/transparent.png?v=3
             style:
               top: 400px
               left: 260px
@@ -428,7 +429,7 @@ cards:
               action: toggle
             hold_action:
               action: more-info
-            image: https://22.400ggp.com/local/images/v2/transparent.png
+            image: https://22.400ggp.com/local/images/v2/transparent.png?v=3
             style:
               top: 400px
               left: 330px
@@ -442,7 +443,7 @@ cards:
               action: toggle
             hold_action:
               action: more-info
-            image: https://22.400ggp.com/local/images/v2/transparent.png
+            image: https://22.400ggp.com/local/images/v2/transparent.png?v=3
             style:
               top: 400px
               left: 550px
@@ -456,7 +457,7 @@ cards:
               action: toggle
             hold_action:
               action: more-info
-            image: https://22.400ggp.com/local/images/v2/transparent.png
+            image: https://22.400ggp.com/local/images/v2/transparent.png?v=3
             style:
               top: 0px
               left: 570px
@@ -470,26 +471,26 @@ cards:
               action: toggle
             hold_action:
               action: more-info
-            image: https://22.400ggp.com/local/images/v2/transparent.png
+            image: https://22.400ggp.com/local/images/v2/transparent.png?v=3
             style:
               top: 100px
-              left: 170px
+              left: 280px
               z-index: 100
-              width: 220px
-              height: 400px
+              width: 100px
+              height: 300px
           - type: image
             entity: light.freds_lamp
             tap_action:
               action: toggle
             hold_action:
               action: more-info
-            image: https://22.400ggp.com/local/images/v2/transparent.png
+            image: https://22.400ggp.com/local/images/v2/transparent.png?v=3
             style:
-              top: 100px
-              right: 0px
-              z-index: 100
-              width: 100px
-              height: 100px
+              top: 80px
+              left: 730px
+              z-index: 700
+              width: 70px
+              height: 70px
       - type: vertical-stack
         view_layout:
           grid-area: th
@@ -512,6 +513,15 @@ cards:
                 hide: false
           - type: horizontal-stack
             cards:
+              - type: custom:html-template-card
+                title: ''
+                style: |
+                  ha-card: {
+                    width: 1rem !important;
+                    height: 1px !important;
+                  }
+                content: |
+                  <p></p>
               - type: button
                 tap_action:
                   action: call-service
@@ -526,6 +536,10 @@ cards:
                 show_name: true
                 show_icon: false
                 name: 70°
+                style: |
+                  :host {
+                    outline: 2px solid var(--primary-text-color);
+                  }
               - type: button
                 tap_action:
                   action: call-service
@@ -540,6 +554,10 @@ cards:
                 show_name: true
                 show_icon: false
                 name: 72°
+                style: |
+                  :host {
+                    outline: 2px solid var(--primary-text-color);
+                  }
               - type: button
                 tap_action:
                   action: call-service
@@ -554,6 +572,10 @@ cards:
                 show_name: true
                 show_icon: false
                 name: 74°
+                style: |
+                  :host {
+                    outline: 2px solid var(--primary-text-color);
+                  }
               - type: button
                 tap_action:
                   action: call-service
@@ -565,7 +587,7 @@ cards:
                     entity_id: climate.ecobee
                 style: |
                   :host {
-                    outline: 2px solid red;
+                    outline: 2px solid var(--primary-text-color);
                   }
                 entity: climate.ecobee
                 icon: hass:thermostat

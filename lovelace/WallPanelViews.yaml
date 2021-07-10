@@ -1041,14 +1041,16 @@ views:
             layout_type: custom:grid-layout
             layout:
               grid-template-areas: |
-                '. .  .'
-                '. fp .'
-                '. .  .'
-              grid-template-columns: 1fr 800px 1fr
-              grid-template-rows: 1fr 600px 1fr
+                '.  .  .'
+                'fp . .'
+                'fp th .'
+                'fp . .'
+                '.  .  .'
+              grid-template-columns: 800px auto 1fr
+              grid-template-rows: 1fr 200px 200px 200px 1fr
             cards:
               - type: picture-elements
-                image: https://22.400ggp.com/local/images/v2/tile.png
+                image: https://22.400ggp.com/local/images/v2/tile.png?v=3
                 view_layout:
                   grid-area: fp
                 card_mod:
@@ -1069,16 +1071,21 @@ views:
                       left: 0;
                       top: unset;
                       bottom: unset;
-                      right: unset;               
+                      right: unset;    
+
                     }     
 
+                    hui-image, img {
+                      width: 100%;
+                      height: 100%;
+                    }
                     #root {
                         left: 100px !important
                         transform: rotate(90deg)
                       }
                 elements:
                   - type: image
-                    image: https://22.400ggp.com/local/images/v2/furniture.png
+                    image: https://22.400ggp.com/local/images/v2/furniture.png?v=3
                     state_color: false
                     style:
                       top: 0
@@ -1087,9 +1094,10 @@ views:
                       position: absolute
                       pointer-events: none
                   - type: image
-                    image: https://22.400ggp.com/local/images/v2/overlay-unlit.png
+                    image: >-
+                      https://22.400ggp.com/local/images/v2/overlay-unlit.png?v=3
                   - type: image
-                    image: https://22.400ggp.com/local/images/v2/walls.png
+                    image: https://22.400ggp.com/local/images/v2/walls.png?v=3
                     state_color: false
                     style:
                       top: 0
@@ -1101,41 +1109,57 @@ views:
                   - type: image
                     entity: light.kitchen
                     tap_action:
-                      action: more-info
+                      action: none
+                    hold_action:
+                      action: none
                     state_image:
                       'off': >-
-                        https://22.400ggp.com/local/images/v2/overlay-kitchen.png
+                        https://22.400ggp.com/local/images/v2/overlay-kitchen.png?v=3
                   - type: image
                     entity: light.living_room
                     tap_action:
-                      action: toggle
+                      action: none
+                    hold_action:
+                      action: none
                     state_image:
-                      'off': https://22.400ggp.com/local/images/v2/overlay-living.png
+                      'off': >-
+                        https://22.400ggp.com/local/images/v2/overlay-living.png?v=3
                   - type: image
                     entity: light.dining
                     tap_action:
-                      action: toggle
+                      action: none
+                    hold_action:
+                      action: none
                     state_image:
-                      'off': https://22.400ggp.com/local/images/v2/overlay-dining.png
+                      'off': >-
+                        https://22.400ggp.com/local/images/v2/overlay-dining.png?v=3
                   - type: image
                     entity: light.master_ceiling
                     tap_action:
-                      action: toggle
+                      action: none
+                    hold_action:
+                      action: none
                     state_image:
-                      'off': https://22.400ggp.com/local/images/v2/overlay-master.png
+                      'off': >-
+                        https://22.400ggp.com/local/images/v2/overlay-master.png?v=3
                   - type: image
                     entity: light.hall
                     tap_action:
-                      action: toggle
+                      action: none
+                    hold_action:
+                      action: none
                     state_image:
-                      'off': https://22.400ggp.com/local/images/v2/overlay-hall.png
+                      'off': >-
+                        https://22.400ggp.com/local/images/v2/overlay-hall.png?v=3
                   - type: image
                     entity: light.freds_lamp
                     tap_action:
-                      action: toggle
+                      action: none
+                    hold_action:
+                      action: none
                     state_image:
                       'on': >-
-                        https://22.400ggp.com/local/images/v2/overlay-freds-light.png
+                        https://22.400ggp.com/local/images/v2/overlay-freds-light.png?v=3
                   - type: image
                     entity: switch.pulley_fan
                     card_mod:
@@ -1154,13 +1178,13 @@ views:
                     tap_action:
                       action: toggle
                     state_image:
-                      'on': https://22.400ggp.com/local/images/v2/fan-dining.png
+                      'on': https://22.400ggp.com/local/images/v2/fan-dining.png?v=3
                   - type: image
                     entity: switch.pulley_fan
                     tap_action:
                       action: toggle
                     state_image:
-                      'off': https://22.400ggp.com/local/images/v2/fan-dining.png
+                      'off': https://22.400ggp.com/local/images/v2/fan-dining.png?v=3
                     card_mod:
                       style: |
                         :host {
@@ -1190,18 +1214,18 @@ views:
                     tap_action:
                       action: toggle
                     state_image:
-                      'on': https://22.400ggp.com/local/images/v2/fan-living.png
+                      'on': https://22.400ggp.com/local/images/v2/fan-living.png?v=3
                   - type: image
                     entity: switch.pulley_fan
                     tap_action:
                       action: toggle
                     state_image:
-                      'off': https://22.400ggp.com/local/images/v2/fan-living.png
+                      'off': https://22.400ggp.com/local/images/v2/fan-living.png?v=3
                     card_mod:
                       style: |
                         :host {
-                          left:120px !important;
-                          top: 180px !important;
+                          left:88px !important;
+                          top: 149px !important;
                           transform: rotate(3deg) !important;
                           z-index: 999;
                         }  
@@ -1223,13 +1247,13 @@ views:
                     tap_action:
                       action: toggle
                     state_image:
-                      'on': https://22.400ggp.com/local/images/v2/fan-lanai.png
+                      'on': https://22.400ggp.com/local/images/v2/fan-lanai.png?v=3
                   - type: image
                     entity: switch.lanai_fan
                     tap_action:
                       action: toggle
                     state_image:
-                      'off': https://22.400ggp.com/local/images/v2/fan-lanai.png
+                      'off': https://22.400ggp.com/local/images/v2/fan-lanai.png?v=3
                     card_mod:
                       style: |
                         :host {
@@ -1259,13 +1283,13 @@ views:
                     tap_action:
                       action: toggle
                     state_image:
-                      'on': https://22.400ggp.com/local/images/v2/fan-lanai.png
+                      'on': https://22.400ggp.com/local/images/v2/fan-lanai.png?v=3
                   - type: image
                     entity: switch.lanai_fan
                     tap_action:
                       action: toggle
                     state_image:
-                      'off': https://22.400ggp.com/local/images/v2/fan-lanai.png
+                      'off': https://22.400ggp.com/local/images/v2/fan-lanai.png?v=3
                     card_mod:
                       style: |
                         :host {
@@ -1277,7 +1301,7 @@ views:
                   - type: image
                     entity: fan.master
                     state_image:
-                      'on': https://22.400ggp.com/local/images/v2/fan-master.png
+                      'on': https://22.400ggp.com/local/images/v2/fan-master.png?v=3
                     card_mod:
                       style: |
                         @keyframes lrotate {
@@ -1300,8 +1324,10 @@ views:
                     entity: fan.master
                     tap_action:
                       action: toggle
+                    hold_action:
+                      action: more-info
                     state_image:
-                      'off': https://22.400ggp.com/local/images/v2/fan-master.png
+                      'off': https://22.400ggp.com/local/images/v2/fan-master.png?v=3
                     card_mod:
                       style: |
                         :host {
@@ -1310,34 +1336,221 @@ views:
                           transform: rotate(3deg) !important;
                           z-index: 999;
                         }                
-                  - type: state-icon
+                  - type: image
                     entity: light.kitchen
                     tap_action:
                       action: toggle
-                    state_color: true
+                    hold_action:
+                      action: more-info
+                    image: https://22.400ggp.com/local/images/v2/transparent.png?v=3
                     state_filter:
                       'on': brightness(110%)
                     style:
-                      top: 550px
-                      left: 50px
-                      color: black
-                      background-color: rgba(0,0,0,0.4)
-                      border-radius: 9999px
-                      border-color: blue
+                      top: 400px
+                      left: 0px
                       z-index: 100
-                      filter: brightness(100%)
-                      '--primary-text-color': black
-                  - type: state-icon
-                    entity: switch.pulley_fan
+                      width: 270px
+                      height: 200px
+                  - type: image
+                    entity: light.living_room
+                    aspect_ratio: 200%
                     tap_action:
                       action: toggle
-                    state_color: true
+                    hold_action:
+                      action: more-info
+                    image: https://22.400ggp.com/local/images/v2/transparent.png?v=3
                     style:
-                      top: 406px
-                      left: 100px
-                      color: black
-                      background-color: rgba(0,0,0,0.4)
-                      border-radius: 9999px
+                      top: 0px
+                      left: 0px
+                      z-index: 100
+                      width: 280px
+                      height: 400px
+                  - type: image
+                    entity: light.hall
+                    aspect_ratio: 300%
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                    image: https://22.400ggp.com/local/images/v2/transparent.png?v=3
+                    style:
+                      top: 400px
+                      left: 260px
+                      z-index: 100
+                      width: 70px
+                      height: 260px
+                  - type: image
+                    entity: light.hall
+                    aspect_ratio: 300%
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                    image: https://22.400ggp.com/local/images/v2/transparent.png?v=3
+                    style:
+                      top: 400px
+                      left: 330px
+                      z-index: 100
+                      width: 220px
+                      height: 70px
+                  - type: image
+                    entity: light.master_ceiling
+                    aspect_ratio: 300%
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                    image: https://22.400ggp.com/local/images/v2/transparent.png?v=3
+                    style:
+                      top: 400px
+                      left: 550px
+                      z-index: 100
+                      width: 140px
+                      height: 70px
+                  - type: image
+                    entity: light.master_ceiling
+                    aspect_ratio: 300%
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                    image: https://22.400ggp.com/local/images/v2/transparent.png?v=3
+                    style:
+                      top: 0px
+                      left: 570px
+                      z-index: 100
+                      width: 220px
+                      height: 400px
+                  - type: image
+                    entity: light.dining
+                    aspect_ratio: 300%
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                    image: https://22.400ggp.com/local/images/v2/transparent.png?v=3
+                    style:
+                      top: 100px
+                      left: 280px
+                      z-index: 100
+                      width: 100px
+                      height: 300px
+                  - type: image
+                    entity: light.freds_lamp
+                    tap_action:
+                      action: toggle
+                    hold_action:
+                      action: more-info
+                    image: https://22.400ggp.com/local/images/v2/transparent.png?v=3
+                    style:
+                      top: 80px
+                      left: 730px
+                      z-index: 700
+                      width: 70px
+                      height: 70px
+              - type: vertical-stack
+                view_layout:
+                  grid-area: th
+                cards:
+                  - type: custom:simple-thermostat
+                    entity: climate.ecobee
+                    layout:
+                      step: column
+                    card_mod:
+                      style: |
+                        ha-icon, ha-card {
+                          --primary-text-color: var(--cool-color)
+                        }
+                    header: false
+                    control: false
+                    setpoints:
+                      target_temp_low:
+                        hide: true
+                      target_temp_high:
+                        hide: false
+                  - type: horizontal-stack
+                    cards:
+                      - type: custom:html-template-card
+                        title: ''
+                        style: |
+                          ha-card: {
+                            width: 1rem !important;
+                            height: 1px !important;
+                          }
+                        content: |
+                          <p></p>
+                      - type: button
+                        tap_action:
+                          action: call-service
+                          service: climate.set_temperature
+                          service_data:
+                            target_temp_high: 68
+                            target_temp_low: 68
+                          target:
+                            entity_id: climate.ecobee
+                        entity: climate.ecobee
+                        icon: hass:thermostat
+                        show_name: true
+                        show_icon: false
+                        name: 70°
+                        style: |
+                          :host {
+                            outline: 2px solid var(--primary-text-color);
+                          }
+                      - type: button
+                        tap_action:
+                          action: call-service
+                          service: climate.set_temperature
+                          service_data:
+                            target_temp_high: 70
+                            target_temp_low: 70
+                          target:
+                            entity_id: climate.ecobee
+                        entity: climate.ecobee
+                        icon: hass:thermostat
+                        show_name: true
+                        show_icon: false
+                        name: 72°
+                        style: |
+                          :host {
+                            outline: 2px solid var(--primary-text-color);
+                          }
+                      - type: button
+                        tap_action:
+                          action: call-service
+                          service: climate.set_temperature
+                          service_data:
+                            target_temp_high: 72
+                            target_temp_low: 72
+                          target:
+                            entity_id: climate.ecobee
+                        entity: climate.ecobee
+                        icon: hass:thermostat
+                        show_name: true
+                        show_icon: false
+                        name: 74°
+                        style: |
+                          :host {
+                            outline: 2px solid var(--primary-text-color);
+                          }
+                      - type: button
+                        tap_action:
+                          action: call-service
+                          service: climate.set_temperature
+                          service_data:
+                            target_temp_high: 74
+                            target_temp_low: 74
+                          target:
+                            entity_id: climate.ecobee
+                        style: |
+                          :host {
+                            outline: 2px solid var(--primary-text-color);
+                          }
+                        entity: climate.ecobee
+                        icon: hass:thermostat
+                        show_name: true
+                        show_icon: false
+                        name: 76°
   - title: Camera
     path: camera
     visible: []
