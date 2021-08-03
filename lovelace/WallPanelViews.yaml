@@ -47,7 +47,6 @@ views:
                   ha-icon { height: 24px !important} 
                   #name {
                     border-bottom: 1px solid var(--primary-color);
-                    
                   }
                 tap_action:
                   action: navigate
@@ -84,18 +83,6 @@ views:
                 icon_height: 24px;
                 style: |
                   * {color: var(--primary-color)}    
-                  ha-icon { height: 24px !important} 
-                tap_action:
-                  action: navigate
-                  navigation_path: /lovelace-wallboard/weather?kiosk
-                icon: mdi:cloud
-                name: Weather
-                view_layout:
-                  grid-area: n4
-              - type: custom:button-card
-                icon_height: 24px;
-                style: |
-                  * {color: var(--primary-color)}    
                   ha-icon { height: 24px !important}          
                 tap_action:
                   action: navigate
@@ -103,7 +90,7 @@ views:
                 icon: mdi:home
                 name: Floor Plan
                 view_layout:
-                  grid-area: n5
+                  grid-area: n4
               - type: glance
                 entities:
                   - entity: sensor.my_wall_panel_battery_level
@@ -344,7 +331,7 @@ views:
                   service_data:
                     entity_id: lock.front_door
               - type: custom:button-card
-                name: Oven
+                name: ' '
                 label: |
                   [[[
                     'xxx'+html`<elt>on</elt>`
@@ -352,14 +339,17 @@ views:
                 custom_fields:
                   state: |
                     [[[
-                      return html`<span style='position: absolute;left:4px;height: 16px;bottom: 4px;'>${entity.attributes.operation_mode}</span>`
+                      if (states['sensor.snvr104582q_cook_mode'].state == 'Off') { 
+                        return html`<span style='position: absolute;left:50%;bottom: 0%; transform: translate(-50%,0)'>${states['sensor.snvr104582q_cook_mode'].state}</span>`
+                      }
+                      return html`<span style='position: absolute;left:4px;;top: 50%; max-width: 90%; white-space: break-spaces; background-color: rgba(0,0,0,0.4)'>${states['sensor.snvr104582q_cook_mode'].state}</span>`
                     ]]]
                   temp: |
                     [[[
-                      if (entity.attributes.operation_mode == 'Off') { return html`<span>&nbsp;</span>`;}
-                      return html`<span >
-                                <ha-icon icon="mdi:thermometer" style="width: 12px; height: 12px; color: red;"></ha-icon>
-                              ${entity.attributes.current_temperature}&deg;</span>`
+                      if (states['sensor.snvr104582q_cook_mode'].state == 'Off') { return html``;}
+                      return html`<span style='position: absolute; left: 2px; top: 2px'>
+                              ${entity.attributes.current_temperature}&deg;  <ha-icon icon="mdi:thermometer" style="width: 12px; height: 12px; color: red;"></ha-icon>
+                              </span>`
                     ]]]
                 show_label: false
                 entity: water_heater.snvr104582q_oven
@@ -461,18 +451,6 @@ views:
                 icon_height: 24px;
                 style: |
                   * {color: var(--primary-color)}    
-                  ha-icon { height: 24px !important} 
-                tap_action:
-                  action: navigate
-                  navigation_path: /lovelace-wallboard/weather?kiosk
-                icon: mdi:cloud
-                name: Weather
-                view_layout:
-                  grid-area: n4
-              - type: custom:button-card
-                icon_height: 24px;
-                style: |
-                  * {color: var(--primary-color)}    
                   ha-icon { height: 24px !important}          
                 tap_action:
                   action: navigate
@@ -480,7 +458,7 @@ views:
                 icon: mdi:home
                 name: Floor Plan
                 view_layout:
-                  grid-area: n5
+                  grid-area: n4
               - type: glance
                 entities:
                   - entity: sensor.my_wall_panel_battery_level
@@ -676,126 +654,6 @@ views:
                   icon: hass:tv
                   show: true
                   use_state_color: true
-  - title: Weather
-    path: weather
-    icon: mdi:cloud
-    theme: Caule Dark Blue
-    panel: true
-    badges: []
-    cards:
-      - type: vertical-stack
-        cards:
-          - type: custom:layout-card
-            layout_type: custom:grid-layout
-            layout:
-              grid-template-areas: |
-                'c  .    n1  n2 n3 n4 n5 n6 n7 . wb'
-              grid-template-columns: 240px 50px repeat(7,1fr) 1fr 100px
-              grid-template-rows: 75px
-            style: |
-              layout-card {
-                border-bottom: 1px solid red;
-              }
-            card_mod: |
-              style: |
-                div {
-                      --test: 12345;
-                      --state-icon-active-color: rgb(9, 251, 213);
-                      --paper-item-icon-active-color: var(--state-icon-active-color);
-                      --state-icon-color: rgb(50,50,255);
-                      --paper-item-icon-color: var(--paper-item-icon-color);
-                    }  
-            cards:
-              - type: custom:simple-clock-card
-                use_military: false
-                font_size: 3rem
-                hide_seconds: true
-                view_layout:
-                  grid-area: c
-              - type: custom:button-card
-                icon_height: 24px;
-                style: |
-                  * {color: var(--primary-color)}   
-                  ha-icon { height: 24px !important} 
-                tap_action:
-                  action: navigate
-                  navigation_path: /lovelace-wallboard/wall-panel?kiosk
-                icon: mdi:sofa
-                name: Living Room
-                view_layout:
-                  grid-area: n1
-                  ha-icon { height: 24px !important}
-              - type: custom:button-card
-                icon_height: 24px;
-                style: |
-                  * {color: var(--primary-color)}    
-                  ha-icon { height: 24px !important} 
-                tap_action:
-                  action: navigate
-                  navigation_path: /lovelace-wallboard/bedrooms?kiosk
-                icon: mdi:bed
-                name: Bedrooms
-                view_layout:
-                  grid-area: n2
-              - type: custom:button-card
-                icon_height: 24px;
-                style: |
-                  * {color: var(--primary-color)}
-                  ha-icon { height: 24px !important} 
-                tap_action:
-                  action: navigate
-                  navigation_path: /lovelace-wallboard/calendar?kiosk
-                icon: mdi:calendar
-                name: Calendar
-                view_layout:
-                  grid-area: n3
-              - type: custom:button-card
-                icon_height: 24px;
-                style: |
-                  * {color: var(--primary-color)}    
-                  ha-icon { height: 24px !important} 
-                  #name {
-                    border-bottom: 1px solid var(--primary-color);
-                  }          
-                tap_action:
-                  action: navigate
-                  navigation_path: /lovelace-wallboard/weather?kiosk
-                icon: mdi:cloud
-                name: Weather
-                view_layout:
-                  grid-area: n4
-              - type: custom:button-card
-                icon_height: 24px;
-                style: |
-                  * {color: var(--primary-color)}    
-                  ha-icon { height: 24px !important}          
-                tap_action:
-                  action: navigate
-                  navigation_path: /lovelace-wallboard/floor-plan?kiosk
-                icon: mdi:home
-                name: Floor Plan
-                view_layout:
-                  grid-area: n5
-              - type: glance
-                entities:
-                  - entity: sensor.my_wall_panel_battery_level
-                    name: ''
-                view_layout:
-                  grid-area: wb
-                style: |
-                  ha-card {margin-top: -40px}        
-          - type: horizontal-stack
-            cards:
-              - type: custom:layout-card
-                layout_type: custom:grid-layout
-                layout:
-                  grid-template-rows: 550px
-                  grid-template-columns: 1fr
-                cards:
-                  - type: iframe
-                    url: /local/html/windfinder-forcast.html
-                    view_layout:
-                      grid: 1 / 1
   - title: Batteries
     path: batteries
     icon: mdi:battery
@@ -1005,18 +863,6 @@ views:
               - type: custom:button-card
                 icon_height: 24px;
                 style: |
-                  * {color: var(--primary-color)}    
-                  ha-icon { height: 24px !important} 
-                tap_action:
-                  action: navigate
-                  navigation_path: /lovelace-wallboard/weather?kiosk
-                icon: mdi:cloud
-                name: Weather
-                view_layout:
-                  grid-area: n4
-              - type: custom:button-card
-                icon_height: 24px;
-                style: |
                   * {color: var(--primary-color); }    
                   #name {
                     border-bottom: 1px solid var(--primary-color);
@@ -1028,7 +874,7 @@ views:
                 icon: mdi:home
                 name: Floor Plan
                 view_layout:
-                  grid-area: n5
+                  grid-area: n4
               - type: glance
                 entities:
                   - entity: sensor.my_wall_panel_battery_level
@@ -1050,7 +896,7 @@ views:
               grid-template-rows: 1fr 200px 200px 200px 1fr
             cards:
               - type: picture-elements
-                image: https://22.400ggp.com/local/images/v2/tile.png?v=3
+                image: https://22.400ggp.com/local/images/v2/tile.png?v=4
                 view_layout:
                   grid-area: fp
                 card_mod:
@@ -1085,7 +931,7 @@ views:
                       }
                 elements:
                   - type: image
-                    image: https://22.400ggp.com/local/images/v2/furniture.png?v=3
+                    image: https://22.400ggp.com/local/images/v2/furniture.png?v=4
                     state_color: false
                     style:
                       top: 0
@@ -1095,9 +941,9 @@ views:
                       pointer-events: none
                   - type: image
                     image: >-
-                      https://22.400ggp.com/local/images/v2/overlay-unlit.png?v=3
+                      https://22.400ggp.com/local/images/v2/overlay-unlit.png?v=4
                   - type: image
-                    image: https://22.400ggp.com/local/images/v2/walls.png?v=3
+                    image: https://22.400ggp.com/local/images/v2/walls.png?v=4
                     state_color: false
                     style:
                       top: 0
@@ -1114,7 +960,7 @@ views:
                       action: none
                     state_image:
                       'off': >-
-                        https://22.400ggp.com/local/images/v2/overlay-kitchen.png?v=3
+                        https://22.400ggp.com/local/images/v2/overlay-kitchen.png?v=4
                   - type: image
                     entity: light.living_room
                     tap_action:
@@ -1123,7 +969,7 @@ views:
                       action: none
                     state_image:
                       'off': >-
-                        https://22.400ggp.com/local/images/v2/overlay-living.png?v=3
+                        https://22.400ggp.com/local/images/v2/overlay-living.png?v=4
                   - type: image
                     entity: light.dining
                     tap_action:
@@ -1132,7 +978,7 @@ views:
                       action: none
                     state_image:
                       'off': >-
-                        https://22.400ggp.com/local/images/v2/overlay-dining.png?v=3
+                        https://22.400ggp.com/local/images/v2/overlay-dining.png?v=4
                   - type: image
                     entity: light.master_ceiling
                     tap_action:
@@ -1141,7 +987,7 @@ views:
                       action: none
                     state_image:
                       'off': >-
-                        https://22.400ggp.com/local/images/v2/overlay-master.png?v=3
+                        https://22.400ggp.com/local/images/v2/overlay-master.png?v=4
                   - type: image
                     entity: light.hall
                     tap_action:
@@ -1150,7 +996,7 @@ views:
                       action: none
                     state_image:
                       'off': >-
-                        https://22.400ggp.com/local/images/v2/overlay-hall.png?v=3
+                        https://22.400ggp.com/local/images/v2/overlay-hall.png?v=4
                   - type: image
                     entity: light.freds_lamp
                     tap_action:
@@ -1159,7 +1005,7 @@ views:
                       action: none
                     state_image:
                       'on': >-
-                        https://22.400ggp.com/local/images/v2/overlay-freds-light.png?v=3
+                        https://22.400ggp.com/local/images/v2/overlay-freds-light.png?v=4
                   - type: image
                     entity: switch.pulley_fan
                     card_mod:
@@ -1178,13 +1024,13 @@ views:
                     tap_action:
                       action: toggle
                     state_image:
-                      'on': https://22.400ggp.com/local/images/v2/fan-dining.png?v=3
+                      'on': https://22.400ggp.com/local/images/v2/fan-dining.png?v=4
                   - type: image
                     entity: switch.pulley_fan
                     tap_action:
                       action: toggle
                     state_image:
-                      'off': https://22.400ggp.com/local/images/v2/fan-dining.png?v=3
+                      'off': https://22.400ggp.com/local/images/v2/fan-dining.png?v=4
                     card_mod:
                       style: |
                         :host {
@@ -1214,13 +1060,13 @@ views:
                     tap_action:
                       action: toggle
                     state_image:
-                      'on': https://22.400ggp.com/local/images/v2/fan-living.png?v=3
+                      'on': https://22.400ggp.com/local/images/v2/fan-living.png?v=4
                   - type: image
                     entity: switch.pulley_fan
                     tap_action:
                       action: toggle
                     state_image:
-                      'off': https://22.400ggp.com/local/images/v2/fan-living.png?v=3
+                      'off': https://22.400ggp.com/local/images/v2/fan-living.png?v=4
                     card_mod:
                       style: |
                         :host {
@@ -1247,13 +1093,13 @@ views:
                     tap_action:
                       action: toggle
                     state_image:
-                      'on': https://22.400ggp.com/local/images/v2/fan-lanai.png?v=3
+                      'on': https://22.400ggp.com/local/images/v2/fan-lanai.png?v=4
                   - type: image
                     entity: switch.lanai_fan
                     tap_action:
                       action: toggle
                     state_image:
-                      'off': https://22.400ggp.com/local/images/v2/fan-lanai.png?v=3
+                      'off': https://22.400ggp.com/local/images/v2/fan-lanai.png?v=4
                     card_mod:
                       style: |
                         :host {
@@ -1283,13 +1129,13 @@ views:
                     tap_action:
                       action: toggle
                     state_image:
-                      'on': https://22.400ggp.com/local/images/v2/fan-lanai.png?v=3
+                      'on': https://22.400ggp.com/local/images/v2/fan-lanai.png?v=4
                   - type: image
                     entity: switch.lanai_fan
                     tap_action:
                       action: toggle
                     state_image:
-                      'off': https://22.400ggp.com/local/images/v2/fan-lanai.png?v=3
+                      'off': https://22.400ggp.com/local/images/v2/fan-lanai.png?v=4
                     card_mod:
                       style: |
                         :host {
@@ -1301,7 +1147,7 @@ views:
                   - type: image
                     entity: fan.master
                     state_image:
-                      'on': https://22.400ggp.com/local/images/v2/fan-master.png?v=3
+                      'on': https://22.400ggp.com/local/images/v2/fan-master.png?v=4
                     card_mod:
                       style: |
                         @keyframes lrotate {
@@ -1327,7 +1173,7 @@ views:
                     hold_action:
                       action: more-info
                     state_image:
-                      'off': https://22.400ggp.com/local/images/v2/fan-master.png?v=3
+                      'off': https://22.400ggp.com/local/images/v2/fan-master.png?v=4
                     card_mod:
                       style: |
                         :host {
@@ -1342,7 +1188,7 @@ views:
                       action: toggle
                     hold_action:
                       action: more-info
-                    image: https://22.400ggp.com/local/images/v2/transparent.png?v=3
+                    image: https://22.400ggp.com/local/images/v2/transparent.png?v=4
                     state_filter:
                       'on': brightness(110%)
                     style:
@@ -1358,7 +1204,7 @@ views:
                       action: toggle
                     hold_action:
                       action: more-info
-                    image: https://22.400ggp.com/local/images/v2/transparent.png?v=3
+                    image: https://22.400ggp.com/local/images/v2/transparent.png?v=4
                     style:
                       top: 0px
                       left: 0px
@@ -1372,7 +1218,7 @@ views:
                       action: toggle
                     hold_action:
                       action: more-info
-                    image: https://22.400ggp.com/local/images/v2/transparent.png?v=3
+                    image: https://22.400ggp.com/local/images/v2/transparent.png?v=4
                     style:
                       top: 400px
                       left: 260px
@@ -1386,7 +1232,7 @@ views:
                       action: toggle
                     hold_action:
                       action: more-info
-                    image: https://22.400ggp.com/local/images/v2/transparent.png?v=3
+                    image: https://22.400ggp.com/local/images/v2/transparent.png?v=4
                     style:
                       top: 400px
                       left: 330px
@@ -1400,7 +1246,7 @@ views:
                       action: toggle
                     hold_action:
                       action: more-info
-                    image: https://22.400ggp.com/local/images/v2/transparent.png?v=3
+                    image: https://22.400ggp.com/local/images/v2/transparent.png?v=4
                     style:
                       top: 400px
                       left: 550px
@@ -1414,7 +1260,7 @@ views:
                       action: toggle
                     hold_action:
                       action: more-info
-                    image: https://22.400ggp.com/local/images/v2/transparent.png?v=3
+                    image: https://22.400ggp.com/local/images/v2/transparent.png?v=4
                     style:
                       top: 0px
                       left: 570px
@@ -1428,7 +1274,7 @@ views:
                       action: toggle
                     hold_action:
                       action: more-info
-                    image: https://22.400ggp.com/local/images/v2/transparent.png?v=3
+                    image: https://22.400ggp.com/local/images/v2/transparent.png?v=4
                     style:
                       top: 100px
                       left: 280px
@@ -1441,7 +1287,7 @@ views:
                       action: toggle
                     hold_action:
                       action: more-info
-                    image: https://22.400ggp.com/local/images/v2/transparent.png?v=3
+                    image: https://22.400ggp.com/local/images/v2/transparent.png?v=4
                     style:
                       top: 80px
                       left: 730px
@@ -1484,8 +1330,8 @@ views:
                           action: call-service
                           service: climate.set_temperature
                           service_data:
-                            target_temp_high: 68
-                            target_temp_low: 68
+                            target_temp_high: 70
+                            target_temp_low: 66
                           target:
                             entity_id: climate.ecobee
                         entity: climate.ecobee
@@ -1502,8 +1348,8 @@ views:
                           action: call-service
                           service: climate.set_temperature
                           service_data:
-                            target_temp_high: 70
-                            target_temp_low: 70
+                            target_temp_high: 72
+                            target_temp_low: 66
                           target:
                             entity_id: climate.ecobee
                         entity: climate.ecobee
@@ -1520,8 +1366,8 @@ views:
                           action: call-service
                           service: climate.set_temperature
                           service_data:
-                            target_temp_high: 72
-                            target_temp_low: 72
+                            target_temp_high: 74
+                            target_temp_low: 68
                           target:
                             entity_id: climate.ecobee
                         entity: climate.ecobee
@@ -1538,8 +1384,8 @@ views:
                           action: call-service
                           service: climate.set_temperature
                           service_data:
-                            target_temp_high: 74
-                            target_temp_low: 74
+                            target_temp_high: 76
+                            target_temp_low: 70
                           target:
                             entity_id: climate.ecobee
                         style: |
@@ -1653,18 +1499,6 @@ views:
                 icon_height: 24px;
                 style: |
                   * {color: var(--primary-color)}    
-                  ha-icon { height: 24px !important} 
-                tap_action:
-                  action: navigate
-                  navigation_path: /lovelace-wallboard/weather?kiosk
-                icon: mdi:cloud
-                name: Weather
-                view_layout:
-                  grid-area: n4
-              - type: custom:button-card
-                icon_height: 24px;
-                style: |
-                  * {color: var(--primary-color)}    
                   ha-icon { height: 24px !important}          
                 tap_action:
                   action: navigate
@@ -1672,7 +1506,7 @@ views:
                 icon: mdi:home
                 name: Floor Plan
                 view_layout:
-                  grid-area: n5
+                  grid-area: n4
               - type: glance
                 entities:
                   - entity: sensor.my_wall_panel_battery_level
