@@ -7,19 +7,6 @@ cards:
         'c  .    n1  n2 n3 n4 n5 n6 n7 . wb'
       grid-template-columns: 240px 50px repeat(7,1fr) 1fr 100px
       grid-template-rows: 75px
-    style: |
-      layout-card {
-        border-bottom: 1px solid red;
-      }
-    card_mod: |
-      style: |
-        div {
-              --test: 12345;
-              --state-icon-active-color: rgb(9, 251, 213);
-              --paper-item-icon-active-color: var(--state-icon-active-color);
-              --state-icon-color: rgb(50,50,255);
-              --paper-item-icon-color: var(--paper-item-icon-color);
-            }  
     cards:
       - type: custom:simple-clock-card
         use_military: false
@@ -32,9 +19,6 @@ cards:
         style: |
           * {color: var(--primary-color)}   
           ha-icon { height: 24px !important} 
-          #name {
-            border-bottom: 1px solid var(--primary-color);
-          }
         tap_action:
           action: navigate
           navigation_path: /lovelace-wallboard/wall-panel?kiosk
@@ -42,7 +26,7 @@ cards:
         name: Living Room
         view_layout:
           grid-area: n1
-          
+          ha-icon { height: 24px !important}
       - type: custom:button-card
         icon_height: 24px;
         style: |
@@ -82,7 +66,10 @@ cards:
       - type: custom:button-card
         icon_height: 24px;
         style: |
-          * {color: var(--primary-color)}    
+          * {color: var(--primary-color); }    
+          #name {
+            border-bottom: 1px solid var(--primary-color);
+          }     
           ha-icon { height: 24px !important}          
         tap_action:
           action: navigate
@@ -98,273 +85,512 @@ cards:
         view_layout:
           grid-area: wb
         style: |
-          ha-card {margin-top: -40px}        
+          ha-card {margin-top: -40px}         
   - type: custom:layout-card
     layout_type: custom:grid-layout
     layout:
       grid-template-areas: |
-        't   t   t    w    w   w    w   clr clr ck ck'
-        't   t   t    w    w   w    w   clr clr ck ck'
-        't   t   t    w    w   w    w   clr clr ck ck'
-        'ld  ld  ld   lh   lh  lh   .   .   .   .  . '
-        'llr llr llr  lk   lk  lk   .   fl  fp  o  lfd'
-      grid-template-columns: repeat(7,120px)  1fr 1fr 1fr 1fr
-      grid-template-rows: repeat(6,126px)
-    card_mod: |
-      style: |
-        div {
-              --state-icon-active-color: rgb(9, 251, 213);
-              --paper-item-icon-active-color: var(--state-icon-active-color);
-              --state-icon-color: rgb(50,50,255);
-              --paper-item-icon-color: var(--paper-item-icon-color);
-            }  
+        '.  .  .'
+        'fp . .'
+        'fp th .'
+        'fp . .'
+        '.  .  .'
+      grid-template-columns: 800px auto 1fr
+      grid-template-rows: 1fr 200px 200px 200px 1fr
     cards:
-      - type: thermostat
-        entity: climate.ecobee
-        name: ' '
-        view_layout:
-          grid-area: t
-        card_mod:
-          style: |
-            round-slider {
-              --xround-slider-path-color: #aaaaff !important;
-              --round-slider-bar-color: #aaffaa !important;
-            }
-            #info {
-              display: none;
-            }
-      - type: custom:weather-card
-        entity: weather.openweathermap
-        secondary_info_attribute: humidity
-        details: true
-        icons: /local/community/weather-card/icons/
-        view_layout:
-          grid-area: w
-      - type: custom:slider-button-card
-        entity: light.kitchen
-        name: Kitchen
-        view_layout:
-          grid-area: lk
-        slider:
-          direction: left-right
-          background: gradient
-          use_percentage_bg_opacity: true
-          use_state_color: false
-          show_track: true
-          force_square: true
-        action_button:
-          mode: toggle
-        icon:
-          icon: hass:lightbulb
-          show: true
-          use_state_color: true
-        compact: tru
-      - type: custom:slider-button-card
-        entity: light.living_room
-        name: Living Room
-        style: 'ha-card .name {font-size: .9rem}'
-        view_layout:
-          grid-area: llr
-        slider:
-          direction: left-right
-          background: gradient
-          use_percentage_bg_opacity: true
-          use_state_color: false
-          show_track: true
-          force_square: true
-        action_button:
-          mode: toggle
-        icon:
-          icon: hass:lightbulb
-          show: true
-          use_state_color: true
-        compact: false
-      - type: custom:slider-button-card
-        entity: light.hall
-        name: Hall
-        view_layout:
-          grid-area: lh
-        slider:
-          direction: left-right
-          background: gradient
-          use_percentage_bg_opacity: true
-          use_state_color: true
-          show_track: true
-          force_square: true
-        action_button:
-          mode: toggle
-        icon:
-          icon: hass:lightbulb
-          show: true
-          use_state_color: true
-        compact: false
-      - type: custom:slider-button-card
-        entity: light.dining
-        name: Dining
-        view_layout:
-          grid-area: ld
-        slider:
-          direction: left-right
-          background: gradient
-          use_percentage_bg_opacity: true
-          use_state_color: true
-          show_track: true
-          force_square: true
-        action_button:
-          mode: toggle
-        icon:
-          icon: hass:lightbulb
-          show: true
-          use_state_color: true
-        compact: false
-      - type: custom:slider-button-card
-        entity: cover.kitchen
-        name: Kitchen Shade
-        style: ha-card .name {}
-        view_layout:
-          grid-area: ck
-        slider:
-          direction: bottom-top
-          background: gradient
-          use_percentage_bg_opacity: false
-          use_state_color: true
-          show_track: true
-          force_square: true
-          invert: false
-        action_button:
-          mode: toggle
-          show: false
-        icon:
-          icon: hass:blinds
-          show: true
-          use_state_color: true
-        compact: false
-      - type: custom:slider-button-card
-        entity: cover.living_room
-        name: Living Room Shade
-        style: ha-card .name {}
-        view_layout:
-          grid-area: clr
-        slider:
-          direction: bottom-top
-          background: gradient
-          use_percentage_bg_opacity: false
-          use_state_color: true
-          show_track: true
-          force_square: true
-          invert: false
-        action_button:
-          mode: toggle
-          show: false
-        icon:
-          icon: hass:blinds
-          show: true
-          use_state_color: true
-        compact: false
-      - type: custom:slider-button-card
-        entity: switch.pulley_fan
-        name: Pulley Fan
+      - type: picture-elements
+        image: https://22.400ggp.com/local/images/v2/tile.png?v=4
         view_layout:
           grid-area: fp
-        slider:
-          direction: bottom-top
-          background: solid
-          use_percentage_bg_opacity: false
-          use_state_color: false
-          show_track: true
-          force_square: true
-          toggle_on_click: true
-        action_button:
-          mode: toggle
-          show: true
-        icon:
-          icon: hass:fan
-          show: true
-          use_state_color: false
-        compact: false
-      - type: custom:slider-button-card
-        entity: switch.lanai_fan
-        name: Lanai Fan
-        view_layout:
-          grid-area: fl
-        slider:
-          direction: bottom-top
-          background: solid
-          use_percentage_bg_opacity: false
-          use_state_color: false
-          show_track: true
-          force_square: true
-          toggle_on_click: true
-        action_button:
-          mode: toggle
-          show: true
-        icon:
-          icon: hass:fan
-          show: true
-          use_state_color: false
-        compact: false
-      - type: custom:button-card
-        name: Front Door
-        entity: lock.front_door
         card_mod:
           style: |
             ha-card {
+              --test: 5678
+              --paper-item-icon-active-color: #ff7700;
+              --paper-item-icon-color: rgba(255,255,0,0.4);
+              margin: 0;
+              padding: 0;
+              position: relative;
+              width: 800px !important;
+              height: 600px !important;
+            }
+            ha-card hui-image, ha-card hui-image-element {
+              position: absolute;
+              transform: none !important;
+              left: 0;
+              top: unset;
+              bottom: unset;
+              right: unset;    
+
+            }     
+
+            hui-image, img {
+              width: 100%;
               height: 100%;
-            }   
-        icon: mdi:lock
+            }
+            #root {
+                left: 100px !important
+                transform: rotate(90deg)
+              }
+        elements:
+          - type: image
+            image: https://22.400ggp.com/local/images/v2/furniture.png?v=4
+            state_color: false
+            style:
+              top: 0
+              left: 0
+              transform: none
+              position: absolute
+              pointer-events: none
+          - type: image
+            image: https://22.400ggp.com/local/images/v2/overlay-unlit.png?v=4
+          - type: image
+            image: https://22.400ggp.com/local/images/v2/walls.png?v=4
+            state_color: false
+            style:
+              top: 0
+              left: 0
+              transform: none
+              position: absolute
+              pointer-events: none
+              z-index: 10
+          - type: image
+            entity: light.kitchen
+            tap_action:
+              action: none
+            hold_action:
+              action: none
+            state_image:
+              'off': https://22.400ggp.com/local/images/v2/overlay-kitchen.png?v=4
+          - type: image
+            entity: light.living_room
+            tap_action:
+              action: none
+            hold_action:
+              action: none
+            state_image:
+              'off': https://22.400ggp.com/local/images/v2/overlay-living.png?v=4
+          - type: image
+            entity: light.dining
+            tap_action:
+              action: none
+            hold_action:
+              action: none
+            state_image:
+              'off': https://22.400ggp.com/local/images/v2/overlay-dining.png?v=4
+          - type: image
+            entity: light.master_ceiling
+            tap_action:
+              action: none
+            hold_action:
+              action: none
+            state_image:
+              'off': https://22.400ggp.com/local/images/v2/overlay-master.png?v=4
+          - type: image
+            entity: light.hall
+            tap_action:
+              action: none
+            hold_action:
+              action: none
+            state_image:
+              'off': https://22.400ggp.com/local/images/v2/overlay-hall.png?v=4
+          - type: image
+            entity: light.freds_lamp
+            tap_action:
+              action: none
+            hold_action:
+              action: none
+            state_image:
+              'on': >-
+                https://22.400ggp.com/local/images/v2/overlay-freds-light.png?v=4
+          - type: image
+            entity: switch.pulley_fan
+            card_mod:
+              style: |
+                @keyframes rotate {
+                  100% {
+                    transform: rotate(360deg);
+                  }
+                }                
+                :host {
+                  animation: rotate 2s linear infinite;
+                  left:282px !important;
+                  top: 218px !important;
+                  z-index: 999;
+                }
+            tap_action:
+              action: toggle
+            state_image:
+              'on': https://22.400ggp.com/local/images/v2/fan-dining.png?v=4
+          - type: image
+            entity: switch.pulley_fan
+            tap_action:
+              action: toggle
+            state_image:
+              'off': https://22.400ggp.com/local/images/v2/fan-dining.png?v=4
+            card_mod:
+              style: |
+                :host {
+                  left:282px !important;
+                  top: 218px !important;
+                  transform: rotate(93deg) !important;
+                  z-index: 999;
+                }
+          - type: image
+            entity: switch.pulley_fan
+            card_mod:
+              style: |
+                @keyframes lrotate {
+                  0% {
+                    transform: rotate(45deg);
+                  }
+                  100% {
+                    transform: rotate(405deg);
+                  }
+                }                
+                :host {
+                  animation: lrotate 2s linear infinite;
+                  left:88px !important;
+                  top: 149px !important;
+                  z-index: 999;
+                }
+            tap_action:
+              action: toggle
+            state_image:
+              'on': https://22.400ggp.com/local/images/v2/fan-living.png?v=4
+          - type: image
+            entity: switch.pulley_fan
+            tap_action:
+              action: toggle
+            state_image:
+              'off': https://22.400ggp.com/local/images/v2/fan-living.png?v=4
+            card_mod:
+              style: |
+                :host {
+                  left:88px !important;
+                  top: 149px !important;
+                  transform: rotate(3deg) !important;
+                  z-index: 999;
+                }  
+          - type: image
+            entity: switch.lanai_fan
+            card_mod:
+              style: |
+                @keyframes rotate {
+                  100% {
+                    transform: rotate(360deg);
+                  }
+                }                
+                :host {
+                  animation: rotate 2s linear infinite;
+                  left:318px !important;
+                  top: 18px !important;
+                  z-index: 999;
+                }
+            tap_action:
+              action: toggle
+            state_image:
+              'on': https://22.400ggp.com/local/images/v2/fan-lanai.png?v=4
+          - type: image
+            entity: switch.lanai_fan
+            tap_action:
+              action: toggle
+            state_image:
+              'off': https://22.400ggp.com/local/images/v2/fan-lanai.png?v=4
+            card_mod:
+              style: |
+                :host {
+                  left:318px !important;
+                  top: 18px !important;
+                  transform: rotate(93deg) !important;
+                  z-index: 999;
+                }
+          - type: image
+            entity: switch.lanai_fan
+            card_mod:
+              style: |
+                @keyframes lrotate {
+                  0% {
+                    transform: rotate(45deg);
+                  }
+                  100% {
+                    transform: rotate(405deg);
+                  }
+                }                
+                :host {
+                  animation: lrotate 2s linear infinite;
+                  left:518px !important;
+                  top: 18px !important;
+                  z-index: 999;
+                }
+            tap_action:
+              action: toggle
+            state_image:
+              'on': https://22.400ggp.com/local/images/v2/fan-lanai.png?v=4
+          - type: image
+            entity: switch.lanai_fan
+            tap_action:
+              action: toggle
+            state_image:
+              'off': https://22.400ggp.com/local/images/v2/fan-lanai.png?v=4
+            card_mod:
+              style: |
+                :host {
+                  left:513px !important;
+                  top: 18px !important;
+                  transform: rotate(3deg) !important;
+                  z-index: 999;
+                }                
+          - type: image
+            entity: fan.master
+            state_image:
+              'on': https://22.400ggp.com/local/images/v2/fan-master.png?v=4
+            card_mod:
+              style: |
+                @keyframes lrotate {
+                  0% {
+                    transform: rotate(45deg);
+                  }
+                  100% {
+                    transform: rotate(405deg);
+                  }
+                }                
+                :host {
+                  animation: lrotate 2s linear infinite;
+                  left:634px !important;
+                  top: 159px !important;
+                  z-index: 999;
+                }
+            tap_action:
+              action: toggle
+          - type: image
+            entity: fan.master
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            state_image:
+              'off': https://22.400ggp.com/local/images/v2/fan-master.png?v=4
+            card_mod:
+              style: |
+                :host {
+                  left:634px !important;
+                  top: 159px !important;
+                  transform: rotate(3deg) !important;
+                  z-index: 999;
+                }                
+          - type: image
+            entity: light.kitchen
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            image: https://22.400ggp.com/local/images/v2/transparent.png?v=4
+            state_filter:
+              'on': brightness(110%)
+            style:
+              top: 400px
+              left: 0px
+              z-index: 100
+              width: 270px
+              height: 200px
+          - type: image
+            entity: light.living_room
+            aspect_ratio: 200%
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            image: https://22.400ggp.com/local/images/v2/transparent.png?v=4
+            style:
+              top: 0px
+              left: 0px
+              z-index: 100
+              width: 280px
+              height: 400px
+          - type: image
+            entity: light.hall
+            aspect_ratio: 300%
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            image: https://22.400ggp.com/local/images/v2/transparent.png?v=4
+            style:
+              top: 400px
+              left: 260px
+              z-index: 100
+              width: 70px
+              height: 260px
+          - type: image
+            entity: light.hall
+            aspect_ratio: 300%
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            image: https://22.400ggp.com/local/images/v2/transparent.png?v=4
+            style:
+              top: 400px
+              left: 330px
+              z-index: 100
+              width: 220px
+              height: 70px
+          - type: image
+            entity: light.master_ceiling
+            aspect_ratio: 300%
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            image: https://22.400ggp.com/local/images/v2/transparent.png?v=4
+            style:
+              top: 400px
+              left: 550px
+              z-index: 100
+              width: 140px
+              height: 70px
+          - type: image
+            entity: light.master_ceiling
+            aspect_ratio: 300%
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            image: https://22.400ggp.com/local/images/v2/transparent.png?v=4
+            style:
+              top: 0px
+              left: 570px
+              z-index: 100
+              width: 220px
+              height: 400px
+          - type: image
+            entity: light.dining
+            aspect_ratio: 300%
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            image: https://22.400ggp.com/local/images/v2/transparent.png?v=4
+            style:
+              top: 100px
+              left: 280px
+              z-index: 100
+              width: 100px
+              height: 300px
+          - type: image
+            entity: light.freds_lamp
+            tap_action:
+              action: toggle
+            hold_action:
+              action: more-info
+            image: https://22.400ggp.com/local/images/v2/transparent.png?v=4
+            style:
+              top: 80px
+              left: 730px
+              z-index: 700
+              width: 70px
+              height: 70px
+      - type: vertical-stack
         view_layout:
-          grid-area: lfd
-        color: rgb(28, 128, 199)
-        state:
-          - value: locked
-            color: green
-            icon: mdi:lock
-          - value: unlocked
-            color: null
-            icon: mdi:lock-open-variant
-        tap_action:
-          action: call-service
-          service: |
-            [[[
-              return (entity.state === 'locked') ? 'lock.unlock' : 'lock.lock';
-            ]]]
-          service_data:
-            entity_id: lock.front_door
-      - type: custom:button-card
-        name: Oven
-        label: |
-          [[[
-            'xxx'+html`<elt>on</elt>`
-          ]]]
-        custom_fields:
-          state: |
-            [[[
-              return html`<span style='position: absolute;left:4px;height: 16px;bottom: 4px;'>${entity.attributes.operation_mode}</span>`
-            ]]]
-          temp: |
-            [[[
-              if (entity.attributes.operation_mode == 'Off') { return html`<span>&nbsp;</span>`;}
-              return html`<span >
-                        <ha-icon icon="mdi:thermometer" style="width: 12px; height: 12px; color: red;"></ha-icon>
-                      ${entity.attributes.current_temperature}&deg;</span>`
-            ]]]
-        show_label: false
-        entity: water_heater.snvr104582q_oven
-        icon: mdi:stove
-        view_layout:
-          grid-area: o
-        color: rgb(28, 128, 199)
-        state:
-          - value: 'on'
-            color: red
-            icon: mdi:fan
-          - value: 'off'
-            color: blue
-            icon: mdi:lock-open-variant
-        tap_action:
-          action: more-info
-        card_mod:
-          style: |
-            ha-card {
-              height: 100%;
-            }      
+          grid-area: th
+        cards:
+          - type: custom:simple-thermostat
+            entity: climate.ecobee
+            layout:
+              step: column
+            card_mod:
+              style: |
+                ha-icon, ha-card {
+                  --primary-text-color: var(--cool-color)
+                }
+            header: false
+            control: false
+            setpoints:
+              target_temp_low:
+                hide: true
+              target_temp_high:
+                hide: false
+          - type: horizontal-stack
+            cards:
+              - type: custom:html-template-card
+                title: ''
+                style: |
+                  ha-card: {
+                    width: 1rem !important;
+                    height: 1px !important;
+                  }
+                content: |
+                  <p></p>
+              - type: button
+                tap_action:
+                  action: call-service
+                  service: climate.set_temperature
+                  service_data:
+                    target_temp_high: 70
+                    target_temp_low: 66
+                  target:
+                    entity_id: climate.ecobee
+                entity: climate.ecobee
+                icon: hass:thermostat
+                show_name: true
+                show_icon: false
+                name: 70°
+                style: |
+                  :host {
+                    outline: 2px solid var(--primary-text-color);
+                  }
+              - type: button
+                tap_action:
+                  action: call-service
+                  service: climate.set_temperature
+                  service_data:
+                    target_temp_high: 72
+                    target_temp_low: 66
+                  target:
+                    entity_id: climate.ecobee
+                entity: climate.ecobee
+                icon: hass:thermostat
+                show_name: true
+                show_icon: false
+                name: 72°
+                style: |
+                  :host {
+                    outline: 2px solid var(--primary-text-color);
+                  }
+              - type: button
+                tap_action:
+                  action: call-service
+                  service: climate.set_temperature
+                  service_data:
+                    target_temp_high: 74
+                    target_temp_low: 68
+                  target:
+                    entity_id: climate.ecobee
+                entity: climate.ecobee
+                icon: hass:thermostat
+                show_name: true
+                show_icon: false
+                name: 74°
+                style: |
+                  :host {
+                    outline: 2px solid var(--primary-text-color);
+                  }
+              - type: button
+                tap_action:
+                  action: call-service
+                  service: climate.set_temperature
+                  service_data:
+                    target_temp_high: 76
+                    target_temp_low: 70
+                  target:
+                    entity_id: climate.ecobee
+                style: |
+                  :host {
+                    outline: 2px solid var(--primary-text-color);
+                  }
+                entity: climate.ecobee
+                icon: hass:thermostat
+                show_name: true
+                show_icon: false
+                name: 76°
