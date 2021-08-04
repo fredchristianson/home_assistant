@@ -106,7 +106,7 @@ views:
                 't   t   t    w    w   w    w   clr clr ck ck'
                 't   t   t    w    w   w    w   clr clr ck ck'
                 't   t   t    w    w   w    w   clr clr ck ck'
-                'ld  ld  ld   lh   lh  lh   .   .   .   .  . '
+                'ld  ld  ld   lh   lh  lh   .   clb .   ckb . '
                 'llr llr llr  lk   lk  lk   .   fl  fp  o  lfd'
               grid-template-columns: repeat(7,120px)  1fr 1fr 1fr 1fr
               grid-template-rows: repeat(6,126px)
@@ -224,16 +224,16 @@ views:
                 view_layout:
                   grid-area: ck
                 slider:
-                  direction: bottom-top
-                  background: gradient
+                  direction: top-bottom
+                  background: striped
                   use_percentage_bg_opacity: false
-                  use_state_color: true
+                  use_state_color: false
                   show_track: true
-                  force_square: true
-                  invert: false
+                  force_square: false
+                  invert: true
                 action_button:
                   mode: toggle
-                  show: false
+                  show: true
                 icon:
                   icon: hass:blinds
                   show: true
@@ -246,21 +246,49 @@ views:
                 view_layout:
                   grid-area: clr
                 slider:
-                  direction: bottom-top
-                  background: gradient
+                  direction: top-bottom
+                  background: striped
                   use_percentage_bg_opacity: false
-                  use_state_color: true
+                  use_state_color: false
                   show_track: true
                   force_square: true
-                  invert: false
+                  invert: true
                 action_button:
                   mode: toggle
-                  show: false
+                  show: true
                 icon:
                   icon: hass:blinds
                   show: true
                   use_state_color: true
                 compact: false
+              - type: custom:html-template-card
+                title: ''
+                style: |
+                  ha-card: {
+                    opacity: 0.7;
+                  }
+                view_layout:
+                  grid-area: clb
+                ignore_line_breaks: true
+                content: >
+                  <div style='position: absolute; left: 10px; top: -90px;
+                  opacity: 0.7'>
+                    <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.living_room_battery') | float * 100.0/84) | round(0)}}%</b>
+                  </div>
+              - type: custom:html-template-card
+                title: ''
+                style: |
+                  ha-card: {
+                    opacity: 0.7;
+                  }
+                view_layout:
+                  grid-area: ckb
+                ignore_line_breaks: true
+                content: >
+                  <div style='position: absolute; left: 10px; top: -90px;
+                  opacity: 0.7'>
+                    <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.kitchen_battery') | float * 100.0/84) | round(0)}}%</b>
+                  </div>
               - type: custom:slider-button-card
                 entity: switch.pulley_fan
                 name: Pulley Fan
@@ -475,7 +503,7 @@ views:
                 'mc  mc   mf   mf   fl  fl  .   .   .  .  .'
                 'mw  mw   ms   ms   .   .   gs gs   .   . .'
                 'mw  mw   ms  ms    .   .   gs gs   .   . .'
-                'tv  tv   tv   .    .   .   .   .   .  .  .'
+                'tv  tv   tv   .    .   .   gsb .   .  .  .'
                 'vol vol  vol  .    .   .   .   .   .  .  .'
               grid-template-columns: repeat(9,120px)  1fr 90px
               grid-template-rows: 75px repeat(6,126px)
@@ -590,6 +618,21 @@ views:
                   show: true
                   use_state_color: true
                 compact: false
+              - type: custom:html-template-card
+                title: ''
+                style: |
+                  ha-card: {
+                    position: relative;
+                    right: 0px; bottom: 0px;
+                  }
+                view_layout:
+                  grid-area: tv
+                ignore_line_breaks: true
+                content: >
+                  <div style='position: absolute; right: 140px; top: -60px;
+                  opacity: 0.7'>
+                    <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.master_window_battery') | float * 100.0/84) | round(0)}}%</b>
+                  </div>
               - type: custom:slider-button-card
                 entity: cover.master_slider
                 name: Master Slider
@@ -615,6 +658,20 @@ views:
                   show: true
                   use_state_color: true
                 compact: false
+              - type: custom:html-template-card
+                title: ''
+                style: |
+                  ha-card: {
+
+                  }
+                view_layout:
+                  grid-area: tv
+                ignore_line_breaks: true
+                content: >
+                  <div style='position: absolute; right: -80px; top: -60px;
+                  opacity: 0.7'>
+                    <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.master_slider_battery') | float * 100.0/84) | round(0)}}%</b>
+                  </div>        
               - type: custom:slider-button-card
                 entity: cover.guest_slider
                 name: Guest Slider
@@ -654,6 +711,20 @@ views:
                   icon: hass:tv
                   show: true
                   use_state_color: true
+              - type: custom:html-template-card
+                title: ''
+                style: |
+                  ha-card: {
+                    opacity: 0.7;
+                  }
+                view_layout:
+                  grid-area: gsb
+                ignore_line_breaks: true
+                content: >
+                  <div style='position:absolute;top:-60px;right:-80px; opacity:
+                  0.7'>
+                    <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.guest_slider_battery') | float * 100.0/84) | round(0)}}%</b>
+                  </div>
   - title: Batteries
     path: batteries
     icon: mdi:battery

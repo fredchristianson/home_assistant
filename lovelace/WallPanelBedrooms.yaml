@@ -71,18 +71,6 @@ cards:
         icon_height: 24px;
         style: |
           * {color: var(--primary-color)}    
-          ha-icon { height: 24px !important} 
-        tap_action:
-          action: navigate
-          navigation_path: /lovelace-wallboard/weather?kiosk
-        icon: mdi:cloud
-        name: Weather
-        view_layout:
-          grid-area: n4
-      - type: custom:button-card
-        icon_height: 24px;
-        style: |
-          * {color: var(--primary-color)}    
           ha-icon { height: 24px !important}          
         tap_action:
           action: navigate
@@ -90,7 +78,7 @@ cards:
         icon: mdi:home
         name: Floor Plan
         view_layout:
-          grid-area: n5
+          grid-area: n4
       - type: glance
         entities:
           - entity: sensor.my_wall_panel_battery_level
@@ -107,7 +95,7 @@ cards:
         'mc  mc   mf   mf   fl  fl  .   .   .  .  .'
         'mw  mw   ms   ms   .   .   gs gs   .   . .'
         'mw  mw   ms  ms    .   .   gs gs   .   . .'
-        'tv  tv   tv   .    .   .   .   .   .  .  .'
+        'tv  tv   tv   .    .   .   gsb .   .  .  .'
         'vol vol  vol  .    .   .   .   .   .  .  .'
       grid-template-columns: repeat(9,120px)  1fr 90px
       grid-template-rows: 75px repeat(6,126px)
@@ -122,10 +110,8 @@ cards:
           grid-area: tp
         content: >
           <ha-icon icon="mdi:thermometer"></ha-icon>
-          <b>{{states('sensor.ecobee_bedroom_temperature')}}&deg;</b> 
-          <i>{% if
-          states('binary_sensor.ecobee_bedroom_occupancy')=="on" %}
-          occupied 
+          <b>{{states('sensor.ecobee_bedroom_temperature')}}&deg;</b>  <i>{% if
+          states('binary_sensor.ecobee_bedroom_occupancy')=="on" %} occupied 
               {% else %} {% endif %} </i>
       - type: custom:slider-button-card
         entity: light.master_ceiling
@@ -222,6 +208,21 @@ cards:
           show: true
           use_state_color: true
         compact: false
+      - type: custom:html-template-card
+        title: ''
+        style: |
+          ha-card: {
+            position: relative;
+            right: 0px; bottom: 0px;
+          }
+        view_layout:
+          grid-area: tv
+        ignore_line_breaks: true
+        content: |
+          <div style='position: absolute; right: 140px; top: -60px; opacity: 0.7'>
+            <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.master_window_battery') | float * 100.0/84) | round(0)}}%</b>
+          </div>
+
       - type: custom:slider-button-card
         entity: cover.master_slider
         name: Master Slider
@@ -247,6 +248,19 @@ cards:
           show: true
           use_state_color: true
         compact: false
+      - type: custom:html-template-card
+        title: ''
+        style: |
+          ha-card: {
+
+          }
+        view_layout:
+          grid-area: tv
+        ignore_line_breaks: true
+        content: |
+          <div style='position: absolute; right: -80px; top: -60px; opacity: 0.7'>
+            <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.master_slider_battery') | float * 100.0/84) | round(0)}}%</b>
+          </div>        
       - type: custom:slider-button-card
         entity: cover.guest_slider
         name: Guest Slider
@@ -286,3 +300,17 @@ cards:
           icon: hass:tv
           show: true
           use_state_color: true
+
+      - type: custom:html-template-card
+        title: ''
+        style: |
+          ha-card: {
+            opacity: 0.7;
+          }
+        view_layout:
+          grid-area: gsb
+        ignore_line_breaks: true
+        content: |
+          <div style='position:absolute;top:-60px;right:-80px; opacity: 0.7'>
+            <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.guest_slider_battery') | float * 100.0/84) | round(0)}}%</b>
+          </div>
