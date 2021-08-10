@@ -207,13 +207,38 @@ cards:
       - type: custom:slider-button-card
         entity: cover.kitchen
         name: Kitchen Shade
-        style: ha-card .name {}
+        style: |
+          :host {
+            --state-color-on: black;
+            --state-color-off: yellow;
+            --label-text-shadow: 2px 2px #777777;
+            --state-text-shadow: 2px 2px #777777;
+            --ha-card-background:  var(--slider-color) ;
+            --icon-color: rgba(255,0,0,0.5);
+          }
+          ha-card .state {
+            color: #eeeeee !important;
+          }
+
+          .slider-bg {
+            opacity: 0.4 !important;
+            background-color: #444444  !important;
+          
+          }
+          .slider-thumb::after {
+            opacity: 1.0 !important;
+            background-color: var(--slider-color)  !important;
+          }
+
+          .icon ha-icon {
+            color: rgba(0,0,0,0.5) !important;
+          }
         view_layout:
           grid-area: ck
         slider:
           direction: top-bottom
-          background: striped
-          use_percentage_bg_opacity: false
+          background: custom
+          use_percentage_bg_opacity: true
           use_state_color: false
           show_track: true
           force_square: false
@@ -229,16 +254,41 @@ cards:
       - type: custom:slider-button-card
         entity: cover.living_room
         name: Living Room Shade
-        style: ha-card .name {}
+        style: |
+          :host {
+            --state-color-on: black;
+            --state-color-off: yellow;
+            --label-text-shadow: 2px 2px #777777;
+            --state-text-shadow: 2px 2px #777777;
+            --ha-card-background:  var(--slider-color) ;
+            --icon-color: rgba(255,0,0,0.5);
+          }
+          ha-card .state {
+            color: #eeeeee !important;
+          }
+
+          .slider-bg {
+            opacity: 0.4 !important;
+            background-color: #444444  !important;
+          
+          }
+          .slider-thumb::after {
+            opacity: 1.0 !important;
+            background-color: var(--slider-color)  !important;
+          }
+
+          .icon ha-icon {
+            color: rgba(0,0,0,0.5) !important;
+          }
         view_layout:
           grid-area: clr
         slider:
           direction: top-bottom
-          background: striped
+          background: custom
           use_percentage_bg_opacity: false
           use_state_color: false
           show_track: true
-          force_square: true
+          force_square: false
           invert: true
         action_button:
           mode: toggle
@@ -259,7 +309,7 @@ cards:
         ignore_line_breaks: true
         content: |
           <div style='position: absolute; left: 10px; top: -90px; opacity: 0.7'>
-            <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.living_room_battery') | float * 100.0/84) | round(0)}}%</b>
+            <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.living_room_battery') | float * 100.0/87) | round(0)}}%</b>
           </div>
       - type: custom:html-template-card
         title: ''
@@ -272,7 +322,7 @@ cards:
         ignore_line_breaks: true
         content: |
           <div style='position: absolute; left: 10px; top: -90px; opacity: 0.7'>
-            <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.kitchen_battery') | float * 100.0/84) | round(0)}}%</b>
+            <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.kitchen_battery') | float * 100.0/87) | round(0)}}%</b>
           </div>
       - type: custom:slider-button-card
         entity: switch.pulley_fan

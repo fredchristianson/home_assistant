@@ -189,12 +189,34 @@ cards:
         view_layout:
           grid-area: mw
         style: |
-          ha-card { --state-color-off: #aaaaaa; 
-                    --paper-item-icon-color: #aaaaaa
-                  }
+          :host {
+            --state-color-on: black;
+            --state-color-off: yellow;
+            --label-text-shadow: 2px 2px #777777;
+            --state-text-shadow: 2px 2px #777777;
+            --ha-card-background:  var(--slider-color) ;
+            --icon-color: rgba(255,0,0,0.5);
+          }
+          ha-card .state {
+            color: #eeeeee !important;
+          }
+
+          .slider-bg {
+            opacity: 0.4 !important;
+            background-color: #444444  !important;
+          
+          }
+          .slider-thumb::after {
+            opacity: 1.0 !important;
+            background-color: var(--slider-color)  !important;
+          }
+
+          .icon ha-icon {
+            color: rgba(0,0,0,0.5) !important;
+          }
         slider:
           direction: top-bottom
-          background: striped
+          background: custom
           use_state_color: false
           use_percentage_bg_opacity: false
           toggle_on_click: false
@@ -204,7 +226,7 @@ cards:
         action_button:
           mode: toggle
         icon:
-          icon: ''
+          icon: hass:blinds
           show: true
           use_state_color: true
         compact: false
@@ -218,23 +240,45 @@ cards:
         view_layout:
           grid-area: tv
         ignore_line_breaks: true
-        content: |
-          <div style='position: absolute; right: 140px; top: -60px; opacity: 0.7'>
-            <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.master_window_battery') | float * 100.0/84) | round(0)}}%</b>
+        content: >
+          <div style='position: absolute; right: 140px; top: -60px; opacity:
+          0.7'>
+            <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.master_window_battery') | float * 100.0/87) | round(0)}}%</b>
           </div>
-
       - type: custom:slider-button-card
         entity: cover.master_slider
         name: Master Slider
         view_layout:
           grid-area: ms
         style: |
-          ha-card { --state-color-off: #aaaaaa; 
-                    --paper-item-icon-color: #aaaaaa
-                  }
+          :host {
+            --state-color-on: black;
+            --state-color-off: yellow;
+            --label-text-shadow: 2px 2px #777777;
+            --state-text-shadow: 2px 2px #777777;
+            --ha-card-background:  var(--slider-color) ;
+            --icon-color: rgba(255,0,0,0.5);
+          }
+          ha-card .state {
+            color: #eeeeee !important;
+          }
+
+          .slider-bg {
+            opacity: 0.4 !important;
+            background-color: #444444  !important;
+          
+          }
+          .slider-thumb::after {
+            opacity: 1.0 !important;
+            background-color: var(--slider-color)  !important;
+          }
+
+          .icon ha-icon {
+            color: rgba(0,0,0,0.5) !important;
+          }
         slider:
           direction: top-bottom
-          background: striped
+          background: custom
           use_state_color: false
           use_percentage_bg_opacity: false
           toggle_on_click: false
@@ -244,22 +288,20 @@ cards:
         action_button:
           mode: toggle
         icon:
-          icon: ''
+          icon: hass:blinds
           show: true
           use_state_color: true
         compact: false
       - type: custom:html-template-card
         title: ''
-        style: |
-          ha-card: {
 
-          }
         view_layout:
           grid-area: tv
         ignore_line_breaks: true
-        content: |
-          <div style='position: absolute; right: -80px; top: -60px; opacity: 0.7'>
-            <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.master_slider_battery') | float * 100.0/84) | round(0)}}%</b>
+        content: >
+          <div style='position: absolute; right: -80px; top: -60px; opacity:
+          0.7'>
+            <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.master_slider_battery') | float * 100.0/87) | round(0)}}%</b>
           </div>        
       - type: custom:slider-button-card
         entity: cover.guest_slider
@@ -267,12 +309,34 @@ cards:
         view_layout:
           grid-area: gs
         style: |
-          ha-card { --state-color-off: #aaaaaa; 
-                    --paper-item-icon-color: #aaaaaa
-                  }
+          :host {
+            --state-color-on: black;
+            --state-color-off: yellow;
+            --label-text-shadow: 2px 2px #777777;
+            --state-text-shadow: 2px 2px #777777;
+            --ha-card-background:  var(--slider-color) ;
+            --icon-color: rgba(255,0,0,0.5);
+          }
+          ha-card .state {
+            color: #eeeeee !important;
+          }
+
+          .slider-bg {
+            opacity: 0.4 !important;
+            background-color: #444444  !important;
+          
+          }
+          .slider-thumb::after {
+            opacity: 1.0 !important;
+            background-color: var(--slider-color)  !important;
+          }
+
+          .icon ha-icon {
+            color: rgba(0,0,0,0.5) !important;
+          }
         slider:
           direction: top-bottom
-          background: striped
+          background: custom
           use_state_color: false
           use_percentage_bg_opacity: false
           toggle_on_click: false
@@ -282,7 +346,7 @@ cards:
         action_button:
           mode: toggle
         icon:
-          icon: ''
+          icon: hass:blinds
           show: true
           use_state_color: true
       - type: custom:slider-button-card
@@ -300,7 +364,6 @@ cards:
           icon: hass:tv
           show: true
           use_state_color: true
-
       - type: custom:html-template-card
         title: ''
         style: |
@@ -312,5 +375,5 @@ cards:
         ignore_line_breaks: true
         content: |
           <div style='position:absolute;top:-60px;right:-80px; opacity: 0.7'>
-            <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.guest_slider_battery') | float * 100.0/84) | round(0)}}%</b>
+            <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.guest_slider_battery') | float * 100.0/87) | round(0)}}%</b>
           </div>
