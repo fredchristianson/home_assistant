@@ -78,6 +78,18 @@ cards:
         name: Floor Plan
         view_layout:
           grid-area: n4
+      - type: custom:button-card
+        icon_height: 24px;
+        style: |
+          * {color: var(--primary-color)}    
+          ha-icon { height: 24px !important}          
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace-wallboard/wifi?kiosk
+        icon: mdi:wifi
+        name: WiFi
+        view_layout:
+          grid-area: n6
       - type: glance
         entities:
           - entity: sensor.my_wall_panel_battery_level
@@ -223,7 +235,7 @@ cards:
           .slider-bg {
             opacity: 0.4 !important;
             background-color: #444444  !important;
-          
+
           }
           .slider-thumb::after {
             opacity: 1.0 !important;
@@ -270,7 +282,7 @@ cards:
           .slider-bg {
             opacity: 0.4 !important;
             background-color: #444444  !important;
-          
+
           }
           .slider-thumb::after {
             opacity: 1.0 !important;

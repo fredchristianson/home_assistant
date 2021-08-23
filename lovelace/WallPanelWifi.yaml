@@ -21,16 +21,10 @@ cards:
               --paper-item-icon-color: var(--paper-item-icon-color);
             }  
     cards:
-      - type: custom:simple-clock-card
-        use_military: false
-        font_size: 3rem
-        hide_seconds: true
-        view_layout:
-          grid-area: c
       - type: custom:button-card
         icon_height: 24px;
         style: |
-          * {color: var(--primary-color)}   
+          * {color: var(--primary-color)}    
           ha-icon { height: 24px !important} 
         tap_action:
           action: navigate
@@ -39,7 +33,6 @@ cards:
         name: Living Room
         view_layout:
           grid-area: n1
-          ha-icon { height: 24px !important}
       - type: custom:button-card
         icon_height: 24px;
         style: |
@@ -57,9 +50,6 @@ cards:
         style: |
           * {color: var(--primary-color)}
           ha-icon { height: 24px !important} 
-          #name {
-            border-bottom: 1px solid var(--primary-color);
-          }
         tap_action:
           action: navigate
           navigation_path: /lovelace-wallboard/calendar?kiosk
@@ -79,51 +69,35 @@ cards:
         name: Floor Plan
         view_layout:
           grid-area: n4
-      - type: glance
-        entities:
-          - entity: sensor.my_wall_panel_battery_level
-            name: ''
-        view_layout:
-          grid-area: wb
+      - type: custom:button-card
+        icon_height: 24px;
         style: |
-          ha-card {margin-top: -40px}        
-  - type: custom:layout-card
-    layout_type: custom:grid-layout
-    layout:
-      grid-template-areas: |
-        'today month'
-      grid-template-columns: 240px 1fr
-      grid-template-rows: 1fr
-    cards:        
-      - type: 'custom:atomic-calendar-revive'
-        maxDaysToShow: 30
-        maxEventCount: 6
-        showMonth: true
-        showWeekDay: true
-        showLoader: false
-        hoursFormat: 12h
-        showHiddenText: false
+          * {color: var(--primary-color)}    
+          ha-icon { height: 24px !important}          
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace-wallboard/wifi?kiosk
+        icon: mdi:wifi
+        name: WiFi
         view_layout:
-          grid-area: today
-        entities:
-          - entity: calendar.fred_and_jen
-            icon: mdi:home-heart
-            color: yellow
-          - entity: calendar.fred_s_reminders
-            icon: mdi:home-heart
-            color: blue
-          - entity: calendar.holidays_in_united_states
-            icon: mdi:home-heart
-            color: green
-          - entity: calendar.fred_christianson_gmail_com
-            icon: mdi:home-heart
-            color: yellow
-      - type: calendar
-        entities:
-          - calendar.fred_christianson_gmail_com
-          - calendar.fred_s_reminders
-          - calendar.fred_and_jen
-          - calendar.holidays_in_united_states
-          - calendar.birthdays
-        initial_view: dayGridMonth
-        theme: Caule Light Yellow
+          grid-area: n6
+  - type: markdown
+    card_mod: ''
+    style: >
+      ha-card  {width: 50%; margin: auto auto} ha-markdown {color: blue;
+      font-size: 24px; line-height: 32px; }
+    content: |
+      Network:  **christianson-5G**
+      Alternate (2.4GHz): **christianson-2.4G**
+      Password: **400ggp#22**
+    title: WiFi
+  - type: markdown
+    style: >
+      ha-card  {width: 50%; margin: auto auto} ha-markdown { color:
+      blue;font-size: 24px; line-height: 32px;}
+    content: |-
+      Keycode:  **1776**
+      Press the ulock button on the bottom right after entering the code.
+
+      When leaving, press the lock button on the bottom left to lock the door.
+    title: Front Door

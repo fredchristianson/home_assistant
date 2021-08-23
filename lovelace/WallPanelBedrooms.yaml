@@ -1,379 +1,181 @@
-type: vertical-stack
+type: custom:layout-card
+layout_type: custom:grid-layout
+layout:
+  grid-template-columns: 50% 50%
+  grid-template-rows: auto
 cards:
-  - type: custom:layout-card
-    layout_type: custom:grid-layout
-    layout:
-      grid-template-areas: |
-        'c  .    n1  n2 n3 n4 n5 n6 n7 . wb'
-      grid-template-columns: 240px 50px repeat(7,1fr) 1fr 100px
-      grid-template-rows: 75px
+  - type: custom:html-template-card
+    title: ''
+    content: >
+      <ha-icon icon="mdi:thermometer"></ha-icon>
+      <b>{{states('sensor.ecobee_bedroom_temperature')}}&deg;</b>  <i>{% if
+      states('binary_sensor.ecobee_bedroom_occupancy')=="on" %} occupied 
+          {% else %} {% endif %} </i>
+  - type: custom:gap-card
+  - type: custom:slider-button-card
+    entity: light.master_ceiling
+    name: Master Ceiling
     style: |
-      layout-card {
-        border-bottom: 1px solid red;
-      }
-    card_mod: |
-      style: |
-        div {
-              --test: 12345;
-              --state-icon-active-color: rgb(9, 251, 213);
-              --paper-item-icon-active-color: var(--state-icon-active-color);
-              --state-icon-color: rgb(50,50,255);
-              --paper-item-icon-color: var(--paper-item-icon-color);
-            }  
-    cards:
-      - type: custom:simple-clock-card
-        use_military: false
-        font_size: 3rem
-        hide_seconds: true
-        view_layout:
-          grid-area: c
-      - type: custom:button-card
-        icon_height: 24px;
-        style: |
-          * {color: var(--primary-color)}   
-          ha-icon { height: 24px !important} 
-        tap_action:
-          action: navigate
-          navigation_path: /lovelace-wallboard/wall-panel?kiosk
-        icon: mdi:sofa
-        name: Living Room
-        view_layout:
-          grid-area: n1
-          ha-icon { height: 24px !important}
-      - type: custom:button-card
-        icon_height: 24px;
-        style: |
-          * {color: var(--primary-color)}    
-          ha-icon { height: 24px !important} 
-          #name {
-            border-bottom: 1px solid var(--primary-color);
-          }
-        tap_action:
-          action: navigate
-          navigation_path: /lovelace-wallboard/bedrooms?kiosk
-        icon: mdi:bed
-        name: Bedrooms
-        view_layout:
-          grid-area: n2
-      - type: custom:button-card
-        icon_height: 24px;
-        style: |
-          * {color: var(--primary-color)}
-          ha-icon { height: 24px !important;} 
-        tap_action:
-          action: navigate
-          navigation_path: /lovelace-wallboard/calendar?kiosk
-        icon: mdi:calendar
-        name: Calendar
-        view_layout:
-          grid-area: n3
-      - type: custom:button-card
-        icon_height: 24px;
-        style: |
-          * {color: var(--primary-color)}    
-          ha-icon { height: 24px !important}          
-        tap_action:
-          action: navigate
-          navigation_path: /lovelace-wallboard/floor-plan?kiosk
-        icon: mdi:home
-        name: Floor Plan
-        view_layout:
-          grid-area: n4
-      - type: glance
-        entities:
-          - entity: sensor.my_wall_panel_battery_level
-            name: ''
-        view_layout:
-          grid-area: wb
-        style: |
-          ha-card {margin-top: -40px}            
-  - type: custom:layout-card
-    layout_type: custom:grid-layout
-    layout:
-      grid-template-areas: |
-        'tp  tp   .    .    .   .   .   .   .  .  .'
-        'mc  mc   mf   mf   fl  fl  .   .   .  .  .'
-        'mw  mw   ms   ms   .   .   gs gs   .   . .'
-        'mw  mw   ms  ms    .   .   gs gs   .   . .'
-        'tv  tv   tv   .    .   .   gsb .   .  .  .'
-        'vol vol  vol  .    .   .   .   .   .  .  .'
-      grid-template-columns: repeat(9,120px)  1fr 90px
-      grid-template-rows: 75px repeat(6,126px)
-    cards:
-      - type: custom:html-template-card
-        title: ''
-        style: |
-          ha-card: {
-            height: 20px !important;
-          }
-        view_layout:
-          grid-area: tp
-        content: >
-          <ha-icon icon="mdi:thermometer"></ha-icon>
-          <b>{{states('sensor.ecobee_bedroom_temperature')}}&deg;</b>  <i>{% if
-          states('binary_sensor.ecobee_bedroom_occupancy')=="on" %} occupied 
-              {% else %} {% endif %} </i>
-      - type: custom:slider-button-card
-        entity: light.master_ceiling
-        name: Master Ceiling
-        view_layout:
-          grid-area: mc
-        style: |
-          ha-card { --state-color-off: #aaaaaa; 
-                    --paper-item-icon-color: #aaaaaa;
-                  }
-        slider:
-          direction: left-right
-          background: gradient
-          use_percentage_bg_opacity: true
-          use_state_color: false
-          show_track: true
-          force_square: false
-        action_button:
-          mode: toggle
-        icon:
-          icon: hass:lightbulb
-          show: true
-          use_state_color: true
-        compact: false
-      - type: custom:slider-button-card
-        entity: fan.master
-        name: Master Fan
-        view_layout:
-          grid-area: mf
-        style: |
-          ha-card { --state-color-off: #aaaaaa; 
-                    --paper-item-icon-color: #aaaaaa;
-                  }
-        slider:
-          direction: left-right
-          background: gradient
-          use_percentage_bg_opacity: true
-          use_state_color: false
-          show_track: true
-          force_square: false
-        action_button:
-          mode: toggle
-        icon:
-          icon: hass:fan
-          show: true
-          use_state_color: true
-        compact: false
-      - type: custom:slider-button-card
-        entity: light.freds_lamp
-        name: Fred's Bed Lamp
-        view_layout:
-          grid-area: fl
-        style: |
-          ha-card { --state-color-off: #aaaaaa; 
-                    --paper-item-icon-color: #aaaaaa;
-                  }
-        slider:
-          direction: left-right
-          background: gradient
-          use_percentage_bg_opacity: true
-          use_state_color: false
-          show_track: true
-          force_square: false
-        action_button:
-          mode: toggle
-        icon:
-          icon: hass:lightbulb
-          show: true
-          use_state_color: true
-        compact: false
-      - type: custom:gap-card
-      - type: custom:slider-button-card
-        entity: cover.master_window
-        name: Master Window
-        view_layout:
-          grid-area: mw
-        style: |
-          :host {
-            --state-color-on: black;
-            --state-color-off: yellow;
-            --label-text-shadow: 2px 2px #777777;
-            --state-text-shadow: 2px 2px #777777;
-            --ha-card-background:  var(--slider-color) ;
-            --icon-color: rgba(255,0,0,0.5);
-          }
-          ha-card .state {
-            color: #eeeeee !important;
-          }
+      ha-card { 
+                --state-color-off: #aaaaaa; 
+                --paper-item-icon-color: #aaaaaa;
+                --action-icon-color-on: #ffffff;
+                --action-icon-color-off: #000000;
+                --switch-checked-button-color: #ffffff;
+                --switch-unchecked-button-color: #000000;
+              }
+    slider:
+      direction: left-right
+      background: gradient
+      use_percentage_bg_opacity: true
+      use_state_color: false
+      show_track: true
+      force_square: false
+    action_button:
+      mode: toggle
+    icon:
+      icon: hass:lightbulb
+      show: true
+      use_state_color: true
+    compact: false
+  - type: custom:slider-button-card
+    entity: fan.master
+    name: Master Fan
+    style: |
+      ha-card { 
+                --state-color-off: #aaaaaa; 
+                --paper-item-icon-color: #aaaaaa;
+                --action-icon-color-on: #ffffff;
+                --action-icon-color-off: #000000;
+                --switch-checked-button-color: #ffffff;
+                --switch-unchecked-button-color: #000000;
+              }
 
-          .slider-bg {
-            opacity: 0.4 !important;
-            background-color: #444444  !important;
-          
-          }
-          .slider-thumb::after {
-            opacity: 1.0 !important;
-            background-color: var(--slider-color)  !important;
-          }
+    slider:
+      direction: left-right
+      background: gradient
+      use_percentage_bg_opacity: true
+      use_state_color: false
+      show_track: true
+      force_square: false
+    action_button:
+      mode: custom
+      tap_action:
+        action: toggle
+      hold_action:
+        action: more-info
+    icon:
+      icon: hass:fan
+      show: true
+      use_state_color: true
+    compact: false
+    show_state: false
+  - type: custom:slider-button-card
+    entity: light.freds_bed_lamp
+    name: Fred's Bed Lamp
+    style: |
+      ha-card { 
+                --state-color-off: #aaaaaa; 
+                --paper-item-icon-color: #aaaaaa;
+                --action-icon-color-on: #ffffff;
+                --action-icon-color-off: #000000;
+                 --switch-checked-button-color: #ffffff;
+                --switch-unchecked-button-color: #000000;
+              }
 
-          .icon ha-icon {
-            color: rgba(0,0,0,0.5) !important;
-          }
-        slider:
-          direction: top-bottom
-          background: custom
-          use_state_color: false
-          use_percentage_bg_opacity: false
-          toggle_on_click: false
-          show_track: false
-          force_square: false
-          invert: true
-        action_button:
-          mode: toggle
-        icon:
-          icon: hass:blinds
-          show: true
-          use_state_color: true
-        compact: false
-      - type: custom:html-template-card
-        title: ''
-        style: |
-          ha-card: {
-            position: relative;
-            right: 0px; bottom: 0px;
-          }
-        view_layout:
-          grid-area: tv
-        ignore_line_breaks: true
-        content: >
-          <div style='position: absolute; right: 140px; top: -60px; opacity:
-          0.7'>
-            <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.master_window_battery') | float * 100.0/87) | round(0)}}%</b>
-          </div>
-      - type: custom:slider-button-card
-        entity: cover.master_slider
-        name: Master Slider
-        view_layout:
-          grid-area: ms
-        style: |
-          :host {
-            --state-color-on: black;
-            --state-color-off: yellow;
-            --label-text-shadow: 2px 2px #777777;
-            --state-text-shadow: 2px 2px #777777;
-            --ha-card-background:  var(--slider-color) ;
-            --icon-color: rgba(255,0,0,0.5);
-          }
-          ha-card .state {
-            color: #eeeeee !important;
-          }
+    slider:
+      direction: left-right
+      background: gradient
+      use_percentage_bg_opacity: true
+      use_state_color: false
+      show_track: true
+      force_square: false
+    action_button:
+      mode: custom
+      tap_action:
+        action: toggle
+      hold_action:
+        action: more-info
+    icon:
+      icon: hass:lightbulb
+      show: true
+      use_state_color: true
+    compact: false
+  - type: custom:slider-button-card
+    entity: light.jens_bed_lamp
+    name: Jen's Bed Lamp
+    style: |
+      ha-card { 
+                --state-color-off: #aaaaaa; 
+                --paper-item-icon-color: #aaaaaa;
+                --action-icon-color-on: #ffffff;
+                --action-icon-color-off: #000000;
+                 --switch-checked-button-color: #ffffff;
+                --switch-unchecked-button-color: #000000;
+              }
 
-          .slider-bg {
-            opacity: 0.4 !important;
-            background-color: #444444  !important;
-          
-          }
-          .slider-thumb::after {
-            opacity: 1.0 !important;
-            background-color: var(--slider-color)  !important;
-          }
+    slider:
+      direction: left-right
+      background: gradient
+      use_percentage_bg_opacity: true
+      use_state_color: false
+      show_track: true
+      force_square: false
+    action_button:
+      mode: custom
+      tap_action:
+        action: toggle
+      hold_action:
+        action: more-info
+    icon:
+      icon: hass:lightbulb
+      show: true
+      use_state_color: true
+    compact: false
+  - type: custom:slider-button-card
+    entity: cover.master_window
+    name: Master Window
+    style: |
+      ha-card { --state-color-off: #aaaaaa; 
+                --paper-item-icon-color: #aaaaaa
+              }
+    slider:
+      direction: top-bottom
+      background: striped
+      use_state_color: false
+      use_percentage_bg_opacity: false
+      toggle_on_click: false
+      show_track: false
+      force_square: false
+      invert: true
+    action_button:
+      mode: toggle
+    icon:
+      icon: ''
+      show: true
+      use_state_color: true
+    compact: false
+  - type: custom:slider-button-card
+    entity: cover.master_slider
+    name: Master Slider
+    style: |
+      ha-card { --state-color-off: #aaaaaa; 
+                --paper-item-icon-color: #aaaaaa
+              }
+    slider:
+      direction: top-bottom
+      background: striped
+      use_state_color: false
+      use_percentage_bg_opacity: false
+      toggle_on_click: false
+      show_track: false
+      force_square: false
+      invert: true
+    action_button:
+      mode: toggle
+    icon:
+      icon: ''
+      show: true
+      use_state_color: true
+    compact: false
 
-          .icon ha-icon {
-            color: rgba(0,0,0,0.5) !important;
-          }
-        slider:
-          direction: top-bottom
-          background: custom
-          use_state_color: false
-          use_percentage_bg_opacity: false
-          toggle_on_click: false
-          show_track: false
-          force_square: false
-          invert: true
-        action_button:
-          mode: toggle
-        icon:
-          icon: hass:blinds
-          show: true
-          use_state_color: true
-        compact: false
-      - type: custom:html-template-card
-        title: ''
-
-        view_layout:
-          grid-area: tv
-        ignore_line_breaks: true
-        content: >
-          <div style='position: absolute; right: -80px; top: -60px; opacity:
-          0.7'>
-            <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.master_slider_battery') | float * 100.0/87) | round(0)}}%</b>
-          </div>        
-      - type: custom:slider-button-card
-        entity: cover.guest_slider
-        name: Guest Slider
-        view_layout:
-          grid-area: gs
-        style: |
-          :host {
-            --state-color-on: black;
-            --state-color-off: yellow;
-            --label-text-shadow: 2px 2px #777777;
-            --state-text-shadow: 2px 2px #777777;
-            --ha-card-background:  var(--slider-color) ;
-            --icon-color: rgba(255,0,0,0.5);
-          }
-          ha-card .state {
-            color: #eeeeee !important;
-          }
-
-          .slider-bg {
-            opacity: 0.4 !important;
-            background-color: #444444  !important;
-          
-          }
-          .slider-thumb::after {
-            opacity: 1.0 !important;
-            background-color: var(--slider-color)  !important;
-          }
-
-          .icon ha-icon {
-            color: rgba(0,0,0,0.5) !important;
-          }
-        slider:
-          direction: top-bottom
-          background: custom
-          use_state_color: false
-          use_percentage_bg_opacity: false
-          toggle_on_click: false
-          show_track: false
-          force_square: false
-          invert: true
-        action_button:
-          mode: toggle
-        icon:
-          icon: hass:blinds
-          show: true
-          use_state_color: true
-      - type: custom:slider-button-card
-        entity: switch.samsung_q60
-        name: TV
-        view_layout:
-          grid-area: tv
-        style: |
-          ha-card { --state-color-off: #aaaaaa; 
-                    --paper-item-icon-color: #aaaaaa;
-                  }
-        action_button:
-          mode: toggle
-        icon:
-          icon: hass:tv
-          show: true
-          use_state_color: true
-      - type: custom:html-template-card
-        title: ''
-        style: |
-          ha-card: {
-            opacity: 0.7;
-          }
-        view_layout:
-          grid-area: gsb
-        ignore_line_breaks: true
-        content: |
-          <div style='position:absolute;top:-60px;right:-80px; opacity: 0.7'>
-            <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.guest_slider_battery') | float * 100.0/87) | round(0)}}%</b>
-          </div>
