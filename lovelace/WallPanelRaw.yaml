@@ -17,7 +17,7 @@ views:
             layout_type: custom:grid-layout
             layout:
               grid-template-areas: |
-                'c  .    n1  n2 n3 n4 n5 n6 n7 . wb'
+                'c  .    n1  n2 n3 n4 n5 n6 n7 pi wb'
               grid-template-columns: 240px 50px repeat(7,1fr) 1fr 100px
               grid-template-rows: 75px
             style: |
@@ -60,6 +60,7 @@ views:
                 style: |
                   * {color: var(--primary-color)}    
                   ha-icon { height: 24px !important} 
+                  ha-card { background-color: transparent}
                 tap_action:
                   action: navigate
                   navigation_path: /lovelace-wallboard/bedrooms?kiosk
@@ -98,6 +99,18 @@ views:
                   ha-icon { height: 24px !important}          
                 tap_action:
                   action: navigate
+                  navigation_path: /lovelace-wallboard/led?kiosk&v=5
+                icon: mdi:dots-horizontal-circle
+                name: LED
+                view_layout:
+                  grid-area: n5
+              - type: custom:button-card
+                icon_height: 24px;
+                style: |
+                  * {color: var(--primary-color)}    
+                  ha-icon { height: 24px !important}          
+                tap_action:
+                  action: navigate
                   navigation_path: /lovelace-wallboard/wifi?kiosk
                 icon: mdi:wifi
                 name: WiFi
@@ -105,12 +118,22 @@ views:
                   grid-area: n6
               - type: glance
                 entities:
+                  - entity: sensor.processor_temperature
+                    name: ''
+                view_layout:
+                  grid-area: pi
+                style: >
+                  ha-card {margin-top: -50px; background-color: transparent;
+                  opacity: 0.3; font-size: smaller}
+              - type: glance
+                entities:
                   - entity: sensor.my_wall_panel_battery_level
                     name: ''
                 view_layout:
                   grid-area: wb
-                style: |
-                  ha-card {margin-top: -40px}        
+                style: >
+                  ha-card {margin-top: -50px; background-color:
+                  transparent;}        
           - type: custom:layout-card
             layout_type: custom:grid-layout
             layout:
@@ -118,8 +141,8 @@ views:
                 't   t   t    w    w   w    w   clr clr ck ck'
                 't   t   t    w    w   w    w   clr clr ck ck'
                 't   t   t    w    w   w    w   clr clr ck ck'
-                'ld  ld  ld   lh   lh  lh   .   clb .   ckb . '
-                'llr llr llr  lk   lk  lk   .   fl  fp  o  lfd'
+                'ld  ld  ld   lh   lh  lh   .   clb fl   ckb . '
+                'llr llr llr  lk   lk  lk   lvf lvf fp  o  lfd'
               grid-template-columns: repeat(7,120px)  1fr 1fr 1fr 1fr
               grid-template-rows: repeat(6,126px)
             card_mod: |
@@ -131,20 +154,107 @@ views:
                       --paper-item-icon-color: var(--paper-item-icon-color);
                     }  
             cards:
-              - type: thermostat
+              - type: custom:simple-thermostat
                 entity: climate.ecobee
-                name: ' '
-                view_layout:
-                  grid-area: t
+                decimals: '0'
+                header: false
+                layout:
+                  step: column
+                  sensors:
+                    type: table
+                  mode:
+                    names: true
+                    icons: false
+                sensors:
+                  - entity: sensor.ecobee_bedroom_temperature
+                    name: Bedroom
+                    decimals: 0
+                step_size: '1'
+                hide:
+                  state: true
+                style: |
+                  ha-card {
+                    --st-font-size-xl: 24px;
+                    --st-font-size-m: 20px;
+                    --st-font-size-title: 0px;
+                    --st-font-size-sensors: 14px;
+                    --st-spacing: 2px;
+                    --heat_cool-color: green;
+                  }
                 card_mod:
                   style: |
-                    round-slider {
-                      --xround-slider-path-color: #aaaaff !important;
-                      --round-slider-bar-color: #aaffaa !important;
+                    .mode-title { display: none}
+                    h3.current--value {
+                      background-color: hsl(0deg,70%,30%);
+                      border-radius: 9999px;
+                      display: block;
+                      color: white;
+                      padding: 14px;
+                      width: 60%;
+                      height: 50%;
+                      font-size: 24px;
+                      position: relative;
                     }
-                    #info {
-                      display: none;
+                    .current-wrapper:last-child h3.current--value {
+                      background-color: hsl(250deg,70%,30%) !important;
+                    }  
+                    .active.heat_cool {
+                      background-color: green !important;} 
+
+
+                    .current--value.updating {
+                      background-color: #4444;
+                      color: #ffffff;
                     }
+                    .current--value.updating:after {
+                      content: '- - -';
+                      position: absolute;
+                      top: 30px;
+                      left: 0px;
+                      right: 0px;
+                      opacity: 0.7;
+                      font-size: 14px;
+                      border-radius: 99999px;
+                      background-color: transparent;
+                      color: white;
+                      text-align: center;
+                      animation: dots 1s  ease-in-out;
+                      animation-iteration-count: 15;
+                    }
+
+                    @keyframes dots {
+                      0% { transform: translate(-20px,0px);}
+                      50% { transform: translate(20px,0px);}
+                      100% { transform: translate(-20px,0px);}
+                    }
+
+                    ha-icon-button { position: relative; }
+                    ha-icon-button[icon="mdi:chevron-up"]:before {
+                      content: '^';
+                      position:absolute;
+                      left: 0%;
+                      right: 0%;
+                      margin-top: 1.5rem;
+                      font-size: 3rem;
+                      text-align: center;
+                      color: #777777;
+                    }
+                    ha-icon-button[icon="mdi:chevron-down"]:after {
+                      content: 'v';
+                      position:absolute;
+                      left: 0%;
+                      right: 0%;
+                      margin-top: 1.5rem;
+                      font-size: 2.1rem;
+                      text-align: center;
+                      color: #777777;
+                    }
+                    .modes.heading {
+                      grid-template-columns: 24% 24% 24% 24% !important;
+                      grid-auto-flow: unset;
+                    }
+                view_layout:
+                  grid-area: t
               - type: custom:weather-card
                 entity: weather.openweathermap
                 secondary_info_attribute: humidity
@@ -153,7 +263,7 @@ views:
                 view_layout:
                   grid-area: w
               - type: custom:slider-button-card
-                entity: light.kitchen
+                entity: light.kitchen_light
                 name: Kitchen
                 view_layout:
                   grid-area: lk
@@ -170,11 +280,32 @@ views:
                   icon: hass:lightbulb
                   show: true
                   use_state_color: true
-                compact: tru
+                compact: false
               - type: custom:slider-button-card
-                entity: light.living_room
+                entity: light.hall_light_light
+                name: Hall
+                view_layout:
+                  grid-area: lh
+                slider:
+                  direction: left-right
+                  background: gradient
+                  use_percentage_bg_opacity: true
+                  use_state_color: false
+                  show_track: true
+                  force_square: true
+                action_button:
+                  mode: toggle
+                icon:
+                  icon: hass:lightbulb
+                  show: true
+                  use_state_color: true
+                compact: false
+              - type: custom:slider-button-card
+                entity: light.living_room_light
                 name: Living Room
-                style: 'ha-card .name {font-size: .9rem}'
+                style: |
+                  ha-card  {background-color: transparent}
+                  ha-card .name {font-size: .9rem}
                 view_layout:
                   grid-area: llr
                 slider:
@@ -192,15 +323,18 @@ views:
                   use_state_color: true
                 compact: false
               - type: custom:slider-button-card
-                entity: light.hall
-                name: Hall
+                entity: switch.plug_3
+                name: Floor Lamp
+                style: |
+                  ha-card  {background-color: transparent}
+                  ha-card .name {font-size: .9rem}
                 view_layout:
-                  grid-area: lh
+                  grid-area: lvf
                 slider:
                   direction: left-right
                   background: gradient
                   use_percentage_bg_opacity: true
-                  use_state_color: true
+                  use_state_color: false
                   show_track: true
                   force_square: true
                 action_button:
@@ -208,10 +342,10 @@ views:
                 icon:
                   icon: hass:lightbulb
                   show: true
-                  use_state_color: true
+                  use_state_color: false
                 compact: false
               - type: custom:slider-button-card
-                entity: light.dining
+                entity: light.dining_light
                 name: Dining
                 view_layout:
                   grid-area: ld
@@ -230,7 +364,7 @@ views:
                   use_state_color: true
                 compact: false
               - type: custom:slider-button-card
-                entity: cover.kitchen
+                entity: cover.kitchen_window
                 name: Kitchen Shade
                 style: |
                   :host {
@@ -277,7 +411,7 @@ views:
                   use_state_color: true
                 compact: false
               - type: custom:slider-button-card
-                entity: cover.living_room
+                entity: cover.living_room_window
                 name: Living Room Shade
                 style: |
                   :host {
@@ -285,7 +419,7 @@ views:
                     --state-color-off: yellow;
                     --label-text-shadow: 2px 2px #777777;
                     --state-text-shadow: 2px 2px #777777;
-                    --ha-card-background:  var(--slider-color) ;
+                    --ha-card-background:  transparent;
                     --icon-color: rgba(255,0,0,0.5);
                   }
                   ha-card .state {
@@ -323,20 +457,44 @@ views:
                   show: true
                   use_state_color: true
                 compact: false
-              - type: custom:html-template-card
-                title: ''
+              - type: vertical-stack
                 style: |
-                  ha-card: {
-                    opacity: 0.7;
-                  }
+                  * {
+                    --ha-card-background: red;
+                    background-color: red !important;
+                  }      
+                cards:
+                  - type: custom:html-template-card
+                    title: ''
+                    card_mod:
+                      style: |
+                        ha-card {
+                          --ha-card-background: red !important; height: 4rem;
+                          padding: 0px !important;
+                        }
+                        .: |
+                          ha-card: {
+                            padding: 0px !important;
+                            --ha-card-background: red !important; height: 4rem;
+                          }
+                    style: |
+                      ha-card {
+                        --ha-card-background: red; height: 4rem;
+                        padding: 0px !important;
+                      }
+                      ha-card {
+                        opacity: 0.0; padding: 0px !important;
+                        background-color: red !important;
+                        --ha-card-background: red;
+                      }
+                    ignore_line_breaks: true
+                    content: >
+                      <div style='position: absolute; left: 10px; top: -90px;
+                      opacity: 0.7'>
+                        <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.living_room_window_battery') | float * 100.0/87) | round(0)}}%</b>
+                      </div>
                 view_layout:
                   grid-area: clb
-                ignore_line_breaks: true
-                content: >
-                  <div style='position: absolute; left: 10px; top: -90px;
-                  opacity: 0.7'>
-                    <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.living_room_battery') | float * 100.0/87) | round(0)}}%</b>
-                  </div>
               - type: custom:html-template-card
                 title: ''
                 style: |
@@ -349,10 +507,10 @@ views:
                 content: >
                   <div style='position: absolute; left: 10px; top: -90px;
                   opacity: 0.7'>
-                    <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.kitchen_battery') | float * 100.0/87) | round(0)}}%</b>
+                    <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.kitchen_window_battery') | float * 100.0/87) | round(0)}}%</b>
                   </div>
               - type: custom:slider-button-card
-                entity: switch.pulley_fan
+                entity: switch.pulley_fan_switch_1
                 name: Pulley Fan
                 view_layout:
                   grid-area: fp
@@ -373,7 +531,7 @@ views:
                   use_state_color: false
                 compact: false
               - type: custom:slider-button-card
-                entity: switch.lanai_fan
+                entity: switch.lanai_fan_switch_1
                 name: Lanai Fan
                 view_layout:
                   grid-area: fl
@@ -586,7 +744,7 @@ views:
                   occupied 
                       {% else %} {% endif %} </i>
               - type: custom:slider-button-card
-                entity: light.master_ceiling
+                entity: light.master_ceiling_lights
                 name: Master Ceiling
                 view_layout:
                   grid-area: mc
@@ -609,7 +767,7 @@ views:
                   use_state_color: true
                 compact: false
               - type: custom:slider-button-card
-                entity: fan.master
+                entity: fan.master_fan
                 name: Master Fan
                 view_layout:
                   grid-area: mf
@@ -631,32 +789,9 @@ views:
                   show: true
                   use_state_color: true
                 compact: false
-              - type: custom:slider-button-card
-                entity: light.freds_lamp
-                name: Fred's Bed Lamp
-                view_layout:
-                  grid-area: fl
-                style: |
-                  ha-card { --state-color-off: #aaaaaa; 
-                            --paper-item-icon-color: #aaaaaa;
-                          }
-                slider:
-                  direction: left-right
-                  background: gradient
-                  use_percentage_bg_opacity: true
-                  use_state_color: false
-                  show_track: true
-                  force_square: false
-                action_button:
-                  mode: toggle
-                icon:
-                  icon: hass:lightbulb
-                  show: true
-                  use_state_color: true
-                compact: false
               - type: custom:gap-card
               - type: custom:slider-button-card
-                entity: cover.master_window
+                entity: cover.master_shade
                 name: Master Window
                 view_layout:
                   grid-area: mw
@@ -775,7 +910,7 @@ views:
                     <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.master_slider_battery') | float * 100.0/87) | round(0)}}%</b>
                   </div>        
               - type: custom:slider-button-card
-                entity: cover.guest_slider
+                entity: cover.guest_window
                 name: Guest Slider
                 view_layout:
                   grid-area: gs
@@ -788,6 +923,7 @@ views:
                     --ha-card-background:  var(--slider-color) ;
                     --icon-color: rgba(255,0,0,0.5);
                   }
+                  ha-card { left: -9990px;}
                   ha-card .state {
                     color: #eeeeee !important;
                   }
@@ -820,34 +956,19 @@ views:
                   icon: hass:blinds
                   show: true
                   use_state_color: true
-              - type: custom:slider-button-card
-                entity: switch.samsung_q60
-                name: TV
-                view_layout:
-                  grid-area: tv
-                style: |
-                  ha-card { --state-color-off: #aaaaaa; 
-                            --paper-item-icon-color: #aaaaaa;
-                          }
-                action_button:
-                  mode: toggle
-                icon:
-                  icon: hass:tv
-                  show: true
-                  use_state_color: true
               - type: custom:html-template-card
                 title: ''
                 style: |
                   ha-card: {
-                    opacity: 0.7;
+                    opacity: 0.0;
                   }
                 view_layout:
                   grid-area: gsb
                 ignore_line_breaks: true
                 content: >
                   <div style='position:absolute;top:-60px;right:-80px; opacity:
-                  0.7'>
-                    <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.guest_slider_battery') | float * 100.0/87) | round(0)}}%</b>
+                  0.0'>
+                    <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.guest_window_battery') | float * 100.0/87) | round(0)}}%</b>
                   </div>
   - title: Floor Plan
     path: floor-plan
@@ -1074,6 +1195,7 @@ views:
                       action: toggle
                     state_image:
                       'on': https://22.400ggp.com/local/images/v2/fan-dining.png?v=4
+                      'off': https://22.400ggp.com/local/images/v2/fan-dining.png?v=4
                   - type: image
                     entity: switch.pulley_fan
                     tap_action:
@@ -1343,109 +1465,6 @@ views:
                       z-index: 700
                       width: 70px
                       height: 70px
-              - type: vertical-stack
-                view_layout:
-                  grid-area: th
-                cards:
-                  - type: custom:simple-thermostat
-                    entity: climate.ecobee
-                    layout:
-                      step: column
-                    card_mod:
-                      style: |
-                        ha-icon, ha-card {
-                          --primary-text-color: var(--cool-color)
-                        }
-                    header: false
-                    control: false
-                    setpoints:
-                      target_temp_low:
-                        hide: true
-                      target_temp_high:
-                        hide: false
-                  - type: horizontal-stack
-                    cards:
-                      - type: custom:html-template-card
-                        title: ''
-                        style: |
-                          ha-card: {
-                            width: 1rem !important;
-                            height: 1px !important;
-                          }
-                        content: |
-                          <p></p>
-                      - type: button
-                        tap_action:
-                          action: call-service
-                          service: climate.set_temperature
-                          service_data:
-                            target_temp_high: 70
-                            target_temp_low: 66
-                          target:
-                            entity_id: climate.ecobee
-                        entity: climate.ecobee
-                        icon: hass:thermostat
-                        show_name: true
-                        show_icon: false
-                        name: 70°
-                        style: |
-                          :host {
-                            outline: 2px solid var(--primary-text-color);
-                          }
-                      - type: button
-                        tap_action:
-                          action: call-service
-                          service: climate.set_temperature
-                          service_data:
-                            target_temp_high: 72
-                            target_temp_low: 66
-                          target:
-                            entity_id: climate.ecobee
-                        entity: climate.ecobee
-                        icon: hass:thermostat
-                        show_name: true
-                        show_icon: false
-                        name: 72°
-                        style: |
-                          :host {
-                            outline: 2px solid var(--primary-text-color);
-                          }
-                      - type: button
-                        tap_action:
-                          action: call-service
-                          service: climate.set_temperature
-                          service_data:
-                            target_temp_high: 74
-                            target_temp_low: 68
-                          target:
-                            entity_id: climate.ecobee
-                        entity: climate.ecobee
-                        icon: hass:thermostat
-                        show_name: true
-                        show_icon: false
-                        name: 74°
-                        style: |
-                          :host {
-                            outline: 2px solid var(--primary-text-color);
-                          }
-                      - type: button
-                        tap_action:
-                          action: call-service
-                          service: climate.set_temperature
-                          service_data:
-                            target_temp_high: 76
-                            target_temp_low: 70
-                          target:
-                            entity_id: climate.ecobee
-                        style: |
-                          :host {
-                            outline: 2px solid var(--primary-text-color);
-                          }
-                        entity: climate.ecobee
-                        icon: hass:thermostat
-                        show_name: true
-                        show_icon: false
-                        name: 76°
   - title: Camera
     path: camera
     visible: []
@@ -1705,12 +1724,12 @@ views:
             content: |
               Network:  **christianson-5G**
               Alternate (2.4GHz): **christianson-2.4G**
-              Password: **400ggp#22**
+              Password: **400ggp22**
             title: WiFi
           - type: markdown
             style: >
-              ha-card  {width: 50%; margin: auto auto} ha-markdown { color:
-              blue;font-size: 24px; line-height: 32px;}
+              ha-card  {display: block; width: 50%; margin: auto auto}
+              ha-markdown { color: blue;font-size: 24px; line-height: 32px;}
             content: >-
               Keycode:  **1776**
 
@@ -1721,3 +1740,128 @@ views:
               When leaving, press the lock button on the bottom left to lock the
               door.
             title: Front Door
+  - title: LEDs
+    path: led
+    type: panel
+    visible:
+      - user: f99870c3980146f6acd13c412710785f
+      - user: babcab3cebe54977847848b7950c97bf
+      - user: f5c633a188f543c7ace4bf32849a67dd
+      - user: b44115047307422f9f5a43667c74ffc3
+    icon: mdi:dots-horizontal-circle
+    badges: []
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: custom:layout-card
+            layout_type: custom:grid-layout
+            layout:
+              grid-template-areas: |
+                'c  .    n1  n2 n3 n4 n5 n6 n7 pi wb'
+              grid-template-columns: 240px 50px repeat(7,1fr) 1fr 100px
+              grid-template-rows: 75px
+            style: |
+              layout-card {
+                border-bottom: 1px solid red;
+              }
+            card_mod: |
+              style: |
+                div {
+                      --test: 12345;
+                      --state-icon-active-color: rgb(9, 251, 213);
+                      --paper-item-icon-active-color: var(--state-icon-active-color);
+                      --state-icon-color: rgb(50,50,255);
+                      --paper-item-icon-color: var(--paper-item-icon-color);
+                    }  
+            cards:
+              - type: custom:simple-clock-card
+                use_military: false
+                font_size: 3rem
+                hide_seconds: true
+                view_layout:
+                  grid-area: c
+              - type: custom:button-card
+                icon_height: 24px;
+                style: |
+                  * {color: var(--primary-color)}   
+                  ha-icon { height: 24px !important} 
+                  #name {
+                    border-bottom: 1px solid var(--primary-color);
+                  }
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace-wallboard/wall-panel?kiosk
+                icon: mdi:sofa
+                name: Living Room
+                view_layout:
+                  grid-area: n1
+              - type: custom:button-card
+                icon_height: 24px;
+                style: |
+                  * {color: var(--primary-color)}    
+                  ha-icon { height: 24px !important} 
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace-wallboard/bedrooms?kiosk
+                icon: mdi:bed
+                name: Bedrooms
+                view_layout:
+                  grid-area: n2
+              - type: custom:button-card
+                icon_height: 24px;
+                style: |
+                  * {color: var(--primary-color)}
+                  ha-icon { height: 24px !important} 
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace-wallboard/calendar?kiosk
+                icon: mdi:calendar
+                name: Calendar
+                view_layout:
+                  grid-area: n3
+              - type: custom:button-card
+                icon_height: 24px;
+                style: |
+                  * {color: var(--primary-color)}    
+                  ha-icon { height: 24px !important}          
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace-wallboard/floor-plan?kiosk
+                icon: mdi:home
+                name: Floor Plan
+                view_layout:
+                  grid-area: n4
+              - type: custom:button-card
+                icon_height: 24px;
+                style: |
+                  * {color: var(--primary-color)}    
+                  ha-icon { height: 24px !important}          
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace-wallboard/wifi?kiosk
+                icon: mdi:wifi
+                name: WiFi
+                view_layout:
+                  grid-area: n6
+              - type: glance
+                entities:
+                  - entity: sensor.processor_temperature
+                    name: ''
+                view_layout:
+                  grid-area: pi
+                style: >
+                  ha-card {margin-top: -50px; background-color: transparent;
+                  opacity: 0.3; font-size: smaller}
+              - type: glance
+                entities:
+                  - entity: sensor.my_wall_panel_battery_level
+                    name: ''
+                view_layout:
+                  grid-area: wb
+                style: >
+                  ha-card {margin-top: -50px; background-color:
+                  transparent;}      
+          - type: iframe
+            style: |
+              ha-card {box-shadow: 0 0 }
+            url: https://22.400ggp.com/local/html/leds.html?i=6

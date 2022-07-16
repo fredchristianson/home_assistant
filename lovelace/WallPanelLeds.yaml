@@ -4,12 +4,25 @@ layout:
   grid-template-columns: 50% 50%
   grid-template-rows: auto
 cards:
+  - type: custom:html-template-card
+    title: ''
+    content: >
+      <ha-icon icon="mdi:thermometer"></ha-icon>
+      <b>{{states('sensor.ecobee_bedroom_temperature')}}&deg;</b>  <i>{% if
+      states('binary_sensor.ecobee_bedroom_occupancy')=="on" %} occupied 
+          {% else %} {% endif %} </i>
+  - type: custom:gap-card
   - type: custom:slider-button-card
     entity: light.master_ceiling
     name: Master Ceiling
     style: |
-      ha-card { --state-color-off: #aaaaaa; 
+      ha-card { 
+                --state-color-off: #aaaaaa; 
                 --paper-item-icon-color: #aaaaaa;
+                --action-icon-color-on: #ffffff;
+                --action-icon-color-off: #000000;
+                --switch-checked-button-color: #ffffff;
+                --switch-unchecked-button-color: #000000;
               }
     slider:
       direction: left-right
@@ -26,12 +39,18 @@ cards:
       use_state_color: true
     compact: false
   - type: custom:slider-button-card
-    entity: fan.master_fan
+    entity: fan.master
     name: Master Fan
     style: |
-      ha-card { --state-color-off: #aaaaaa; 
+      ha-card { 
+                --state-color-off: #aaaaaa; 
                 --paper-item-icon-color: #aaaaaa;
+                --action-icon-color-on: #ffffff;
+                --action-icon-color-off: #000000;
+                --switch-checked-button-color: #ffffff;
+                --switch-unchecked-button-color: #000000;
               }
+
     slider:
       direction: left-right
       background: gradient
@@ -40,19 +59,30 @@ cards:
       show_track: true
       force_square: false
     action_button:
-      mode: toggle
+      mode: custom
+      tap_action:
+        action: toggle
+      hold_action:
+        action: more-info
     icon:
       icon: hass:fan
       show: true
       use_state_color: true
     compact: false
+    show_state: false
   - type: custom:slider-button-card
     entity: light.freds_bed_lamp
     name: Fred's Bed Lamp
     style: |
-      ha-card { --state-color-off: #aaaaaa; 
+      ha-card { 
+                --state-color-off: #aaaaaa; 
                 --paper-item-icon-color: #aaaaaa;
+                --action-icon-color-on: #ffffff;
+                --action-icon-color-off: #000000;
+                 --switch-checked-button-color: #ffffff;
+                --switch-unchecked-button-color: #000000;
               }
+
     slider:
       direction: left-right
       background: gradient
@@ -61,13 +91,47 @@ cards:
       show_track: true
       force_square: false
     action_button:
-      mode: toggle
+      mode: custom
+      tap_action:
+        action: toggle
+      hold_action:
+        action: more-info
     icon:
       icon: hass:lightbulb
       show: true
       use_state_color: true
     compact: false
-  - type: custom:gap-card
+  - type: custom:slider-button-card
+    entity: light.jens_bed_lamp
+    name: Jen's Bed Lamp
+    style: |
+      ha-card { 
+                --state-color-off: #aaaaaa; 
+                --paper-item-icon-color: #aaaaaa;
+                --action-icon-color-on: #ffffff;
+                --action-icon-color-off: #000000;
+                 --switch-checked-button-color: #ffffff;
+                --switch-unchecked-button-color: #000000;
+              }
+
+    slider:
+      direction: left-right
+      background: gradient
+      use_percentage_bg_opacity: true
+      use_state_color: false
+      show_track: true
+      force_square: false
+    action_button:
+      mode: custom
+      tap_action:
+        action: toggle
+      hold_action:
+        action: more-info
+    icon:
+      icon: hass:lightbulb
+      show: true
+      use_state_color: true
+    compact: false
   - type: custom:slider-button-card
     entity: cover.master_window
     name: Master Window
@@ -114,25 +178,4 @@ cards:
       show: true
       use_state_color: true
     compact: false
-  - type: custom:slider-button-card
-    entity: cover.guest_window
-    name: Guest Slider
-    style: |
-      ha-card { --state-color-off: #aaaaaa; 
-                --paper-item-icon-color: #aaaaaa
-              }
-    slider:
-      direction: top-bottom
-      background: striped
-      use_state_color: false
-      use_percentage_bg_opacity: false
-      toggle_on_click: false
-      show_track: false
-      force_square: false
-      invert: true
-    action_button:
-      mode: toggle
-    icon:
-      icon: ''
-      show: true
-      use_state_color: true
+

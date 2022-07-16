@@ -4,7 +4,7 @@ cards:
     layout_type: custom:grid-layout
     layout:
       grid-template-areas: |
-        'c  .    n1  n2 n3 n4 n5 n6 n7 . wb'
+        'c  .    n1  n2 n3 n4 n5 n6 n7 pi wb'
       grid-template-columns: 240px 50px repeat(7,1fr) 1fr 100px
       grid-template-rows: 75px
     style: |
@@ -47,6 +47,7 @@ cards:
         style: |
           * {color: var(--primary-color)}    
           ha-icon { height: 24px !important} 
+          ha-card { background-color: transparent}
         tap_action:
           action: navigate
           navigation_path: /lovelace-wallboard/bedrooms?kiosk
@@ -85,6 +86,18 @@ cards:
           ha-icon { height: 24px !important}          
         tap_action:
           action: navigate
+          navigation_path: /lovelace-wallboard/led?kiosk&v=3
+        icon: mdi:dots-horizontal-circle
+        name: LED
+        view_layout:
+          grid-area: n5
+      - type: custom:button-card
+        icon_height: 24px;
+        style: |
+          * {color: var(--primary-color)}    
+          ha-icon { height: 24px !important}          
+        tap_action:
+          action: navigate
           navigation_path: /lovelace-wallboard/wifi?kiosk
         icon: mdi:wifi
         name: WiFi
@@ -92,12 +105,21 @@ cards:
           grid-area: n6
       - type: glance
         entities:
+          - entity: sensor.processor_temperature
+            name: ''
+        view_layout:
+          grid-area: pi
+        style: >
+          ha-card {margin-top: -50px; background-color: transparent; opacity:
+          0.3; font-size: smaller}
+      - type: glance
+        entities:
           - entity: sensor.my_wall_panel_battery_level
             name: ''
         view_layout:
           grid-area: wb
         style: |
-          ha-card {margin-top: -40px}        
+          ha-card {margin-top: -50px; background-color: transparent;}        
   - type: custom:layout-card
     layout_type: custom:grid-layout
     layout:
@@ -105,8 +127,8 @@ cards:
         't   t   t    w    w   w    w   clr clr ck ck'
         't   t   t    w    w   w    w   clr clr ck ck'
         't   t   t    w    w   w    w   clr clr ck ck'
-        'ld  ld  ld   lh   lh  lh   .   clb .   ckb . '
-        'llr llr llr  lk   lk  lk   .   fl  fp  o  lfd'
+        'ld  ld  ld   lh   lh  lh   .   clb fl   ckb . '
+        'llr llr llr  lk   lk  lk   lvf lvf fp  o  lfd'
       grid-template-columns: repeat(7,120px)  1fr 1fr 1fr 1fr
       grid-template-rows: repeat(6,126px)
     card_mod: |
@@ -118,20 +140,107 @@ cards:
               --paper-item-icon-color: var(--paper-item-icon-color);
             }  
     cards:
-      - type: thermostat
+      - type: custom:simple-thermostat
         entity: climate.ecobee
-        name: ' '
-        view_layout:
-          grid-area: t
+        decimals: '0'
+        header: false
+        layout:
+          step: column
+          sensors:
+            type: table
+          mode:
+            names: true
+            icons: false
+        sensors:
+          - entity: sensor.ecobee_bedroom_temperature
+            name: Bedroom
+            decimals: 0
+        step_size: '1'
+        hide:
+          state: true
+        style: |
+          ha-card {
+            --st-font-size-xl: 24px;
+            --st-font-size-m: 20px;
+            --st-font-size-title: 0px;
+            --st-font-size-sensors: 14px;
+            --st-spacing: 2px;
+            --heat_cool-color: green;
+          }
         card_mod:
           style: |
-            round-slider {
-              --xround-slider-path-color: #aaaaff !important;
-              --round-slider-bar-color: #aaffaa !important;
+            .mode-title { display: none}
+            h3.current--value {
+              background-color: hsl(0deg,70%,30%);
+              border-radius: 9999px;
+              display: block;
+              color: white;
+              padding: 14px;
+              width: 60%;
+              height: 50%;
+              font-size: 24px;
+              position: relative;
             }
-            #info {
-              display: none;
+            .current-wrapper:last-child h3.current--value {
+              background-color: hsl(250deg,70%,30%) !important;
+            }  
+            .active.heat_cool {
+              background-color: green !important;} 
+
+
+            .current--value.updating {
+              background-color: #4444;
+              color: #ffffff;
             }
+            .current--value.updating:after {
+              content: '- - -';
+              position: absolute;
+              top: 30px;
+              left: 0px;
+              right: 0px;
+              opacity: 0.7;
+              font-size: 14px;
+              border-radius: 99999px;
+              background-color: transparent;
+              color: white;
+              text-align: center;
+              animation: dots 1s  ease-in-out;
+              animation-iteration-count: 15;
+            }
+
+            @keyframes dots {
+              0% { transform: translate(-20px,0px);}
+              50% { transform: translate(20px,0px);}
+              100% { transform: translate(-20px,0px);}
+            }
+
+            ha-icon-button { position: relative; }
+            ha-icon-button[icon="mdi:chevron-up"]:before {
+              content: '^';
+              position:absolute;
+              left: 0%;
+              right: 0%;
+              margin-top: 1.5rem;
+              font-size: 3rem;
+              text-align: center;
+              color: #777777;
+            }
+            ha-icon-button[icon="mdi:chevron-down"]:after {
+              content: 'v';
+              position:absolute;
+              left: 0%;
+              right: 0%;
+              margin-top: 1.5rem;
+              font-size: 2.1rem;
+              text-align: center;
+              color: #777777;
+            }
+            .modes.heading {
+              grid-template-columns: 24% 24% 24% 24% !important;
+              grid-auto-flow: unset;
+            }
+        view_layout:
+          grid-area: t
       - type: custom:weather-card
         entity: weather.openweathermap
         secondary_info_attribute: humidity
@@ -140,7 +249,7 @@ cards:
         view_layout:
           grid-area: w
       - type: custom:slider-button-card
-        entity: light.kitchen
+        entity: light.kitchen_light
         name: Kitchen
         view_layout:
           grid-area: lk
@@ -157,11 +266,32 @@ cards:
           icon: hass:lightbulb
           show: true
           use_state_color: true
-        compact: tru
+        compact: false
       - type: custom:slider-button-card
-        entity: light.living_room
+        entity: light.hall_light_light
+        name: Hall
+        view_layout:
+          grid-area: lh
+        slider:
+          direction: left-right
+          background: gradient
+          use_percentage_bg_opacity: true
+          use_state_color: false
+          show_track: true
+          force_square: true
+        action_button:
+          mode: toggle
+        icon:
+          icon: hass:lightbulb
+          show: true
+          use_state_color: true
+        compact: false
+      - type: custom:slider-button-card
+        entity: light.living_room_light
         name: Living Room
-        style: 'ha-card .name {font-size: .9rem}'
+        style: |
+          ha-card  {background-color: transparent}
+          ha-card .name {font-size: .9rem}
         view_layout:
           grid-area: llr
         slider:
@@ -179,15 +309,18 @@ cards:
           use_state_color: true
         compact: false
       - type: custom:slider-button-card
-        entity: light.hall
-        name: Hall
+        entity: light.floor_light
+        name: Floor Lamp
+        style: |
+          ha-card  {background-color: transparent}
+          ha-card .name {font-size: .9rem}
         view_layout:
-          grid-area: lh
+          grid-area: llr
         slider:
           direction: left-right
           background: gradient
           use_percentage_bg_opacity: true
-          use_state_color: true
+          use_state_color: false
           show_track: true
           force_square: true
         action_button:
@@ -195,10 +328,10 @@ cards:
         icon:
           icon: hass:lightbulb
           show: true
-          use_state_color: true
-        compact: false
+          use_state_color: false
+        compact: false        
       - type: custom:slider-button-card
-        entity: light.dining
+        entity: light.dining_light
         name: Dining
         view_layout:
           grid-area: ld
@@ -217,7 +350,7 @@ cards:
           use_state_color: true
         compact: false
       - type: custom:slider-button-card
-        entity: cover.kitchen
+        entity: cover.kitchen_window
         name: Kitchen Shade
         style: |
           :host {
@@ -264,7 +397,7 @@ cards:
           use_state_color: true
         compact: false
       - type: custom:slider-button-card
-        entity: cover.living_room
+        entity: cover.living_room_window
         name: Living Room Shade
         style: |
           :host {
@@ -272,7 +405,7 @@ cards:
             --state-color-off: yellow;
             --label-text-shadow: 2px 2px #777777;
             --state-text-shadow: 2px 2px #777777;
-            --ha-card-background:  var(--slider-color) ;
+            --ha-card-background:  transparent;
             --icon-color: rgba(255,0,0,0.5);
           }
           ha-card .state {
@@ -310,19 +443,44 @@ cards:
           show: true
           use_state_color: true
         compact: false
-      - type: custom:html-template-card
-        title: ''
+      - type: vertical-stack
         style: |
-          ha-card: {
-            opacity: 0.7;
-          }
+          * {
+            --ha-card-background: red;
+            background-color: red !important;
+          }      
+        cards:
+          - type: custom:html-template-card
+            title: ''
+            card_mod:
+              style: |
+                ha-card {
+                  --ha-card-background: red !important; height: 4rem;
+                  padding: 0px !important;
+                }
+                .: |
+                  ha-card: {
+                    padding: 0px !important;
+                    --ha-card-background: red !important; height: 4rem;
+                  }
+            style: |
+              ha-card {
+                --ha-card-background: red; height: 4rem;
+                padding: 0px !important;
+              }
+              ha-card {
+                opacity: 0.0; padding: 0px !important;
+                background-color: red !important;
+                --ha-card-background: red;
+              }
+            ignore_line_breaks: true
+            content: >
+              <div style='position: absolute; left: 10px; top: -90px; opacity:
+              0.7'>
+                <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.living_room_window_battery') | float * 100.0/87) | round(0)}}%</b>
+              </div>
         view_layout:
           grid-area: clb
-        ignore_line_breaks: true
-        content: |
-          <div style='position: absolute; left: 10px; top: -90px; opacity: 0.7'>
-            <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.living_room_battery') | float * 100.0/87) | round(0)}}%</b>
-          </div>
       - type: custom:html-template-card
         title: ''
         style: |
@@ -334,10 +492,10 @@ cards:
         ignore_line_breaks: true
         content: |
           <div style='position: absolute; left: 10px; top: -90px; opacity: 0.7'>
-            <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.kitchen_battery') | float * 100.0/87) | round(0)}}%</b>
+            <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.kitchen_window_battery') | float * 100.0/87) | round(0)}}%</b>
           </div>
       - type: custom:slider-button-card
-        entity: switch.pulley_fan
+        entity: switch.pulley_fan_switch_1
         name: Pulley Fan
         view_layout:
           grid-area: fp
@@ -358,7 +516,7 @@ cards:
           use_state_color: false
         compact: false
       - type: custom:slider-button-card
-        entity: switch.lanai_fan
+        entity: switch.lanai_fan_switch_1
         name: Lanai Fan
         view_layout:
           grid-area: fl

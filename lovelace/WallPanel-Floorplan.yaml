@@ -498,7 +498,7 @@ cards:
           - type: custom:simple-thermostat
             entity: climate.ecobee
             layout:
-              step: column
+              step: row
             card_mod:
               style: |
                 ha-icon, ha-card {
@@ -507,10 +507,8 @@ cards:
             header: false
             control: false
             setpoints:
-              target_temp_low:
-                hide: true
+              target_temp_low: 
               target_temp_high:
-                hide: false
           - type: horizontal-stack
             cards:
               - type: custom:html-template-card
