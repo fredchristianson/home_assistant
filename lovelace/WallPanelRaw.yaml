@@ -8,7 +8,7 @@ views:
     path: wall-panel
     icon: mdi:sofa
     panel: true
-    theme: Caule Black Aqua Glass
+    theme: Mushroom
     badges: []
     cards:
       - type: vertical-stack
@@ -18,7 +18,7 @@ views:
             layout:
               grid-template-areas: |
                 'c  .    n1  n2 n3 n4 n5 n6 n7 pi wb'
-              grid-template-columns: 240px 50px repeat(7,1fr) 1fr 100px
+              grid-template-columns: 240px 50px repeat(7,1fr) 1fr 1fr
               grid-template-rows: 75px
             style: |
               layout-card {
@@ -87,23 +87,11 @@ views:
                   ha-icon { height: 24px !important}          
                 tap_action:
                   action: navigate
-                  navigation_path: /lovelace-wallboard/floor-plan?kiosk
-                icon: mdi:home
-                name: Floor Plan
-                view_layout:
-                  grid-area: n4
-              - type: custom:button-card
-                icon_height: 24px;
-                style: |
-                  * {color: var(--primary-color)}    
-                  ha-icon { height: 24px !important}          
-                tap_action:
-                  action: navigate
                   navigation_path: /lovelace-wallboard/led?kiosk&v=5
                 icon: mdi:dots-horizontal-circle
                 name: LED
                 view_layout:
-                  grid-area: n5
+                  grid-area: n4
               - type: custom:button-card
                 icon_height: 24px;
                 style: |
@@ -115,36 +103,35 @@ views:
                 icon: mdi:wifi
                 name: WiFi
                 view_layout:
-                  grid-area: n6
-              - type: glance
-                entities:
-                  - entity: sensor.processor_temperature
-                    name: ''
+                  grid-area: n5
+              - type: custom:mushroom-chips-card
+                chips:
+                  - type: entity
+                    entity: sensor.processor_temperature
+                    use_entity_picture: true
                 view_layout:
                   grid-area: pi
                 style: >
-                  ha-card {margin-top: -50px; background-color: transparent;
-                  opacity: 0.3; font-size: smaller}
-              - type: glance
-                entities:
-                  - entity: sensor.my_wall_panel_battery_level
-                    name: ''
+                  ha-card { background-color: transparent; opacity: 0.3;
+                  font-size: smaller}
+              - type: custom:mushroom-chips-card
+                chips:
+                  - type: entity
+                    entity: sensor.my_wall_panel_battery_level
+                    use_entity_picture: true
                 view_layout:
                   grid-area: wb
-                style: >
-                  ha-card {margin-top: -50px; background-color:
-                  transparent;}        
           - type: custom:layout-card
             layout_type: custom:grid-layout
             layout:
               grid-template-areas: |
-                't   t   t    w    w   w    w   clr clr ck ck'
-                't   t   t    w    w   w    w   clr clr ck ck'
-                't   t   t    w    w   w    w   clr clr ck ck'
-                'ld  ld  ld   lh   lh  lh   .   clb fl   ckb . '
-                'llr llr llr  lk   lk  lk   lvf lvf fp  o  lfd'
-              grid-template-columns: repeat(7,120px)  1fr 1fr 1fr 1fr
-              grid-template-rows: repeat(6,126px)
+                't   t   t    w    w   w    w   clr clr clr'
+                't   t   t    w    w   w    w   clr clr clr'
+                't   t   t    w    w   w    w   ck  ck ck'
+                'ld  ld  ld   lh   lh  lh   lvf ck ck ck'
+                'llr llr llr  lk   lk  lk   fl  fp  o  lfd'
+              grid-template-columns: repeat(7,120px)  1fr 1fr 1fr
+              grid-template-rows: repeat(5,140px)
             card_mod: |
               style: |
                 div {
@@ -174,6 +161,7 @@ views:
                   state: true
                 style: |
                   ha-card {
+                    height: 360px;
                     --st-font-size-xl: 24px;
                     --st-font-size-m: 20px;
                     --st-font-size-title: 0px;
@@ -184,6 +172,7 @@ views:
                 card_mod:
                   style: |
                     .mode-title { display: none}
+                    ha-card { height: 360px;}
                     h3.current--value {
                       background-color: hsl(0deg,70%,30%);
                       border-radius: 9999px;
@@ -262,367 +251,142 @@ views:
                 icons: /local/community/weather-card/icons/
                 view_layout:
                   grid-area: w
-              - type: custom:slider-button-card
+                card_mod:
+                  style: |
+                    ha-card { height: 360px;}                  
+              - type: custom:mushroom-light-card
+                name: Hall
+                entity: light.hall_light_light
+                layout: horizontal
+                fill_container: true
+                use_light_color: true
+                show_brightness_control: true
+                show_color_temp_control: false
+                show_color_control: false
+                collapsible_controls: false
+                view_layout:
+                  grid-area: lh
+              - type: custom:mushroom-light-card
+                name: Dining
+                entity: light.dining_light
+                layout: horizontal
+                fill_container: true
+                use_light_color: true
+                show_brightness_control: true
+                show_color_temp_control: false
+                show_color_control: false
+                collapsible_controls: false
+                view_layout:
+                  grid-area: ld
+              - type: custom:mushroom-light-card
+                name: Living Room
+                entity: light.living_room_light
+                layout: horizontal
+                fill_container: true
+                use_light_color: true
+                show_brightness_control: true
+                show_color_temp_control: false
+                show_color_control: false
+                collapsible_controls: false
+                view_layout:
+                  grid-area: llr
+              - type: custom:mushroom-light-card
                 entity: light.kitchen_light
                 name: Kitchen
                 view_layout:
                   grid-area: lk
-                slider:
-                  direction: left-right
-                  background: gradient
-                  use_percentage_bg_opacity: true
-                  use_state_color: false
-                  show_track: true
-                  force_square: true
-                action_button:
-                  mode: toggle
-                icon:
-                  icon: hass:lightbulb
-                  show: true
-                  use_state_color: true
-                compact: false
-              - type: custom:slider-button-card
-                entity: light.hall_light_light
-                name: Hall
-                view_layout:
-                  grid-area: lh
-                slider:
-                  direction: left-right
-                  background: gradient
-                  use_percentage_bg_opacity: true
-                  use_state_color: false
-                  show_track: true
-                  force_square: true
-                action_button:
-                  mode: toggle
-                icon:
-                  icon: hass:lightbulb
-                  show: true
-                  use_state_color: true
-                compact: false
-              - type: custom:slider-button-card
-                entity: light.living_room_light
-                name: Living Room
-                style: |
-                  ha-card  {background-color: transparent}
-                  ha-card .name {font-size: .9rem}
-                view_layout:
-                  grid-area: llr
-                slider:
-                  direction: left-right
-                  background: gradient
-                  use_percentage_bg_opacity: true
-                  use_state_color: false
-                  show_track: true
-                  force_square: true
-                action_button:
-                  mode: toggle
-                icon:
-                  icon: hass:lightbulb
-                  show: true
-                  use_state_color: true
-                compact: false
-              - type: custom:slider-button-card
+                layout: horizontal
+                fill_container: true
+                use_light_color: true
+                show_brightness_control: true
+                show_color_temp_control: false
+                show_color_control: false
+                collapsible_controls: false
+              - type: custom:mushroom-light-card
                 entity: switch.plug_3
                 name: Floor Lamp
-                style: |
-                  ha-card  {background-color: transparent}
-                  ha-card .name {font-size: .9rem}
+                icon: mdi:lightbulb
                 view_layout:
                   grid-area: lvf
-                slider:
-                  direction: left-right
-                  background: gradient
-                  use_percentage_bg_opacity: true
-                  use_state_color: false
-                  show_track: true
-                  force_square: true
-                action_button:
-                  mode: toggle
-                icon:
-                  icon: hass:lightbulb
-                  show: true
-                  use_state_color: false
-                compact: false
-              - type: custom:slider-button-card
-                entity: light.dining_light
-                name: Dining
-                view_layout:
-                  grid-area: ld
-                slider:
-                  direction: left-right
-                  background: gradient
-                  use_percentage_bg_opacity: true
-                  use_state_color: true
-                  show_track: true
-                  force_square: true
-                action_button:
-                  mode: toggle
-                icon:
-                  icon: hass:lightbulb
-                  show: true
-                  use_state_color: true
-                compact: false
-              - type: custom:slider-button-card
+                layout: vertical
+                fill_container: true
+                use_light_color: true
+                show_brightness_control: false
+                show_color_temp_control: false
+                show_color_control: false
+                collapsible_controls: false
+              - type: custom:mushroom-cover-card
                 entity: cover.kitchen_window
-                name: Kitchen Shade
-                style: |
-                  :host {
-                    --state-color-on: black;
-                    --state-color-off: yellow;
-                    --label-text-shadow: 2px 2px #777777;
-                    --state-text-shadow: 2px 2px #777777;
-                    --ha-card-background:  var(--slider-color) ;
-                    --icon-color: rgba(255,0,0,0.5);
-                  }
-                  ha-card .state {
-                    color: #eeeeee !important;
-                  }
-
-                  .slider-bg {
-                    opacity: 0.4 !important;
-                    background-color: #444444  !important;
-
-                  }
-                  .slider-thumb::after {
-                    opacity: 1.0 !important;
-                    background-color: var(--slider-color)  !important;
-                  }
-
-                  .icon ha-icon {
-                    color: rgba(0,0,0,0.5) !important;
-                  }
+                name: Kitchen
+                fill_container: true
+                layout: vertical
+                show_position_control: true
+                show_buttons_control: true
                 view_layout:
                   grid-area: ck
-                slider:
-                  direction: top-bottom
-                  background: custom
-                  use_percentage_bg_opacity: true
-                  use_state_color: false
-                  show_track: true
-                  force_square: false
-                  invert: true
-                action_button:
-                  mode: toggle
-                  show: true
-                icon:
-                  icon: hass:blinds
-                  show: true
-                  use_state_color: true
-                compact: false
-              - type: custom:slider-button-card
+              - type: custom:mushroom-cover-card
                 entity: cover.living_room_window
-                name: Living Room Shade
-                style: |
-                  :host {
-                    --state-color-on: black;
-                    --state-color-off: yellow;
-                    --label-text-shadow: 2px 2px #777777;
-                    --state-text-shadow: 2px 2px #777777;
-                    --ha-card-background:  transparent;
-                    --icon-color: rgba(255,0,0,0.5);
-                  }
-                  ha-card .state {
-                    color: #eeeeee !important;
-                  }
-
-                  .slider-bg {
-                    opacity: 0.4 !important;
-                    background-color: #444444  !important;
-
-                  }
-                  .slider-thumb::after {
-                    opacity: 1.0 !important;
-                    background-color: var(--slider-color)  !important;
-                  }
-
-                  .icon ha-icon {
-                    color: rgba(0,0,0,0.5) !important;
-                  }
+                name: Living Room
+                fill_container: true
+                layout: vertical
+                show_position_control: true
+                show_buttons_control: true
                 view_layout:
                   grid-area: clr
-                slider:
-                  direction: top-bottom
-                  background: custom
-                  use_percentage_bg_opacity: false
-                  use_state_color: false
-                  show_track: true
-                  force_square: false
-                  invert: true
-                action_button:
-                  mode: toggle
-                  show: true
-                icon:
-                  icon: hass:blinds
-                  show: true
-                  use_state_color: true
-                compact: false
-              - type: vertical-stack
-                style: |
-                  * {
-                    --ha-card-background: red;
-                    background-color: red !important;
-                  }      
-                cards:
-                  - type: custom:html-template-card
-                    title: ''
-                    card_mod:
-                      style: |
-                        ha-card {
-                          --ha-card-background: red !important; height: 4rem;
-                          padding: 0px !important;
-                        }
-                        .: |
-                          ha-card: {
-                            padding: 0px !important;
-                            --ha-card-background: red !important; height: 4rem;
-                          }
-                    style: |
-                      ha-card {
-                        --ha-card-background: red; height: 4rem;
-                        padding: 0px !important;
-                      }
-                      ha-card {
-                        opacity: 0.0; padding: 0px !important;
-                        background-color: red !important;
-                        --ha-card-background: red;
-                      }
-                    ignore_line_breaks: true
-                    content: >
-                      <div style='position: absolute; left: 10px; top: -90px;
-                      opacity: 0.7'>
-                        <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.living_room_window_battery') | float * 100.0/87) | round(0)}}%</b>
-                      </div>
+              - type: custom:mushroom-chips-card
+                chips:
+                  - type: entity
+                    entity: sensor.kitchen_window_battery
+                    use_entity_picture: true
                 view_layout:
-                  grid-area: clb
-              - type: custom:html-template-card
-                title: ''
-                style: |
-                  ha-card: {
-                    opacity: 0.7;
-                  }
+                  grid-area: ck
+              - type: custom:mushroom-chips-card
+                chips:
+                  - type: entity
+                    entity: sensor.living_room_window_battery
+                    use_entity_picture: true
                 view_layout:
-                  grid-area: ckb
-                ignore_line_breaks: true
-                content: >
-                  <div style='position: absolute; left: 10px; top: -90px;
-                  opacity: 0.7'>
-                    <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.kitchen_window_battery') | float * 100.0/87) | round(0)}}%</b>
-                  </div>
-              - type: custom:slider-button-card
+                  grid-area: clr
+              - type: custom:mushroom-fan-card
                 entity: switch.pulley_fan_switch_1
                 name: Pulley Fan
+                icon_animation: false
+                fill_container: true
+                layout: vertical
+                icon_type: icon
+                icon: mdi:fan-plus
                 view_layout:
                   grid-area: fp
-                slider:
-                  direction: bottom-top
-                  background: solid
-                  use_percentage_bg_opacity: false
-                  use_state_color: false
-                  show_track: true
-                  force_square: true
-                  toggle_on_click: true
-                action_button:
-                  mode: toggle
-                  show: true
-                icon:
-                  icon: hass:fan
-                  show: true
-                  use_state_color: false
-                compact: false
-              - type: custom:slider-button-card
+              - type: custom:mushroom-fan-card
                 entity: switch.lanai_fan_switch_1
                 name: Lanai Fan
+                icon_animation: false
+                fill_container: true
+                layout: vertical
+                icon_type: icon
+                icon: mdi:fan
                 view_layout:
                   grid-area: fl
-                slider:
-                  direction: bottom-top
-                  background: solid
-                  use_percentage_bg_opacity: false
-                  use_state_color: false
-                  show_track: true
-                  force_square: true
-                  toggle_on_click: true
-                action_button:
-                  mode: toggle
-                  show: true
-                icon:
-                  icon: hass:fan
-                  show: true
-                  use_state_color: false
-                compact: false
-              - type: custom:button-card
-                name: Front Door
+              - type: custom:mushroom-lock-card
                 entity: lock.front_door
-                card_mod:
-                  style: |
-                    ha-card {
-                      height: 100%;
-                    }   
-                icon: mdi:lock
+                fill_container: true
+                layout: vertical
+                primary_info: name
+                secondary_info: state
+                icon_type: none
                 view_layout:
                   grid-area: lfd
-                color: rgb(28, 128, 199)
-                state:
-                  - value: locked
-                    color: green
-                    icon: mdi:lock
-                  - value: unlocked
-                    color: null
-                    icon: mdi:lock-open-variant
-                tap_action:
-                  action: call-service
-                  service: |
-                    [[[
-                      return (entity.state === 'locked') ? 'lock.unlock' : 'lock.lock';
-                    ]]]
-                  service_data:
-                    entity_id: lock.front_door
-              - type: custom:button-card
-                name: ' '
-                label: |
-                  [[[
-                    'xxx'+html`<elt>on</elt>`
-                  ]]]
-                custom_fields:
-                  state: |
-                    [[[
-                      if (states['sensor.snvr104582q_cook_mode'].state == 'Off') { 
-                        return html`<span style='position: absolute;left:50%;bottom: 0%; transform: translate(-50%,0)'>${states['sensor.snvr104582q_cook_mode'].state}</span>`
-                      }
-                      return html`<span style='position: absolute;left:4px;;top: 50%; max-width: 90%; white-space: break-spaces; background-color: rgba(0,0,0,0.4)'>${states['sensor.snvr104582q_cook_mode'].state}</span>`
-                    ]]]
-                  temp: |
-                    [[[
-                      if (states['sensor.snvr104582q_cook_mode'].state == 'Off') { return html``;}
-                      return html`<span style='position: absolute; left: 2px; top: 2px'>
-                              ${entity.attributes.current_temperature}&deg;  <ha-icon icon="mdi:thermometer" style="width: 12px; height: 12px; color: red;"></ha-icon>
-                              </span>`
-                    ]]]
-                show_label: false
+              - type: custom:mushroom-entity-card
                 entity: water_heater.snvr104582q_oven
-                icon: mdi:stove
-                view_layout:
-                  grid-area: o
-                color: rgb(28, 128, 199)
-                state:
-                  - value: 'on'
-                    color: red
-                    icon: mdi:fan
-                  - value: 'off'
-                    color: blue
-                    icon: mdi:lock-open-variant
+                layout: vertical
+                fill_container: true
                 tap_action:
                   action: more-info
-                card_mod:
-                  style: |
-                    ha-card {
-                      height: 100%;
-                    }      
+                name: Oven
   - title: Bedrooms
     path: bedrooms
     icon: mdi:bed
-    theme: Caule Black Blue Glass
+    theme: Mushroom
     panel: true
     badges: []
     cards:
@@ -632,8 +396,8 @@ views:
             layout_type: custom:grid-layout
             layout:
               grid-template-areas: |
-                'c  .    n1  n2 n3 n4 n5 n6 n7 . wb'
-              grid-template-columns: 240px 50px repeat(7,1fr) 1fr 100px
+                'c  .    n1  n2 n3 n4 n5 n6 n7 pi wb'
+              grid-template-columns: 240px 50px repeat(7,1fr) 1fr 1fr
               grid-template-rows: 75px
             style: |
               layout-card {
@@ -660,6 +424,9 @@ views:
                 style: |
                   * {color: var(--primary-color)}   
                   ha-icon { height: 24px !important} 
+                  #name {
+                    border-bottom: 1px solid var(--primary-color);
+                  }
                 tap_action:
                   action: navigate
                   navigation_path: /lovelace-wallboard/wall-panel?kiosk
@@ -667,15 +434,12 @@ views:
                 name: Living Room
                 view_layout:
                   grid-area: n1
-                  ha-icon { height: 24px !important}
               - type: custom:button-card
                 icon_height: 24px;
                 style: |
                   * {color: var(--primary-color)}    
                   ha-icon { height: 24px !important} 
-                  #name {
-                    border-bottom: 1px solid var(--primary-color);
-                  }
+                  ha-card { background-color: transparent}
                 tap_action:
                   action: navigate
                   navigation_path: /lovelace-wallboard/bedrooms?kiosk
@@ -687,7 +451,7 @@ views:
                 icon_height: 24px;
                 style: |
                   * {color: var(--primary-color)}
-                  ha-icon { height: 24px !important;} 
+                  ha-icon { height: 24px !important} 
                 tap_action:
                   action: navigate
                   navigation_path: /lovelace-wallboard/calendar?kiosk
@@ -702,274 +466,122 @@ views:
                   ha-icon { height: 24px !important}          
                 tap_action:
                   action: navigate
-                  navigation_path: /lovelace-wallboard/floor-plan?kiosk
-                icon: mdi:home
-                name: Floor Plan
+                  navigation_path: /lovelace-wallboard/led?kiosk&v=5
+                icon: mdi:dots-horizontal-circle
+                name: LED
                 view_layout:
                   grid-area: n4
-              - type: glance
-                entities:
-                  - entity: sensor.my_wall_panel_battery_level
-                    name: ''
+              - type: custom:button-card
+                icon_height: 24px;
+                style: |
+                  * {color: var(--primary-color)}    
+                  ha-icon { height: 24px !important}          
+                tap_action:
+                  action: navigate
+                  navigation_path: /lovelace-wallboard/wifi?kiosk
+                icon: mdi:wifi
+                name: WiFi
+                view_layout:
+                  grid-area: n5
+              - type: custom:mushroom-chips-card
+                chips:
+                  - type: entity
+                    entity: sensor.processor_temperature
+                    use_entity_picture: true
+                view_layout:
+                  grid-area: pi
+                style: >
+                  ha-card { background-color: transparent; opacity: 0.3;
+                  font-size: smaller}
+              - type: custom:mushroom-chips-card
+                chips:
+                  - type: entity
+                    entity: sensor.my_wall_panel_battery_level
+                    use_entity_picture: true
                 view_layout:
                   grid-area: wb
-                style: |
-                  ha-card {margin-top: -40px}            
           - type: custom:layout-card
             layout_type: custom:grid-layout
             layout:
               grid-template-areas: |
-                'tp  tp   .    .    .   .   .   .   .  .  .'
-                'mc  mc   mf   mf   fl  fl  .   .   .  .  .'
-                'mw  mw   ms   ms   .   .   gs gs   .   . .'
-                'mw  mw   ms  ms    .   .   gs gs   .   . .'
-                'tv  tv   tv   .    .   .   gsb .   .  .  .'
-                'vol vol  vol  .    .   .   .   .   .  .  .'
-              grid-template-columns: repeat(9,120px)  1fr 90px
-              grid-template-rows: 75px repeat(6,126px)
+                'tp  mf   mf   mf    .   .   .   .   .  .  .'
+                'mc  mc   fl   fl    .   .   .   .   .  .  .'
+                'mw  mw   ms   ms    .   .   .   .   .  .  .'
+                'mw  mw   ms   ms    .   .   .   .   .  .  .'
+                '.   .    .    .     .   .   .   .   .  .  .'
+                '.   .    .    .     .   .   .   .   .  .  .'
+              grid-template-columns: repeat(4,160px)  repeat(7,1fr)
+              grid-template-rows: repeat(6,156px)
             cards:
-              - type: custom:html-template-card
-                title: ''
-                style: |
-                  ha-card: {
-                    height: 20px !important;
-                  }
+              - type: custom:mushroom-entity-card
+                entity: sensor.ecobee_bedroom_temperature
+                name: Bedroom
+                fill_container: true
                 view_layout:
                   grid-area: tp
-                content: >
-                  <ha-icon icon="mdi:thermometer"></ha-icon>
-                  <b>{{states('sensor.ecobee_bedroom_temperature')}}&deg;</b> 
-                  <i>{% if
-                  states('binary_sensor.ecobee_bedroom_occupancy')=="on" %}
-                  occupied 
-                      {% else %} {% endif %} </i>
-              - type: custom:slider-button-card
+              - type: custom:mushroom-light-card
                 entity: light.master_ceiling_lights
                 name: Master Ceiling
+                icon: mdi:lightbulb
                 view_layout:
                   grid-area: mc
-                style: |
-                  ha-card { --state-color-off: #aaaaaa; 
-                            --paper-item-icon-color: #aaaaaa;
-                          }
-                slider:
-                  direction: left-right
-                  background: gradient
-                  use_percentage_bg_opacity: true
-                  use_state_color: false
-                  show_track: true
-                  force_square: false
-                action_button:
-                  mode: toggle
-                icon:
-                  icon: hass:lightbulb
-                  show: true
-                  use_state_color: true
-                compact: false
-              - type: custom:slider-button-card
-                entity: fan.master_fan
-                name: Master Fan
+                layout: default
+                fill_container: true
+                use_light_color: true
+                show_brightness_control: true
+                show_color_temp_control: false
+                show_color_control: false
+                collapsible_controls: false
+              - type: custom:mushroom-light-card
+                entity: light.freds_bed_lamp
+                name: Fred's Lamp
+                icon: mdi:lightbulb
+                view_layout:
+                  grid-area: fl
+                fill_container: true
+                use_light_color: true
+                show_brightness_control: true
+                show_color_temp_control: true
+                show_color_control: true
+                collapsible_controls: false
+              - type: entities
+                entities:
+                  - fan.master_fan
                 view_layout:
                   grid-area: mf
-                style: |
-                  ha-card { --state-color-off: #aaaaaa; 
-                            --paper-item-icon-color: #aaaaaa;
-                          }
-                slider:
-                  direction: left-right
-                  background: gradient
-                  use_percentage_bg_opacity: true
-                  use_state_color: false
-                  show_track: true
-                  force_square: false
-                action_button:
-                  mode: toggle
-                icon:
-                  icon: hass:fan
-                  show: true
-                  use_state_color: true
-                compact: false
               - type: custom:gap-card
-              - type: custom:slider-button-card
+              - type: custom:mushroom-cover-card
                 entity: cover.master_shade
                 name: Master Window
+                fill_container: true
+                layout: vertical
+                show_position_control: true
+                show_buttons_control: true
                 view_layout:
                   grid-area: mw
-                style: |
-                  :host {
-                    --state-color-on: black;
-                    --state-color-off: yellow;
-                    --label-text-shadow: 2px 2px #777777;
-                    --state-text-shadow: 2px 2px #777777;
-                    --ha-card-background:  var(--slider-color) ;
-                    --icon-color: rgba(255,0,0,0.5);
-                  }
-                  ha-card .state {
-                    color: #eeeeee !important;
-                  }
-
-                  .slider-bg {
-                    opacity: 0.4 !important;
-                    background-color: #444444  !important;
-
-                  }
-                  .slider-thumb::after {
-                    opacity: 1.0 !important;
-                    background-color: var(--slider-color)  !important;
-                  }
-
-                  .icon ha-icon {
-                    color: rgba(0,0,0,0.5) !important;
-                  }
-                slider:
-                  direction: top-bottom
-                  background: custom
-                  use_state_color: false
-                  use_percentage_bg_opacity: false
-                  toggle_on_click: false
-                  show_track: false
-                  force_square: false
-                  invert: true
-                action_button:
-                  mode: toggle
-                icon:
-                  icon: hass:blinds
-                  show: true
-                  use_state_color: true
-                compact: false
-              - type: custom:html-template-card
-                title: ''
-                style: |
-                  ha-card: {
-                    position: relative;
-                    right: 0px; bottom: 0px;
-                  }
+              - type: custom:mushroom-chips-card
+                chips:
+                  - type: entity
+                    entity: sensor.master_shade_battery
+                    use_entity_picture: true
                 view_layout:
-                  grid-area: tv
-                ignore_line_breaks: true
-                content: >
-                  <div style='position: absolute; right: 140px; top: -60px;
-                  opacity: 0.7'>
-                    <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.master_window_battery') | float * 100.0/87) | round(0)}}%</b>
-                  </div>
-              - type: custom:slider-button-card
+                  grid-area: mw
+              - type: custom:mushroom-cover-card
                 entity: cover.master_slider
                 name: Master Slider
+                fill_container: true
+                layout: vertical
+                show_position_control: true
+                show_buttons_control: true
                 view_layout:
                   grid-area: ms
-                style: |
-                  :host {
-                    --state-color-on: black;
-                    --state-color-off: yellow;
-                    --label-text-shadow: 2px 2px #777777;
-                    --state-text-shadow: 2px 2px #777777;
-                    --ha-card-background:  var(--slider-color) ;
-                    --icon-color: rgba(255,0,0,0.5);
-                  }
-                  ha-card .state {
-                    color: #eeeeee !important;
-                  }
-
-                  .slider-bg {
-                    opacity: 0.4 !important;
-                    background-color: #444444  !important;
-
-                  }
-                  .slider-thumb::after {
-                    opacity: 1.0 !important;
-                    background-color: var(--slider-color)  !important;
-                  }
-
-                  .icon ha-icon {
-                    color: rgba(0,0,0,0.5) !important;
-                  }
-                slider:
-                  direction: top-bottom
-                  background: custom
-                  use_state_color: false
-                  use_percentage_bg_opacity: false
-                  toggle_on_click: false
-                  show_track: false
-                  force_square: false
-                  invert: true
-                action_button:
-                  mode: toggle
-                icon:
-                  icon: hass:blinds
-                  show: true
-                  use_state_color: true
-                compact: false
-              - type: custom:html-template-card
-                title: ''
+              - type: custom:mushroom-chips-card
+                chips:
+                  - type: entity
+                    entity: sensor.master_slider_battery
+                    use_entity_picture: true
                 view_layout:
-                  grid-area: tv
-                ignore_line_breaks: true
-                content: >
-                  <div style='position: absolute; right: -80px; top: -60px;
-                  opacity: 0.7'>
-                    <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.master_slider_battery') | float * 100.0/87) | round(0)}}%</b>
-                  </div>        
-              - type: custom:slider-button-card
-                entity: cover.guest_window
-                name: Guest Slider
-                view_layout:
-                  grid-area: gs
-                style: |
-                  :host {
-                    --state-color-on: black;
-                    --state-color-off: yellow;
-                    --label-text-shadow: 2px 2px #777777;
-                    --state-text-shadow: 2px 2px #777777;
-                    --ha-card-background:  var(--slider-color) ;
-                    --icon-color: rgba(255,0,0,0.5);
-                  }
-                  ha-card { left: -9990px;}
-                  ha-card .state {
-                    color: #eeeeee !important;
-                  }
-
-                  .slider-bg {
-                    opacity: 0.4 !important;
-                    background-color: #444444  !important;
-
-                  }
-                  .slider-thumb::after {
-                    opacity: 1.0 !important;
-                    background-color: var(--slider-color)  !important;
-                  }
-
-                  .icon ha-icon {
-                    color: rgba(0,0,0,0.5) !important;
-                  }
-                slider:
-                  direction: top-bottom
-                  background: custom
-                  use_state_color: false
-                  use_percentage_bg_opacity: false
-                  toggle_on_click: false
-                  show_track: false
-                  force_square: false
-                  invert: true
-                action_button:
-                  mode: toggle
-                icon:
-                  icon: hass:blinds
-                  show: true
-                  use_state_color: true
-              - type: custom:html-template-card
-                title: ''
-                style: |
-                  ha-card: {
-                    opacity: 0.0;
-                  }
-                view_layout:
-                  grid-area: gsb
-                ignore_line_breaks: true
-                content: >
-                  <div style='position:absolute;top:-60px;right:-80px; opacity:
-                  0.0'>
-                    <ha-icon icon="mdi:battery" ></ha-icon><b>{{ (states('sensor.guest_window_battery') | float * 100.0/87) | round(0)}}%</b>
-                  </div>
+                  grid-area: ms
   - title: Floor Plan
     path: floor-plan
     icon: mdi:home-outline
@@ -1053,418 +665,6 @@ views:
                   grid-area: wb
                 style: |
                   ha-card {margin-top: -40px}         
-          - type: custom:layout-card
-            layout_type: custom:grid-layout
-            layout:
-              grid-template-areas: |
-                '.  .  .'
-                'fp . .'
-                'fp th .'
-                'fp . .'
-                '.  .  .'
-              grid-template-columns: 800px auto 1fr
-              grid-template-rows: 1fr 200px 200px 200px 1fr
-            cards:
-              - type: picture-elements
-                image: https://22.400ggp.com/local/images/v2/tile.png?v=4
-                view_layout:
-                  grid-area: fp
-                card_mod:
-                  style: |
-                    ha-card {
-                      --test: 5678
-                      --paper-item-icon-active-color: #ff7700;
-                      --paper-item-icon-color: rgba(255,255,0,0.4);
-                      margin: 0;
-                      padding: 0;
-                      position: relative;
-                      width: 800px !important;
-                      height: 600px !important;
-                    }
-                    ha-card hui-image, ha-card hui-image-element {
-                      position: absolute;
-                      transform: none !important;
-                      left: 0;
-                      top: unset;
-                      bottom: unset;
-                      right: unset;    
-
-                    }     
-
-                    hui-image, img {
-                      width: 100%;
-                      height: 100%;
-                    }
-                    #root {
-                        left: 100px !important
-                        transform: rotate(90deg)
-                      }
-                elements:
-                  - type: image
-                    image: https://22.400ggp.com/local/images/v2/furniture.png?v=4
-                    state_color: false
-                    style:
-                      top: 0
-                      left: 0
-                      transform: none
-                      position: absolute
-                      pointer-events: none
-                  - type: image
-                    image: >-
-                      https://22.400ggp.com/local/images/v2/overlay-unlit.png?v=4
-                  - type: image
-                    image: https://22.400ggp.com/local/images/v2/walls.png?v=4
-                    state_color: false
-                    style:
-                      top: 0
-                      left: 0
-                      transform: none
-                      position: absolute
-                      pointer-events: none
-                      z-index: 10
-                  - type: image
-                    entity: light.kitchen
-                    tap_action:
-                      action: none
-                    hold_action:
-                      action: none
-                    state_image:
-                      'off': >-
-                        https://22.400ggp.com/local/images/v2/overlay-kitchen.png?v=4
-                  - type: image
-                    entity: light.living_room
-                    tap_action:
-                      action: none
-                    hold_action:
-                      action: none
-                    state_image:
-                      'off': >-
-                        https://22.400ggp.com/local/images/v2/overlay-living.png?v=4
-                  - type: image
-                    entity: light.dining
-                    tap_action:
-                      action: none
-                    hold_action:
-                      action: none
-                    state_image:
-                      'off': >-
-                        https://22.400ggp.com/local/images/v2/overlay-dining.png?v=4
-                  - type: image
-                    entity: light.master_ceiling
-                    tap_action:
-                      action: none
-                    hold_action:
-                      action: none
-                    state_image:
-                      'off': >-
-                        https://22.400ggp.com/local/images/v2/overlay-master.png?v=4
-                  - type: image
-                    entity: light.hall
-                    tap_action:
-                      action: none
-                    hold_action:
-                      action: none
-                    state_image:
-                      'off': >-
-                        https://22.400ggp.com/local/images/v2/overlay-hall.png?v=4
-                  - type: image
-                    entity: light.freds_lamp
-                    tap_action:
-                      action: none
-                    hold_action:
-                      action: none
-                    state_image:
-                      'on': >-
-                        https://22.400ggp.com/local/images/v2/overlay-freds-light.png?v=4
-                  - type: image
-                    entity: switch.pulley_fan
-                    card_mod:
-                      style: |
-                        @keyframes rotate {
-                          100% {
-                            transform: rotate(360deg);
-                          }
-                        }                
-                        :host {
-                          animation: rotate 2s linear infinite;
-                          left:282px !important;
-                          top: 218px !important;
-                          z-index: 999;
-                        }
-                    tap_action:
-                      action: toggle
-                    state_image:
-                      'on': https://22.400ggp.com/local/images/v2/fan-dining.png?v=4
-                      'off': https://22.400ggp.com/local/images/v2/fan-dining.png?v=4
-                  - type: image
-                    entity: switch.pulley_fan
-                    tap_action:
-                      action: toggle
-                    state_image:
-                      'off': https://22.400ggp.com/local/images/v2/fan-dining.png?v=4
-                    card_mod:
-                      style: |
-                        :host {
-                          left:282px !important;
-                          top: 218px !important;
-                          transform: rotate(93deg) !important;
-                          z-index: 999;
-                        }
-                  - type: image
-                    entity: switch.pulley_fan
-                    card_mod:
-                      style: |
-                        @keyframes lrotate {
-                          0% {
-                            transform: rotate(45deg);
-                          }
-                          100% {
-                            transform: rotate(405deg);
-                          }
-                        }                
-                        :host {
-                          animation: lrotate 2s linear infinite;
-                          left:88px !important;
-                          top: 149px !important;
-                          z-index: 999;
-                        }
-                    tap_action:
-                      action: toggle
-                    state_image:
-                      'on': https://22.400ggp.com/local/images/v2/fan-living.png?v=4
-                  - type: image
-                    entity: switch.pulley_fan
-                    tap_action:
-                      action: toggle
-                    state_image:
-                      'off': https://22.400ggp.com/local/images/v2/fan-living.png?v=4
-                    card_mod:
-                      style: |
-                        :host {
-                          left:88px !important;
-                          top: 149px !important;
-                          transform: rotate(3deg) !important;
-                          z-index: 999;
-                        }  
-                  - type: image
-                    entity: switch.lanai_fan
-                    card_mod:
-                      style: |
-                        @keyframes rotate {
-                          100% {
-                            transform: rotate(360deg);
-                          }
-                        }                
-                        :host {
-                          animation: rotate 2s linear infinite;
-                          left:318px !important;
-                          top: 18px !important;
-                          z-index: 999;
-                        }
-                    tap_action:
-                      action: toggle
-                    state_image:
-                      'on': https://22.400ggp.com/local/images/v2/fan-lanai.png?v=4
-                  - type: image
-                    entity: switch.lanai_fan
-                    tap_action:
-                      action: toggle
-                    state_image:
-                      'off': https://22.400ggp.com/local/images/v2/fan-lanai.png?v=4
-                    card_mod:
-                      style: |
-                        :host {
-                          left:318px !important;
-                          top: 18px !important;
-                          transform: rotate(93deg) !important;
-                          z-index: 999;
-                        }
-                  - type: image
-                    entity: switch.lanai_fan
-                    card_mod:
-                      style: |
-                        @keyframes lrotate {
-                          0% {
-                            transform: rotate(45deg);
-                          }
-                          100% {
-                            transform: rotate(405deg);
-                          }
-                        }                
-                        :host {
-                          animation: lrotate 2s linear infinite;
-                          left:518px !important;
-                          top: 18px !important;
-                          z-index: 999;
-                        }
-                    tap_action:
-                      action: toggle
-                    state_image:
-                      'on': https://22.400ggp.com/local/images/v2/fan-lanai.png?v=4
-                  - type: image
-                    entity: switch.lanai_fan
-                    tap_action:
-                      action: toggle
-                    state_image:
-                      'off': https://22.400ggp.com/local/images/v2/fan-lanai.png?v=4
-                    card_mod:
-                      style: |
-                        :host {
-                          left:513px !important;
-                          top: 18px !important;
-                          transform: rotate(3deg) !important;
-                          z-index: 999;
-                        }                
-                  - type: image
-                    entity: fan.master
-                    state_image:
-                      'on': https://22.400ggp.com/local/images/v2/fan-master.png?v=4
-                    card_mod:
-                      style: |
-                        @keyframes lrotate {
-                          0% {
-                            transform: rotate(45deg);
-                          }
-                          100% {
-                            transform: rotate(405deg);
-                          }
-                        }                
-                        :host {
-                          animation: lrotate 2s linear infinite;
-                          left:634px !important;
-                          top: 159px !important;
-                          z-index: 999;
-                        }
-                    tap_action:
-                      action: toggle
-                  - type: image
-                    entity: fan.master
-                    tap_action:
-                      action: toggle
-                    hold_action:
-                      action: more-info
-                    state_image:
-                      'off': https://22.400ggp.com/local/images/v2/fan-master.png?v=4
-                    card_mod:
-                      style: |
-                        :host {
-                          left:634px !important;
-                          top: 159px !important;
-                          transform: rotate(3deg) !important;
-                          z-index: 999;
-                        }                
-                  - type: image
-                    entity: light.kitchen
-                    tap_action:
-                      action: toggle
-                    hold_action:
-                      action: more-info
-                    image: https://22.400ggp.com/local/images/v2/transparent.png?v=4
-                    state_filter:
-                      'on': brightness(110%)
-                    style:
-                      top: 400px
-                      left: 0px
-                      z-index: 100
-                      width: 270px
-                      height: 200px
-                  - type: image
-                    entity: light.living_room
-                    aspect_ratio: 200%
-                    tap_action:
-                      action: toggle
-                    hold_action:
-                      action: more-info
-                    image: https://22.400ggp.com/local/images/v2/transparent.png?v=4
-                    style:
-                      top: 0px
-                      left: 0px
-                      z-index: 100
-                      width: 280px
-                      height: 400px
-                  - type: image
-                    entity: light.hall
-                    aspect_ratio: 300%
-                    tap_action:
-                      action: toggle
-                    hold_action:
-                      action: more-info
-                    image: https://22.400ggp.com/local/images/v2/transparent.png?v=4
-                    style:
-                      top: 400px
-                      left: 260px
-                      z-index: 100
-                      width: 70px
-                      height: 260px
-                  - type: image
-                    entity: light.hall
-                    aspect_ratio: 300%
-                    tap_action:
-                      action: toggle
-                    hold_action:
-                      action: more-info
-                    image: https://22.400ggp.com/local/images/v2/transparent.png?v=4
-                    style:
-                      top: 400px
-                      left: 330px
-                      z-index: 100
-                      width: 220px
-                      height: 70px
-                  - type: image
-                    entity: light.master_ceiling
-                    aspect_ratio: 300%
-                    tap_action:
-                      action: toggle
-                    hold_action:
-                      action: more-info
-                    image: https://22.400ggp.com/local/images/v2/transparent.png?v=4
-                    style:
-                      top: 400px
-                      left: 550px
-                      z-index: 100
-                      width: 140px
-                      height: 70px
-                  - type: image
-                    entity: light.master_ceiling
-                    aspect_ratio: 300%
-                    tap_action:
-                      action: toggle
-                    hold_action:
-                      action: more-info
-                    image: https://22.400ggp.com/local/images/v2/transparent.png?v=4
-                    style:
-                      top: 0px
-                      left: 570px
-                      z-index: 100
-                      width: 220px
-                      height: 400px
-                  - type: image
-                    entity: light.dining
-                    aspect_ratio: 300%
-                    tap_action:
-                      action: toggle
-                    hold_action:
-                      action: more-info
-                    image: https://22.400ggp.com/local/images/v2/transparent.png?v=4
-                    style:
-                      top: 100px
-                      left: 280px
-                      z-index: 100
-                      width: 100px
-                      height: 300px
-                  - type: image
-                    entity: light.freds_lamp
-                    tap_action:
-                      action: toggle
-                    hold_action:
-                      action: more-info
-                    image: https://22.400ggp.com/local/images/v2/transparent.png?v=4
-                    style:
-                      top: 80px
-                      left: 730px
-                      z-index: 700
-                      width: 70px
-                      height: 70px
   - title: Camera
     path: camera
     visible: []

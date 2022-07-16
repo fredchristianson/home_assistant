@@ -1,181 +1,196 @@
-type: custom:layout-card
-layout_type: custom:grid-layout
-layout:
-  grid-template-columns: 50% 50%
-  grid-template-rows: auto
+type: vertical-stack
 cards:
-  - type: custom:html-template-card
-    title: ''
-    content: >
-      <ha-icon icon="mdi:thermometer"></ha-icon>
-      <b>{{states('sensor.ecobee_bedroom_temperature')}}&deg;</b>  <i>{% if
-      states('binary_sensor.ecobee_bedroom_occupancy')=="on" %} occupied 
-          {% else %} {% endif %} </i>
-  - type: custom:gap-card
-  - type: custom:slider-button-card
-    entity: light.master_ceiling
-    name: Master Ceiling
+  - type: custom:layout-card
+    layout_type: custom:grid-layout
+    layout:
+      grid-template-areas: |
+        'c  .    n1  n2 n3 n4 n5 n6 n7 pi wb'
+      grid-template-columns: 240px 50px repeat(7,1fr) 1fr 1fr
+      grid-template-rows: 75px
     style: |
-      ha-card { 
-                --state-color-off: #aaaaaa; 
-                --paper-item-icon-color: #aaaaaa;
-                --action-icon-color-on: #ffffff;
-                --action-icon-color-off: #000000;
-                --switch-checked-button-color: #ffffff;
-                --switch-unchecked-button-color: #000000;
-              }
-    slider:
-      direction: left-right
-      background: gradient
-      use_percentage_bg_opacity: true
-      use_state_color: false
-      show_track: true
-      force_square: false
-    action_button:
-      mode: toggle
-    icon:
-      icon: hass:lightbulb
-      show: true
-      use_state_color: true
-    compact: false
-  - type: custom:slider-button-card
-    entity: fan.master
-    name: Master Fan
-    style: |
-      ha-card { 
-                --state-color-off: #aaaaaa; 
-                --paper-item-icon-color: #aaaaaa;
-                --action-icon-color-on: #ffffff;
-                --action-icon-color-off: #000000;
-                --switch-checked-button-color: #ffffff;
-                --switch-unchecked-button-color: #000000;
-              }
-
-    slider:
-      direction: left-right
-      background: gradient
-      use_percentage_bg_opacity: true
-      use_state_color: false
-      show_track: true
-      force_square: false
-    action_button:
-      mode: custom
-      tap_action:
-        action: toggle
-      hold_action:
-        action: more-info
-    icon:
-      icon: hass:fan
-      show: true
-      use_state_color: true
-    compact: false
-    show_state: false
-  - type: custom:slider-button-card
-    entity: light.freds_bed_lamp
-    name: Fred's Bed Lamp
-    style: |
-      ha-card { 
-                --state-color-off: #aaaaaa; 
-                --paper-item-icon-color: #aaaaaa;
-                --action-icon-color-on: #ffffff;
-                --action-icon-color-off: #000000;
-                 --switch-checked-button-color: #ffffff;
-                --switch-unchecked-button-color: #000000;
-              }
-
-    slider:
-      direction: left-right
-      background: gradient
-      use_percentage_bg_opacity: true
-      use_state_color: false
-      show_track: true
-      force_square: false
-    action_button:
-      mode: custom
-      tap_action:
-        action: toggle
-      hold_action:
-        action: more-info
-    icon:
-      icon: hass:lightbulb
-      show: true
-      use_state_color: true
-    compact: false
-  - type: custom:slider-button-card
-    entity: light.jens_bed_lamp
-    name: Jen's Bed Lamp
-    style: |
-      ha-card { 
-                --state-color-off: #aaaaaa; 
-                --paper-item-icon-color: #aaaaaa;
-                --action-icon-color-on: #ffffff;
-                --action-icon-color-off: #000000;
-                 --switch-checked-button-color: #ffffff;
-                --switch-unchecked-button-color: #000000;
-              }
-
-    slider:
-      direction: left-right
-      background: gradient
-      use_percentage_bg_opacity: true
-      use_state_color: false
-      show_track: true
-      force_square: false
-    action_button:
-      mode: custom
-      tap_action:
-        action: toggle
-      hold_action:
-        action: more-info
-    icon:
-      icon: hass:lightbulb
-      show: true
-      use_state_color: true
-    compact: false
-  - type: custom:slider-button-card
-    entity: cover.master_window
-    name: Master Window
-    style: |
-      ha-card { --state-color-off: #aaaaaa; 
-                --paper-item-icon-color: #aaaaaa
-              }
-    slider:
-      direction: top-bottom
-      background: striped
-      use_state_color: false
-      use_percentage_bg_opacity: false
-      toggle_on_click: false
-      show_track: false
-      force_square: false
-      invert: true
-    action_button:
-      mode: toggle
-    icon:
-      icon: ''
-      show: true
-      use_state_color: true
-    compact: false
-  - type: custom:slider-button-card
-    entity: cover.master_slider
-    name: Master Slider
-    style: |
-      ha-card { --state-color-off: #aaaaaa; 
-                --paper-item-icon-color: #aaaaaa
-              }
-    slider:
-      direction: top-bottom
-      background: striped
-      use_state_color: false
-      use_percentage_bg_opacity: false
-      toggle_on_click: false
-      show_track: false
-      force_square: false
-      invert: true
-    action_button:
-      mode: toggle
-    icon:
-      icon: ''
-      show: true
-      use_state_color: true
-    compact: false
-
+      layout-card {
+        border-bottom: 1px solid red;
+      }
+    card_mod: |
+      style: |
+        div {
+              --test: 12345;
+              --state-icon-active-color: rgb(9, 251, 213);
+              --paper-item-icon-active-color: var(--state-icon-active-color);
+              --state-icon-color: rgb(50,50,255);
+              --paper-item-icon-color: var(--paper-item-icon-color);
+            }  
+    cards:
+      - type: custom:simple-clock-card
+        use_military: false
+        font_size: 3rem
+        hide_seconds: true
+        view_layout:
+          grid-area: c
+      - type: custom:button-card
+        icon_height: 24px;
+        style: |
+          * {color: var(--primary-color)}   
+          ha-icon { height: 24px !important} 
+          #name {
+            border-bottom: 1px solid var(--primary-color);
+          }
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace-wallboard/wall-panel?kiosk
+        icon: mdi:sofa
+        name: Living Room
+        view_layout:
+          grid-area: n1
+      - type: custom:button-card
+        icon_height: 24px;
+        style: |
+          * {color: var(--primary-color)}    
+          ha-icon { height: 24px !important} 
+          ha-card { background-color: transparent}
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace-wallboard/bedrooms?kiosk
+        icon: mdi:bed
+        name: Bedrooms
+        view_layout:
+          grid-area: n2
+      - type: custom:button-card
+        icon_height: 24px;
+        style: |
+          * {color: var(--primary-color)}
+          ha-icon { height: 24px !important} 
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace-wallboard/calendar?kiosk
+        icon: mdi:calendar
+        name: Calendar
+        view_layout:
+          grid-area: n3
+      - type: custom:button-card
+        icon_height: 24px;
+        style: |
+          * {color: var(--primary-color)}    
+          ha-icon { height: 24px !important}          
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace-wallboard/led?kiosk&v=5
+        icon: mdi:dots-horizontal-circle
+        name: LED
+        view_layout:
+          grid-area: n4
+      - type: custom:button-card
+        icon_height: 24px;
+        style: |
+          * {color: var(--primary-color)}    
+          ha-icon { height: 24px !important}          
+        tap_action:
+          action: navigate
+          navigation_path: /lovelace-wallboard/wifi?kiosk
+        icon: mdi:wifi
+        name: WiFi
+        view_layout:
+          grid-area: n5
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: entity
+            entity: sensor.processor_temperature
+            use_entity_picture: true
+        view_layout:
+          grid-area: pi
+        style: >
+          ha-card { background-color: transparent; opacity: 0.3; font-size:
+          smaller}
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: entity
+            entity: sensor.my_wall_panel_battery_level
+            use_entity_picture: true
+        view_layout:
+          grid-area: wb
+  - type: custom:layout-card
+    layout_type: custom:grid-layout
+    layout:
+      grid-template-areas: |
+        'tp  mf   mf   mf    .   .   .   .   .  .  .'
+        'mc  mc   fl   fl    .   .   .   .   .  .  .'
+        'mw  mw   ms   ms    .   .   .   .   .  .  .'
+        'mw  mw   ms   ms    .   .   .   .   .  .  .'
+        '.   .    .    .     .   .   .   .   .  .  .'
+        '.   .    .    .     .   .   .   .   .  .  .'
+      grid-template-columns: repeat(4,160px)  repeat(7,1fr)
+      grid-template-rows: repeat(6,156px)
+    cards:
+      - type: custom:mushroom-entity-card
+        entity: sensor.ecobee_bedroom_temperature
+        name: Bedroom
+        fill_container: true
+        view_layout:
+          grid-area: tp
+      - type: custom:mushroom-light-card
+        entity: light.master_ceiling_lights
+        name: Master Ceiling
+        icon: mdi:lightbulb
+        view_layout:
+          grid-area: mc
+        layout: default
+        fill_container: true
+        use_light_color: true
+        show_brightness_control: true
+        show_color_temp_control: false
+        show_color_control: false
+        collapsible_controls: false  
+      - type: custom:mushroom-light-card
+        entity: light.freds_bed_lamp
+        name: Fred's Lamp
+        icon: mdi:lightbulb
+        view_layout:
+          grid-area: fl
+        fill_container: true
+        use_light_color: true
+        show_brightness_control: true
+        show_color_temp_control: true
+        show_color_control: true
+        collapsible_controls: false           
+      - type: custom:mushroom-fan-card
+        entity: fan.master_fan
+        fill_container: true
+        show_percentage_control: false
+        show_oscillate_control: false
+        collapsible_controls: true
+        view_layout:
+          grid-area: mf
+      - type: custom:gap-card
+      - type: custom:mushroom-cover-card
+        entity: cover.master_shade
+        name: Master Window
+        fill_container: true
+        layout: vertical
+        show_position_control: true
+        show_buttons_control: true
+        view_layout:
+          grid-area: mw
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: entity
+            entity: sensor.master_shade_battery
+            use_entity_picture: true
+        view_layout:
+          grid-area: mw
+      - type: custom:mushroom-cover-card
+        entity: cover.master_slider
+        name: Master Slider
+        fill_container: true
+        layout: vertical
+        show_position_control: true
+        show_buttons_control: true
+        view_layout:
+          grid-area: ms
+      - type: custom:mushroom-chips-card
+        chips:
+          - type: entity
+            entity: sensor.master_slider_battery
+            use_entity_picture: true
+        view_layout:
+          grid-area: ms
+     

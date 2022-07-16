@@ -7,390 +7,404 @@ views:
   - title: Main
     path: main
     icon: mdi:sofa
-    theme: Caule Black Green Glass
+    theme: Mushroom
+    badges: []
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: custom:layout-card
+            layout_type: custom:grid-layout
+            layout:
+              grid-template-columns: 80% 20%
+              grid-template-rows: auto
+              justify-content: left
+              gap: 10px
+            card_mod: |
+              style: |
+                div {
+                      --state-icon-active-color: rgb(9, 251, 213);
+                      --paper-item-icon-active-color: var(--state-icon-active-color);
+                      --state-icon-color: rgb(50,50,255);
+                      --paper-item-icon-color: var(--paper-item-icon-color);
+                    }  
+            cards:
+              - type: vertical-stack
+                cards:
+                  - type: custom:simple-thermostat
+                    entity: climate.ecobee
+                    decimals: '0'
+                    header: true
+                    control: true
+                    layout:
+                      step: column
+                      sensors:
+                        type: table
+                    sensors:
+                      - entity: sensor.ecobee_bedroom_temperature
+                        name: Bedroom
+                        decimals: 0
+                    step_size: '1'
+                    hide:
+                      state: true
+                    style: |
+                      ha-card {
+                        --st-font-size-xl: 24px;
+                        --st-font-size-m: 20px;
+                        --st-font-size-title: 0px;
+                        --st-font-size-sensors: 14px;
+                        --st-spacing: 2px;
+                        --heat_cool-color: green;
+                      }
+                    card_mod:
+                      style: |
+                        .mode-title { display: none}
+                        h3.current--value {
+                          background-color: hsl(0deg,70%,30%);
+                          border-radius: 9999px;
+                          display: block;
+                          color: white;
+                          padding: 14px;
+                          width: 60%;
+                          height: 50%;
+                          font-size: 24px;
+                          position: relative;
+                        }
+                        .current-wrapper:last-child h3.current--value {
+                          background-color: hsl(250deg,70%,30%) !important;
+                        }  
+                        .active.heat_cool {
+                          background-color: green !important;} 
+
+
+                        .current--value.updating {
+                          background-color: #4444;
+                          color: #ffffff;
+                        }
+                        .current--value.updating:after {
+                          content: 'updating';
+                          position: absolute;
+                          top: 60px;
+                          left: 0px;
+                          right: 0px;
+                          opacity: 0.7;
+                          font-size: 14px;
+                          border-radius: 99999px;
+                          background-color: white;
+                          color: black;
+                          text-align: center;
+                        }
+                    view_layout:
+                      grid-column: 1/1
+
+#fans
+                  - type: custom:mushroom-fan-card
+                    entity: switch.pulley_fan_switch_1
+                    name: Pulley Fan
+                    icon_animation: false
+                    fill_container: true
+                    layout: vertical
+                    icon_type: icon
+                    icon: mdi:fan-plus
+                    view_layout:
+                      grid-area: fp
+                  - type: custom:mushroom-fan-card
+                    entity: switch.lanai_fan_switch_1
+                    name: Lanai Fan
+                    icon_animation: false
+                    fill_container: true
+                    layout: vertical
+                    icon_type: icon
+                    icon: mdi:fan
+                    view_layout:
+                      grid-area: fl
+#lights
+                  - type: custom:mushroom-light-card
+                    entity: light.kitchen_light
+                    name: Kitchen
+                    layout: horizontal
+                    fill_container: false
+                    use_light_color: true
+                    show_brightness_control: true
+                    show_color_temp_control: false
+                    show_color_control: false
+                    collapsible_controls: false
+
+                  - type: custom:mushroom-light-card
+                    entity: light.living_room_light
+                    name: Living Room
+                    layout: horizontal
+                    fill_container: false
+                    use_light_color: true
+                    show_brightness_control: true
+                    show_color_temp_control: false
+                    show_color_control: false
+                    collapsible_controls: false
+                    
+                  - type: custom:mushroom-light-card
+                    entity: light.dining_light
+                    name: Dining
+                    layout: horizontal
+                    fill_container: false
+                    use_light_color: true
+                    show_brightness_control: true
+                    show_color_temp_control: false
+                    show_color_control: false
+                    collapsible_controls: false
+
+                    
+                  - type: custom:mushroom-light-card
+                    entity: light.hall_light_light
+                    name: Hall
+                    layout: horizontal
+                    fill_container: false
+                    use_light_color: true
+                    show_brightness_control: true
+                    show_color_temp_control: false
+                    show_color_control: false
+                    collapsible_controls: false
+ 
+                  - type: custom:mushroom-light-card
+                    entity: switch.plug_3
+                    name: Floor Lamp
+                    icon: mdi:light-flood-down
+
+# windows
+                  - type: custom:mushroom-cover-card
+                    entity: cover.kitchen_window
+                    name: Kitchen
+                    fill_container: true
+                    layout: vertical
+                    show_position_control: true
+                    show_buttons_control: true
+
+                  - type: custom:mushroom-cover-card
+                    entity: cover.living_room_window
+                    name: Living Room
+                    fill_container: true
+                    layout: vertical
+                    show_position_control: true
+                    show_buttons_control: true                    
+
+#other
+                  - type: custom:mushroom-lock-card
+                    entity: lock.front_door
+                    fill_container: true
+                    layout: vertical
+                    primary_info: name
+                    secondary_info: state
+                    icon_type: none
+                    view_layout:
+                      grid-area: lfd
+                  - type: custom:mushroom-entity-card
+                    entity: water_heater.snvr104582q_oven
+                    layout: vertical
+                    fill_container: true
+                    tap_action:
+                      action: more-info
+                    name: Oven
+#bedroom                    
+  - title: Bedrooms
+    path: bedrooms
+    icon: mdi:bed
+    theme: Mushroom
+    panel: true
     badges: []
     cards:
       - type: custom:layout-card
         layout_type: custom:grid-layout
         layout:
-          grid-template-columns: 50% 50%
+          grid-template-columns: 80% 20%
           grid-template-rows: auto
+          justify-content: left
+          gap: 10px
         cards:
-          - type: custom:slider-button-card
-            entity: light.kitchen
-            name: Kitchen
-            style: |
-              ha-card { --state-color-off: #aaaaaa; 
-                        --paper-item-icon-color: #aaaaaa;
-                      }
-            slider:
-              direction: left-right
-              background: gradient
-              use_percentage_bg_opacity: true
-              use_state_color: false
-              show_track: true
-              force_square: false
-            action_button:
-              mode: toggle
-            icon:
-              icon: hass:lightbulb
-              show: true
-              use_state_color: true
-            compact: true
-            view_layout: column:1
-          - type: custom:slider-button-card
-            entity: light.living_room
-            style: |
-              ha-card { --state-color-off: #aaaaaa; 
-                        --paper-item-icon-color: #aaaaaa;
-                      }
-            slider:
-              direction: left-right
-              background: gradient
-              use_percentage_bg_opacity: true
-              use_state_color: false
-              show_track: true
-              force_square: false
-            action_button:
-              mode: toggle
-            icon:
-              icon: ''
-              show: true
-              use_state_color: true
-            compact: true
-            view_layout:
-              column: 2
-          - type: custom:slider-button-card
-            entity: light.dining
-            style: |
-              ha-card { --state-color-off: #aaaaaa; 
-                        --paper-item-icon-color: #aaaaaa
-                      }
-            slider:
-              direction: left-right
-              background: gradient
-              use_percentage_bg_opacity: true
-              use_state_color: false
-              show_track: true
-              force_square: false
-            action_button:
-              mode: toggle
-            icon:
-              icon: ''
-              show: true
-              use_state_color: true
-            compact: true
-          - type: custom:slider-button-card
-            entity: light.hall
-            style: |
-              ha-card { --state-color-off: #aaaaaa; 
-                        --paper-item-icon-color: #aaaaaa
-                      }
-            slider:
-              direction: left-right
-              background: gradient
-              use_percentage_bg_opacity: true
-              use_state_color: false
-              show_track: true
-              force_square: false
-            action_button:
-              mode: toggle
-            icon:
-              icon: ''
-              show: true
-              use_state_color: true
-            compact: true
-          - type: custom:slider-button-card
-            entity: cover.kitchen
-            style: |
-              ha-card { --state-color-off: #aaaaaa; 
-                        --paper-item-icon-color: #aaaaaa
-                      }
-            slider:
-              direction: top-bottom
-              background: striped
-              use_state_color: false
-              use_percentage_bg_opacity: false
-              toggle_on_click: false
-              show_track: false
-              force_square: false
-              invert: true
-            action_button:
-              mode: toggle
-            icon:
-              icon: ''
-              show: true
-              use_state_color: true
-            compact: true
-          - type: custom:slider-button-card
-            entity: cover.living_room
-            style: |
-              ha-card { --state-color-off: #aaaaaa; 
-                        --paper-item-icon-color: #aaaaaa
-                      }
-            slider:
-              direction: top-bottom
-              background: striped
-              use_state_color: false
-              use_percentage_bg_opacity: false
-              toggle_on_click: false
-              show_track: false
-              force_square: false
-              invert: true
-            action_button:
-              mode: toggle
-            icon:
-              icon: ''
-              show: true
-              use_state_color: true
-            compact: true
-          - type: custom:slider-button-card
-            entity: switch.pulley_fan
-            name: Pulley Fan
-            slider:
-              direction: bottom-top
-              background: solid
-              use_percentage_bg_opacity: false
-              use_state_color: false
-              show_track: true
-              force_square: false
-              toggle_on_click: true
-            action_button:
-              mode: toggle
-              show: true
-            icon:
-              icon: hass:fan
-              show: true
-              use_state_color: false
-            compact: true
-          - type: custom:slider-button-card
-            entity: switch.lanai_fan
-            name: Lanai Fan
-            slider:
-              direction: bottom-top
-              background: solid
-              use_percentage_bg_opacity: false
-              use_state_color: false
-              show_track: true
-              force_square: false
-              toggle_on_click: true
-            action_button:
-              mode: toggle
-              show: true
-            icon:
-              icon: hass:fan
-              show: true
-              use_state_color: false
-            compact: true
-          - type: thermostat
-            entity: climate.ecobee
-            name: ' '
-            view_layout:
-              grid-column: 1/3
-  - title: Bedrooms
-    path: bedrooms
-    icon: mdi:bed
-    theme: Caule Black Gray Glass
-    type: custom:horizontal-layout
-    layout:
-      max_cols: 10
-    badges: []
-    cards: []
-  - path: all_devices
-    title: All Devices
+          - type: vertical-stack
+            cards:
+#fans
+              - type: entities
+                entities:
+                  - entity: sensor.ecobee_bedroom_temperature
+                    name: Bedroom Temperature
+                  - entity: fan.master_fan
+                  - entity: light.master_fan
+         
+#lights
+              - type: custom:mushroom-light-card
+                entity: light.master_ceiling_lights
+                name: Master Ceiling
+                layout: vertical
+                fill_container: false
+                use_light_color: true
+                show_brightness_control: true
+                show_color_temp_control: false
+                show_color_control: false
+                collapsible_controls: false
+              
+              - type: custom:mushroom-light-card
+                entity: light.freds_bed_lamp
+                name: Fred's Lamp
+                layout: vertical
+                icon: mdi:lightbulb
+                view_layout:
+                  grid-area: fl
+                fill_container: true
+                use_light_color: true
+                show_brightness_control: true
+                show_color_temp_control: true
+                show_color_control: true
+                collapsible_controls: false
+#windows
+              - type: custom:mushroom-cover-card
+                entity: cover.master_shade
+                name: Master Window
+                fill_container: true
+                layout: vertical
+                show_position_control: true
+                show_buttons_control: true
+              - type: custom:mushroom-cover-card
+                entity: cover.master_slider
+                name: Master Slider
+                fill_container: true
+                layout: vertical
+                show_position_control: true
+                show_buttons_control: true
+
+
+  - title: Camera
+    icon: mdi:camera
+    cards:
+      - type: picture-elements
+        entity: camera.door_camera
+        camera_image: camera.door_camera
+        camera_view: live
+        elements:
+          - type: icon
+            icon: mdi:arrow-up
+            style:
+              background: rgba(255, 255, 255, 0.25)
+              right: 25px
+              bottom: 50px
+            tap_action:
+              action: call-service
+              service: amcrest.ptz_control
+              service_data:
+                entity_id: camera.door_camera
+                movement: up
+          - type: icon
+            icon: mdi:arrow-down
+            style:
+              background: rgba(255, 255, 255, 0.25)
+              right: 25px
+              bottom: 0px
+            tap_action:
+              action: call-service
+              service: amcrest.ptz_control
+              service_data:
+                entity_id: camera.door_camera
+                movement: down
+          - type: icon
+            icon: mdi:arrow-left
+            style:
+              background: rgba(255, 255, 255, 0.25)
+              right: 50px
+              bottom: 25px
+            tap_action:
+              action: call-service
+              service: amcrest.ptz_control
+              service_data:
+                entity_id: camera.door_camera
+                movement: left
+          - type: icon
+            icon: mdi:arrow-right
+            style:
+              background: rgba(255, 255, 255, 0.25)
+              right: 0px
+              bottom: 25px
+            tap_action:
+              action: call-service
+              service: amcrest.ptz_control
+              service_data:
+                entity_id: camera.door_camera
+                movement: right
+          - type: icon
+            icon: mdi:arrow-top-left
+            style:
+              background: rgba(255, 255, 255, 0.25)
+              right: 50px
+              bottom: 50px
+            tap_action:
+              action: call-service
+              service: amcrest.ptz_control
+              service_data:
+                entity_id: camera.door_camera
+                movement: left_up
+          - type: icon
+            icon: mdi:arrow-top-right
+            style:
+              background: rgba(255, 255, 255, 0.25)
+              right: 0px
+              bottom: 50px
+            tap_action:
+              action: call-service
+              service: amcrest.ptz_control
+              service_data:
+                entity_id: camera.door_camera
+                movement: right_up
+          - type: icon
+            icon: mdi:arrow-bottom-left
+            style:
+              background: rgba(255, 255, 255, 0.25)
+              right: 50px
+              bottom: 0px
+            tap_action:
+              action: call-service
+              service: amcrest.ptz_control
+              service_data:
+                entity_id: camera.door_camera
+                movement: left_down
+          - type: icon
+            icon: mdi:arrow-bottom-right
+            style:
+              background: rgba(255, 255, 255, 0.25)
+              right: 0px
+              bottom: 0px
+            tap_action:
+              action: call-service
+              service: amcrest.ptz_control
+              service_data:
+                entity_id: camera.door_camera
+                movement: right_down
+          - type: icon
+            icon: mdi:magnify
+            style:
+              background: rgba(255, 255, 255, 0.25)
+              bottom: 25px
+              right: 25px
+            tap_action:
+              action: call-service
+              service: amcrest.ptz_control
+              service_data:
+                entity_id: camera.door_camera
+                movement: zoom_in
+            hold_action:
+              action: call-service
+              service: amcrest.ptz_control
+              service_data:
+                entity_id: camera.door_camera
+                movement: zoom_out
+      - type: entities
+        entities:
+          - entity: binary_sensor.door_camera_audio_detected
+          - entity: binary_sensor.door_camera_motion_detected
+          - entity: sensor.door_camera_sd_used
+          - entity: binary_sensor.front_door_closed
+  - title: LEDs
+    path: leds
+    icon: mdi:dots-horizontal-circle-outline
+    type: panel
     badges: []
     cards:
-      - type: entities
-        entities:
-          - sensor.openweathermap_weather
-          - sensor.openweathermap_dew_point
-          - sensor.openweathermap_temperature
-          - sensor.openweathermap_feels_like_temperature
-          - sensor.openweathermap_wind_speed
-          - sensor.openweathermap_wind_bearing
-          - sensor.openweathermap_humidity
-          - sensor.openweathermap_pressure
-          - sensor.openweathermap_cloud_coverage
-          - sensor.openweathermap_rain
-          - sensor.openweathermap_snow
-          - sensor.openweathermap_precipitation_kind
-          - sensor.openweathermap_uv_index
-          - sensor.openweathermap_condition
-          - sensor.openweathermap_weather_code
-          - sensor.openweathermap_forecast_condition
-          - sensor.openweathermap_forecast_precipitation
-          - sensor.openweathermap_forecast_precipitation_probability
-          - sensor.openweathermap_forecast_pressure
-          - sensor.openweathermap_forecast_temperature
-          - sensor.openweathermap_forecast_temperature_low
-          - sensor.openweathermap_forecast_time
-          - sensor.openweathermap_forecast_wind_bearing
-          - sensor.openweathermap_forecast_wind_speed
-          - sensor.openweathermap_forecast_cloud_coverage
-        title: 400GGP
-      - type: entities
-        entities:
-          - sensor.samsung_q60_volume
-          - sensor.samsung_q60_media_playback_status
-          - sensor.samsung_q60_tv_channel
-          - sensor.samsung_q60_tv_channel_name
-          - switch.samsung_q60
-          - binary_sensor.ecobee_bedroom_occupancy
-          - sensor.ecobee_bedroom_temperature
-          - cover.master_window
-          - cover.master_slider
-          - sensor.master_window_signal
-          - sensor.master_slider_signal
-        title: Bedroom
-      - type: entities
-        entities:
-          - cover.guest_slider
-          - sensor.guest_slider_signal
-        title: Guest room
-      - type: entities
-        entities:
-          - lock.front_door
-        title: Hall
-      - type: entities
-        entities:
-          - cover.kitchen
-          - entity: sensor.kitchen_signal
-            name: Signal
-          - binary_sensor.snvr104582q_remote_enabled
-          - sensor.snvr104582q_cook_mode
-          - sensor.snvr104582q_cook_time_remaining
-          - sensor.snvr104582q_kitchen_timer
-          - sensor.snvr104582q_user_temp_offset
-          - sensor.snvr104582q_raw_temperature
-          - switch.snvr104582q_sabbath_mode
-          - water_heater.snvr104582q_oven
-        title: Kitchen
-      - type: entities
-        entities:
-          - entity: switch.lanai_fan
-            name: Fan
-        title: Lanai
-      - type: entities
-        entities:
-          - sensor.ecobee_humidity
-          - binary_sensor.ecobee_occupancy
-          - sensor.ecobee_temperature
-          - cover.living_room
-          - entity: sensor.living_room_signal
-            name: Signal
-          - sensor.my_wall_panel_light
-          - binary_sensor.my_wall_panel_usb_plugged
-          - binary_sensor.my_wall_panel_ac_plugged
-          - binary_sensor.my_wall_panel_charging
-          - binary_sensor.my_wall_panel_motion_detected
-        title: Living Room
-      - type: thermostat
-        entity: climate.ecobee
-      - type: weather-forecast
-        entity: weather.ecobee
-        show_forecast: false
-      - type: entities
-        entities:
-          - binary_sensor.door_camera_audio_detected
-          - binary_sensor.door_camera_motion_detected
-          - binary_sensor.door_camera_online
-          - binary_sensor.front_door_closed
-          - binary_sensor.updater
-        title: Binary sensor
-      - type: picture-entity
-        entity: camera.door_camera
-      - type: entities
-        entities:
-          - fan.eb62af8a93acc91276vbf7
-        title: Fan
-      - type: entities
-        entities:
-          - input_boolean.front_door_sensor
-        title: Input boolean
-      - type: entities
-        entities:
-          - light.master_lamp
-          - light.kitchen
-          - light.dining
-          - light.hall
-          - light.living_room
-          - light.master_ceiling
-        title: Light
-      - type: entities
-        entities:
-          - person.fred
-        title: Person
-      - type: entities
-        entities:
-          - scene.evening
-        title: Scene
-      - type: entities
-        entities:
-          - sensor.disk_use_percent_config
-          - sensor.disk_use_percent_dev_root
-          - sensor.disk_use_percent_home
-          - sensor.door_camera_ptz_preset
-          - sensor.door_camera_sd_used
-          - sensor.load_15m
-          - sensor.load_1m
-          - sensor.load_5m
-          - sensor.memory_free
-          - sensor.memory_use_percent
-          - sensor.processor_temperature
-          - sensor.processor_use_percent
-          - sensor.hacs
-        title: Sensor
-      - type: entities
-        entities:
-          - sun.sun
-        title: Sun
-      - type: entities
-        entities:
-          - switch.wyze_notifications
-          - switch.wyze_notifications_off
-          - switch.wyze_notifications_off_2
-          - switch.wyze_notifications_off_3
-          - switch.wyze_notifications_off_4
-          - switch.wyze_notifications_off_5
-          - switch.wyze_notifications_off_6
-          - switch.wyze_notifications_off_7
-          - switch.wyze_notifications_off_8
-          - switch.wyze_notifications_off_9
-          - switch.wyze_notifications_off_10
-          - switch.wyze_notifications_off_11
-          - switch.wyze_notifications_off_12
-          - switch.wyze_notifications_off_13
-          - switch.wyze_notifications_off_14
-          - switch.wyze_notifications_off_15
-          - switch.wyze_notifications_off_16
-          - switch.wyze_notifications_off_17
-          - switch.wyze_notifications_on
-          - switch.wyze_notifications_on_2
-          - switch.wyze_notifications_on_3
-          - switch.wyze_notifications_on_4
-          - switch.wyze_notifications_on_5
-          - switch.wyze_notifications_on_6
-          - switch.wyze_notifications_on_7
-          - switch.wyze_notifications_on_8
-          - switch.wyze_notifications_on_9
-          - switch.wyze_notifications_on_10
-          - switch.wyze_notifications_on_11
-          - switch.wyze_notifications_on_12
-          - switch.wyze_notifications_on_13
-          - switch.wyze_notifications_on_14
-          - switch.wyze_notifications_on_15
-          - switch.wyze_notifications_on_16
-          - switch.wyze_notifications_on_17
-          - switch.pulley_fan
-        title: Switch
-      - type: weather-forecast
-        entity: weather.home
-        show_forecast: false
-      - type: weather-forecast
-        entity: weather.openweathermap
-        show_forecast: false
-  - type: custom:horizontal-layout
-    layout:
-      column: 2
-    badges: []
-    cards: []
+      - type: iframe
+        style: |
+          ha-card {box-shadow: 0 0 }
+        url: https://22.400ggp.com/local/html/leds.html?i=11
